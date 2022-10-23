@@ -24,7 +24,7 @@ const CSS_CODE=`<style>
     .aver-table{width: 100%;margin-top:100px;text-align:center;border-top:2px solid #dedede;}
     .aver-table th{text-align:center;}
     .blind{  visibility: hidden; position: absolute; font-size: 0; width: 0; height: 0; line-height: 0;}
-    .container{margin:0 0 180px 350px;}
+    .container{margin:0 0 180px 304px;}
 </style>`;
 const JS_CODE=`<script>
   let percentItems=[];
@@ -54,7 +54,7 @@ const JS_CODE=`<script>
         
         let titleMenus=$('h2');
         let len=titleMenus.length;
-        let result='<div style="position:fixed;left:0;top:0;width: 300px;height: 100vh;color: #fff;background: linear-gradient(0deg,#5768f3,#1c45ef);"><p style="margin-top:177px;padding: 0 20px;font-size:30px;">바로가기 메뉴</p>';
+        let result='<div style="position:fixed;left:0;top:0;width:300px;height:100vh;overflow-y:scroll;color: #fff;background:linear-gradient(0deg,#5768f3,#1c45ef);"><p style="margin-top:177px;padding: 0 20px;font-size:30px;">바로가기 메뉴</p>';
         for(i=0;i<len;i++){
            result+= '<a class="btn-shortcut" href="#'+titleMenus.eq(i).attr('id')+'" data-index="'+i+'" >'+titleMenus.eq(i).text()+'</a>';
         }
