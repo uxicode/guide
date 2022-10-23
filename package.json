@@ -1,7 +1,7 @@
 {
   "name": "v6.1",
   "version": "1.0.0",
-  "description": "- 기한 ( 2019.05.01~2019.05.31 ) ------------------ ## 문서 정의",
+  "description": "문서 정의",
   "main": "gulpfile.babel.js",
   "directories": {
     "doc": "docs"
@@ -13,6 +13,7 @@
     "browser-sync": "^2.26.14",
     "del": "^5.1.0",
     "fibers": "^4.0.1",
+    "gh-pages": "^4.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-babel": "^8.0.0",
@@ -33,8 +34,11 @@
     "stream-series": "^0.1.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "homepage": "http://uxicode.github.io/guide"
 }

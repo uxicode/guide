@@ -4,7 +4,7 @@ import markdown from 'gulp-markdown';
 import cheerio from 'gulp-cheerio';
 import rename from 'gulp-rename';
 
-export const clean = () => del([ 'docs.html' ]);
+export const clean = () => del([ 'index.html' ]);
 /*Major Version.Minor Version.Build or Maintenance Version
  Major Version - 1로 시작해서 전체를 뒤엎을 정도의 큰 변화가 발생했을 때 이 수치를 올린다.
  Minor Version - 0으로 시작해서 없던 기능의 추가나 기존 기능의 수정 등의 변화가 발생했을때 이 수치를 올린다.
@@ -147,7 +147,7 @@ const guideMdToHTML=()=> {
                     decodeEntities:false  // true = 엔티티 코드화
                 }
             }) )
-        .pipe( rename('docs.html'))
+        .pipe( rename('index.html'))
         .pipe( gulp.dest('./') )
 }
 const docs = gulp.series( clean, guideMdToHTML );
