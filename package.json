@@ -40,5 +40,16 @@
   },
   "author": "",
   "license": "ISC",
-  "homepage": "http://uxicode.github.io/guide"
+  "homepage": "https://uxicode.github.io/guide",
+  "dependencies": {
+    "array-uniq": "^1.0.3",
+    "email-addresses": "^3.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uxicode/guide.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uxicode/guide/issues"
+  }
 }
