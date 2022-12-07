@@ -378,6 +378,20 @@ CSS 의 기본 문법인 @import 는 성능 문제를 가지고 있다. 사용 X
 | list-cnt |     | 리스트를 감싸는 경우(ul) |     |
 | tab |     | 탭 메뉴 |     |
 
+
+### 2-12. 유용한 tip
+
+```
+html {
+-webkit-touch-callout:none;
+-webkit-user-select:none;
+-webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+}
+```
+
+- `webkit-touch-callout` 는 아이폰에서만 적용된다. 롱프레스시 새로운탭에서 열기, 읽기목록 추가, 복사하기, 공유 등 하단에 나오는 ios 네이티브 메뉴바 설정. none 으로 할 때 나오지 않게 됨.
+- `webkit-user-select ` 는 모바일웹에서 엘리먼트 드래그 방지용. 특히 텍스트 같은 경우 드래그 해서 선택 방지시에 많이 사용.
+- `webkit-tap-highlight-color` 는 롱프레스시에 해당 엘리먼트가 파랗게 선택되어 보여지는 것을 방지.
 -------
 
 ## 3. SCSS
