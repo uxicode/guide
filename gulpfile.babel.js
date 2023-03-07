@@ -60,7 +60,7 @@ const CSS_CODE=`<style>
        
         .side-bar{transform:translateX(-100%);transition: transform .5s ease-out;}
         .side-bar.active{transform:translateX(0)}
-        .container{margin:0 0 180px 10px;}
+        .container{overflow-x:hidden;overflow-y:auto;width:100%;margin:0 0 180px 0;}
     }
 </style>`;
 const JS_CODE=`<script>
