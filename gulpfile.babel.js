@@ -59,7 +59,7 @@ const JS_CODE=`<script>
         
         let titleMenus=$('h2');
         let len=titleMenus.length;
-        let result='<div style="side-bar"><p style="margin-top:177px;padding: 0 20px;font-size:30px;">바로가기 메뉴</p>';
+        let result='<div class="side-bar"><p style="margin-top:177px;padding: 0 20px;font-size:30px;">바로가기 메뉴</p>';
         for(i=0;i<len;i++){
            result+= '<a class="btn-shortcut" href="#'+titleMenus.eq(i).attr('id')+'" data-index="'+i+'" >'+titleMenus.eq(i).text()+'</a>';
         }
