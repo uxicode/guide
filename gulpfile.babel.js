@@ -110,7 +110,8 @@ const JS_CODE=`<script>
             let scrollIdx = $(this).attr('href');
              let offsetY=$(scrollIdx).offset().top;
              $('html, body').stop().animate({scrollTop:offsetY}, 350 );
-             
+             $('.side-bar').toggleClass('active');
+             $('.m-bar').toggleClass('active');
             activeMenus( parseInt( $(this).attr('data-index')) );
         });
         scrollSpyBtnItems.on('mouseenter', function(e){
