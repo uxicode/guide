@@ -26,8 +26,40 @@ const CSS_CODE=`<style>
     .blind{  visibility: hidden; position: absolute; font-size: 0; width: 0; height: 0; line-height: 0;}
     .container{margin:0 0 180px 230px;}
     .side-bar{position:fixed;left:0;top:0;width:220px;height:100vh;overflow-y:scroll;color: #fff;background:linear-gradient(0deg,#5768f3,#1c45ef);}
+    .m-bar{display: none;}
     @media (max-width:480px) {
-        .side-bar{left:-220px;}
+        .nav-bar{
+            position: fixed;
+            width: 100%;
+            left: 0;
+            top: 0;
+            height: 40px;
+        }
+        .nav-bar:before{
+           content:'';
+           position:absolute;
+           width:100%;
+           height:50px;
+           background-color:#333;
+        }
+        
+         .m-bar{
+           display: block;
+           position:absolute;
+           top:10px;
+           left:20px;
+           width:32px;
+           height:32px;
+           background:#fff url(./hamburger-svgrepo-com.svg) 50% 50% no-repeat;
+           background-size:32px;
+        }
+        .m-bar.active{
+           background:#fff url(./clear-svgrepo-com.svg) 50% 50% no-repeat;
+           background-size:32px;
+        }
+       
+        .side-bar{transform:translateX(-100%);transition: transform .5s ease-out;}
+        .side-bar.active{transform:translateX(0)}
         .container{margin:0 0 180px 10px;}
     }
 </style>`;
@@ -59,14 +91,18 @@ const JS_CODE=`<script>
         
         let titleMenus=$('h2');
         let len=titleMenus.length;
-        let result='<div class="side-bar"><p style="margin-top:177px;padding: 0 20px;font-size:30px;">바로가기 메뉴</p>';
+        let result='<div class="nav-bar"><div class="side-bar"><p style="margin-top:177px;padding: 0 20px;font-size:30px;">바로가기 메뉴</p>';
         for(i=0;i<len;i++){
            result+= '<a class="btn-shortcut" href="#'+titleMenus.eq(i).attr('id')+'" data-index="'+i+'" >'+titleMenus.eq(i).text()+'</a>';
         }
-        result+='</div>';
+        result+='</div><div class="m-bar"></div></div>';
         titleMenus.eq(0).before(result);
         $('.btn-top').on('click', function(e) {
           $('html,body').stop().animate({scrollTop:0}, 700 );
+        });
+        $('.m-bar').on('click', function(e){
+          $('.side-bar').toggleClass('active');
+          $('.m-bar').toggleClass('active');
         });
         let oldScrollNum=-1;
         let scrollSpyBtnItems=$('.btn-shortcut');
