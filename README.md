@@ -2115,8 +2115,43 @@ command not found 라는 문구가 뜨면서 안되는 경우가 있다.
 
 `nvm use v5`  ( node 설치된 v5버전으로 사용한다. )
 
+----------------------
+### 10-2. mac m2 환경에서 nvm 설치
+1. brew 로 nvm 설치
+- `brew install nvm`
 
-### 10-2. window 에서 nvm 설치 
+2. 설치 되었는지 버전 확인
+- `nvm --version`
+
+
+설치가 안되고 nvm not found라는 에러 나오면 환경설정 수정해야 한다.
+1. z shell 을 연다.
+( 기본 쉘 (Shell) 이 bash 에서 zsh (Z shell)로 변경 )
+- `vi ~/.zshrc`
+2. 쉘스크립트가 열리면 아래 코드를 입력한다 ( vi 로 열었을때 i 를 누르면 insert 즉 입력가능해진다 )
+```
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+```
+```
+export NVM_DIR=~/.nvm
+export PATH=/opt/homebrew/bin:$PATH
+source $(brew --prefix nvm)/nvm.sh
+```
+
+export PATH=/opt/homebrew/bin:$PATH 라는 내용은 command not found : brew 라는 에러 발생해서 추가해 주었던 부분이다.
+참고로 해당 에러 발생은 'Homebrew가 /usr/local/... 가 아닌  /opt/homebrew/ 에 설정되어 있어서 그렇다' 라고 해서 해당 부분은 경로를 추가해 해결하였다. 아래는 쉘스크립트에서 기존의 $PATH 값에 새로운 경로추가시 경로 추가하는 법이다.
+( 추가되는 디렉렉터리는 :(쌍점, 콜론)으로 구분 )
+PATH=/추가경로1:/추가경로2:$PATH
+
+3. 입력이 끝나면 esc키 누른다. 그리고 :wq ( 저장후 종료 ) 타이핑을 치고 엔터 누르면 편집에서 빠져나오게 된다.
+
+4. source 명령어로 아까 입력한 부분을 실행시킨다.
+( 참고로 source 명령어는 command를 읽고 실행하는 bash 내장 명령어 )
+- `source ~/.zshrc`
+
+
+### 10-3. window 에서 nvm 설치 
 1. NVM 설치 파일 다운로드
 - [https://github.com/coreybutler/nvm-windows/releases](https://github.com/coreybutler/nvm-windows/releases)
 - 위 주소에 접속하여 nvm-setup.zip 파일을 다운 받는다.
@@ -2524,7 +2559,7 @@ git reset --hard origin/master
 - pull origin develop > add > commit > push 
 4. 작업 완료 되면 pull request 요청 
 5. 최종 결정권자는 오픈된 pull request 사항을 체크 후 develop 에 merge 혹은 decline 시킨다.
-6. 최종 작업 마무리는  develop 의 모든 사항은 master 에 merge z
+6. 최종 작업 마무리는  develop 의 모든 사항은 master 에 merge 
 
 ![./gitWorkFlow.jpg](./gitWorkFlow.jpg)
 
