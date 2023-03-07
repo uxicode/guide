@@ -2295,7 +2295,7 @@ checkout 명령에 -b 옵션을 넣으면 브랜치 작성과 체크아웃을 �
 
 ```
 git branch -d mybranch
-git push origin --delete mybranch
+git push origin -d mybranch
 ```
 
 - mybranch 라는 브랜치 제거. 두번째 명령어는 삭제된 브렌치를 리모트 저장소에도 동기화 
