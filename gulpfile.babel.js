@@ -35,7 +35,7 @@ const CSS_CODE=`<style>
             top: 0;
             height: 40px;
         }
-        .nav-bar:before{
+        .nav-bar:after{
            content:'';
            position:absolute;
            width:100%;
@@ -52,6 +52,7 @@ const CSS_CODE=`<style>
            height:32px;
            background:#fff url(./hamburger-svgrepo-com.svg) 50% 50% no-repeat;
            background-size:32px;
+           z-index:1;
         }
         .m-bar.active{
            background:#fff url(./clear-svgrepo-com.svg) 50% 50% no-repeat;
