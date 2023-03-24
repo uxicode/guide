@@ -9,16 +9,17 @@ export const clean = () => del([ 'index.html' ]);
  Major Version - 1로 시작해서 전체를 뒤엎을 정도의 큰 변화가 발생했을 때 이 수치를 올린다.
  Minor Version - 0으로 시작해서 없던 기능의 추가나 기존 기능의 수정 등의 변화가 발생했을때 이 수치를 올린다.
  Build or Maintenance Version - 자잘한 버그나 내부적 코드 보완 등의 변화가 발생했을때 이 수치를 올린다.*/
-const CONVENTION_VER='1.6.3'; // 3번째 자리가 10이 될때 2번째 자리수가 1 이 된다.
+const CONVENTION_VER='1.7.1'; // 3번째 자리가 10이 될때 2번째 자리수가 1 이 된다.
 const TITLE_TXT = 'guide';
 const CSS_CODE=`<style>
-    h1{font-size:60px;margin:1em 0;}
+    h1{font-size:48px;margin:0.7em 0;}
+    h2{font-weight:500;}
     body{font-size:14px;}
     pre{color: #ccd645; background-color: #1d1d1d;}
     blockquote{border-radius: 8px;}
     blockquote>p{font-size:16px;}
-    .btn-shortcut{display:block;padding:15px 12px 15px 20px;text-indent:0;line-height:1;font-size:14px;color:#fff;background-color:transparent;border-bottom: 1px solid rgba(255, 255, 255, 0.1);transition:all 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);}
-    .btn-shortcut:hover, .btn-shortcut.active{padding:20px 12px 18px 20px;text-indent:3px;text-decoration: none;color:#333;background-color:#fff;box-shadow:inset 0 -3px 10px 0 rgba(0, 0, 0, 0.12);border-bottom: 0;}
+    .btn-shortcut{display:block;padding:12px 12px 12px 14px;text-indent:0;line-height:1;font-size:14px;color:#fff;background-color:transparent;border-bottom: 1px solid rgba(255, 255, 255, 0.1);transition:all 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);}
+    .btn-shortcut:hover, .btn-shortcut.active{padding:12px;text-indent:3px;text-decoration: none;color:#333;background-color:#fff;box-shadow:inset 0 -3px 10px 0 rgba(0, 0, 0, 0.12);border-bottom: 0;}
     .btn-top{z-index: 20;position:fixed;bottom:46px;right:50%;margin-right:-45%;}
     .btn-top>a{display:block;width:66px; height:66px;background-color:#fff;border-radius: 50%; border: 1px solid #dedede;} 
     .btn-top>a:hover{text-decoration: none;}
@@ -28,6 +29,7 @@ const CSS_CODE=`<style>
     .blind{  visibility: hidden; position: absolute; font-size: 0; width: 0; height: 0; line-height: 0;}
     .container{margin:0 0 180px 230px;}
     .side-bar{position:fixed;left:0;top:0;width:220px;height:100vh;overflow-y:scroll;color: #fff;background:linear-gradient(0deg,#5768f3,#1c45ef);}
+    .side-bar>.tit{margin-top: 74px; padding: 0 12px; font-size: 18px;}
     .m-bar{display: none;}
     @media (max-width:480px) {
         .nav-bar{
@@ -94,7 +96,7 @@ const JS_CODE=`<script>
         
         let titleMenus=$('h2');
         let len=titleMenus.length;
-        let result='<div class="nav-bar"><div class="side-bar"><p style="margin-top:177px;padding: 0 20px;font-size:30px;">바로가기 메뉴</p>';
+        let result='<div class="nav-bar"><div class="side-bar"><p class="tit">바로가기 메뉴</p>';
         for(i=0;i<len;i++){
            result+= '<a class="btn-shortcut" href="#'+titleMenus.eq(i).attr('id')+'" data-index="'+i+'" >'+titleMenus.eq(i).text()+'</a>';
         }
