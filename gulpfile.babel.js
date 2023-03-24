@@ -14,6 +14,7 @@ const TITLE_TXT = 'guide';
 const CSS_CODE=`<style>
     h1{font-size:60px;margin:1em 0;}
     body{font-size:14px;}
+    pre{color: #ccd645; background-color: #1d1d1d;}
     blockquote{border-radius: 8px;}
     blockquote>p{font-size:16px;}
     .btn-shortcut{display:block;padding:15px 12px 15px 20px;text-indent:0;line-height:1;font-size:14px;color:#fff;background-color:transparent;border-bottom: 1px solid rgba(255, 255, 255, 0.1);transition:all 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);}
