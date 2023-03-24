@@ -32,7 +32,7 @@ const CSS_CODE=`<style>
     .side-bar>.tit{margin-top: 74px; padding: 0 12px; font-size: 18px;}
     .m-bar{display: none;}
     @media (max-width:840px) {
-        .h1{margin: 1.5em 0 0.5em;}
+        h1{margin: 1.5em 0 0.5em;}
         .nav-bar{
             position: fixed;
             width: 100%;
@@ -103,7 +103,6 @@ const JS_CODE=`<script>
           let txt=titleMenus.eq(i).text();
           let menuTxt=String(txt).replace(/^[0-9]+\.\s*/g, 'ㆍ ');
           let hashLink=titleMenus.eq(i).attr('id');
-          console.log(menuTxt);
           result+='<a class="btn-shortcut" href="#'+hashLink+'" data-index="'+i+'">'+menuTxt+'</a>';
         }
         result+='</div><div class="m-bar"></div></div>';
