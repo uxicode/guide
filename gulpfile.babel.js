@@ -97,9 +97,14 @@ const JS_CODE=`<script>
         
         let titleMenus=$('h2');
         let len=titleMenus.length;
+        
         let result='<div class="nav-bar"><div class="side-bar"><p class="tit">바로가기 메뉴</p>';
         for(i=0;i<len;i++){
-           result+= '<a class="btn-shortcut" href="#'+titleMenus.eq(i).attr('id')+'" data-index="'+i+'" >'+titleMenus.eq(i).text()+'</a>';
+          let txt=titleMenus.eq(i).text();
+          let menuTxt=String(txt).replace(/^[0-9]+\.\s*/g, 'ㆍ ');
+          let hashLink=titleMenus.eq(i).attr('id');
+          console.log(menuTxt);
+          result+='<a class="btn-shortcut" href="#'+hashLink+'" data-index="'+i+'">'+menuTxt+'</a>';
         }
         result+='</div><div class="m-bar"></div></div>';
         titleMenus.eq(0).before(result);
