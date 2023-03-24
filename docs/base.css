@@ -187,11 +187,12 @@ html {
 }
 
 body {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: HelveticaNeue,AppleSDGothicNeo-Regular,Arial,sans-serif;
     font-size: 15px;
     line-height: 1.45;
     color: #000;
-    background-color: #fff
+    background-color: #fff;
+    font-weight:300;
 }
 
 input, button, select, textarea {
