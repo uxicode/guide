@@ -31,7 +31,8 @@ const CSS_CODE=`<style>
     .side-bar{position:fixed;left:0;top:0;width:220px;height:100vh;overflow-y:scroll;color: #fff;background:linear-gradient(137deg,#373737,#2f4dc9);}
     .side-bar>.tit{margin-top: 74px; padding: 0 12px; font-size: 18px;}
     .m-bar{display: none;}
-    @media (max-width:480px) {
+    @media (max-width:840px) {
+        .h1{margin: 1.5em 0 0.5em;}
         .nav-bar{
             position: fixed;
             width: 100%;

@@ -2637,6 +2637,14 @@ git reset --hard origin/master
 ### 3. 아이콘 폰트 만들기( svg icon font )
 [https://icomoon.io/](https://icomoon.io/)
 
+> note ( 무료 svg icon font )
+> - [https://iconsvg.xyz/](https://iconsvg.xyz/)
+> - [https://basicons.xyz/](https://basicons.xyz/)
+> - [https://lucide.dev/](https://lucide.dev/)
+> - [https://icons8.com/line-awesome?ref=toools](https://icons8.com/line-awesome?ref=toools)
+> - [https://icons.theforgesmith.com/](https://icons.theforgesmith.com/)
+> - [https://tabler-icons.io/](https://tabler-icons.io/)
+
 1. 사이트 우측 상단에 IcoMoon App 버튼을 클릭
 
 ![1번](./docs/images/icomoon1.jpg)
@@ -2677,6 +2685,8 @@ git reset --hard origin/master
 ( json 파일 누락시 사이트에서 일일히 아이콘의 코드값을 입력해야 한다. )   
 
 ![4번](./docs/images/icomoon4.jpg)
+
+
 
 ---------------------
 
