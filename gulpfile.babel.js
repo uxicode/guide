@@ -18,7 +18,7 @@ const CSS_CODE=`<style>
     pre{color: #ccd645; background-color: #1d1d1d;}
     blockquote{border-radius: 8px;}
     blockquote>p{font-size:16px;}
-    .btn-shortcut{display:block;padding:12px 12px 12px 14px;text-indent:0;line-height:1;font-size:14px;color:#fff;background-color:transparent;border-bottom: 1px solid rgba(255, 255, 255, 0.1);transition:all 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);}
+    .btn-shortcut{display:block;padding:12px 12px 12px 14px;text-indent:0;line-height:1;font-size:13px;color:#fff;background-color:transparent;border-bottom: 1px solid rgba(255, 255, 255, 0.1);transition:all 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);}
     .btn-shortcut:hover, .btn-shortcut.active{padding:12px;text-indent:3px;text-decoration: none;color:#333;background-color:#fff;box-shadow:inset 0 -3px 10px 0 rgba(0, 0, 0, 0.12);border-bottom: 0;}
     .btn-top{z-index: 20;position:fixed;bottom:46px;right:50%;margin-right:-45%;}
     .btn-top>a{display:block;width:66px; height:66px;background-color:#fff;border-radius: 50%; border: 1px solid #dedede;} 
