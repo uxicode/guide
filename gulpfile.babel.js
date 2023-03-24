@@ -23,7 +23,7 @@ const CSS_CODE=`<style>
     .btn-top{z-index: 20;position:fixed;bottom:46px;right:50%;margin-right:-45%;}
     .btn-top>a{display:block;width:66px; height:66px;background-color:#fff;border-radius: 50%; border: 1px solid #dedede;} 
     .btn-top>a:hover{text-decoration: none;}
-    .btn-top>a:before{content:'↑';padding:0 18px;font-size:50px;color:#337ab7;}
+    .btn-top>a:before{content:'↑';padding:0 13px;font-size:39px;color:#337ab7;line-height:62px;}
     .aver-table{width: 100%;margin-top:100px;text-align:center;border-top:2px solid #dedede;}
     .aver-table th{text-align:center;}
     .blind{  visibility: hidden; position: absolute; font-size: 0; width: 0; height: 0; line-height: 0;}
