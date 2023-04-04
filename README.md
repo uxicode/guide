@@ -2334,8 +2334,14 @@ git push origin -d mybranch
 ```
 
 - mybranch 라는 브랜치 제거. 두번째 명령어는 삭제된 브렌치를 리모트 저장소에도 동기화 
+> note : `git push origin -d mybranch` 삭제 명령 후에 git unable to delete remote ref does not exist 라는
+> 메세지가 나온다면 remote 된 git 서버와의 최신 동기화가 이루어 지지 않아서 발생하는 문제이다.
+> 깃허브나 비트버킷 사이트로 들어가서 정보를 조회해 보면 삭제된 것을 볼 수 있다. 
+> 하지만 `git branch -r` 로 브랜치를 조회를 하면 삭제한 브랜치가 남아 있는 것을 볼 수 있을 것이다.
+> 결론은 최신 동기화를 해주면 된다. `git fetch -p origin`  여기서 -p 옵션은 더 이상 존재하지 않는 remote 브랜치 정보는 삭제하는 것이다.
 
 
+```git fetch -p origin```
 
 -----------------------
 
