@@ -1,5 +1,5 @@
 # Coding 컨벤션
-## 테스트3
+
 ------------------
 ## 1. HTML
 
@@ -1885,6 +1885,21 @@ type T5 = ReturnType<any>;  // any
 type T6 = ReturnType<never>;  // any
 type T7 = ReturnType<string>;  // 오류
 type T8 = ReturnType<Function>;  // 오류
+```
+
+
+
+--------------------
+
+
+#### **InstanceType<T>**
+클래스 생성자의 인스턴스 타입을 구한다.
+
+```
+예제 (Example)
+type A={new(): B}
+type B={b: number}
+type I= InstanceType<A> // {b: number}
 ```
  
 

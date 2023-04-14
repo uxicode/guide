@@ -1664,6 +1664,12 @@ type T5 = ReturnType&lt;any&gt;;  // any
 type T6 = ReturnType&lt;never&gt;;  // any
 type T7 = ReturnType&lt;string&gt;;  // 오류
 type T8 = ReturnType&lt;Function&gt;;  // 오류</code></pre><hr>
+<h4 id="instancetypet"><strong>InstanceType&lt;T&gt;</strong></h4>
+<p>클래스 생성자의 인스턴스 타입을 구한다.</p>
+<pre><code>예제 (Example)
+type A={new(): B}
+type B={b: number}
+type I= InstanceType&lt;A&gt; // {b: number}</code></pre><hr>
 <h4 id="constructorparameterst"><strong>ConstructorParameters&lt;T&gt;</strong></h4>
 <p><code>ConstructorParameters&lt;T&gt;</code>타입은 생성자 함수 타입의 모든 매개변수 타입을 추출할 수 있게 해준다. 
 모든 매개변수 타입을 가지는 튜플 타입(T가 함수가 아닌 경우 never)을 생성.</p>
