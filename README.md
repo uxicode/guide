@@ -2837,9 +2837,9 @@ eventBus.$on('이벤트명', function(데이터){
 
 **a.객체 구문**
 
-**\- 인라인 방식**
+**- 인라인 방식**
 
-\- active, text-danger 클래스가 적용되려면 true가 할당되면 된다.
+- active, text-danger 클래스가 적용되려면 true가 할당되면 된다.
 
 ```
 <div class="static"
@@ -2969,7 +2969,7 @@ const User = {
 
 ### 라우터 가드
 
-\- 아래 befoeEnter 는 각 라우트에 해당하는 개별 라우트 가드이다.
+- 아래 befoeEnter 는 각 라우트에 해당하는 개별 라우트 가드이다.
 
 ```
 const router = new VueRouter({
@@ -3377,3 +3377,388 @@ new Vue({
 
 
 [https://vuex.vuejs.org/kr/api/](https://vuex.vuejs.org/kr/api/)
+
+
+-------------
+
+## 15. vue3.x  간단 정리
+
+
+### `<script setup>` 사용, ts 방식 
+1. 템플릿 문법
+- 여러 속성을 동적으로 바인딩
+
+```
+const objectOfAttrs = {
+  id: 'container',
+  class: 'wrapper'
+}
+```
+
+```
+<div v-bind="objectOfAttrs"></div>
+```
+
+- 단축 문법
+```<div :id="dynamicId"></div>```
+
+
+-------------
+
+
+2. Props
+
+- 문법 제한# 
+  올바른 런타임 코드를 생성하려면 defineProps() 의 제너릭 전달인자가 다음 중 하나를 선택.
+  
+  * 객체 리터럴 타입:
+
+    ```
+    
+    defineProps<{ /*... */ }>()
+    
+    ````
+
+  * 동일한 파일에 있는 인터페이스 또는 객체 리터럴 타입에 대한 참조:
+
+    ```
+    
+    interface Props {/* ... */}
+    defineProps<Props>()
+    
+    ```
+    
+> note : defineProps 의 제네릭 전달인자는 가져온 타입을 사용 할 수 없다
+
+```
+import { Props } from './other-file'
+
+// 지원하지 않음
+defineProps<Props>()
+```
+
+> note: 해결책 -> 컴파일러 매크로 withDefaults 
+
+```
+export interface Props {
+  msg?: string
+  labels?: string[]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  msg: 'hello',
+  labels: () => ['one', 'two']
+})
+```
+
+-------------
+
+3. 컴포넌트 Emits 작성
+
+```
+<script setup lang="ts">
+// runtime
+// 런타임
+const emit = defineEmits(['change', 'update'])
+
+// type-based
+// 타입기반
+const emit = defineEmits<{
+  (e: 'change', id: number): void
+  (e: 'update', value: string): void
+}>()
+</script>
+```
+
+
+-------------
+
+4. ref()에 타입 적용하기
+
+
+- Ref 타입을 사용:
+```
+import { ref } from 'vue'
+import type { Ref } from 'vue'
+
+const year: Ref<string | number> = ref('2020')
+
+year.value = 2020 // ok!
+```
+
+- ref() 를 호출할 때 제너릭 전달인자를 전달:
+
+```
+import { ref } from 'vue'
+const year = ref<string | number>('2020')
+
+year.value = 2020 // ok!
+```
+
+> note : 제네릭 형식 타입를 지정하지만 초기 **값을 생략하면 결과 타입은 undefined** 를 포함하는 유니온 타입된다.
+> 
+```
+// 추론된 타입: Ref<number | undefined>
+const n = ref<number>()
+  ```
+
+
+-------------
+
+5. reactive()에 타입 지정하기
+
+- 전달인자에서 타입을 암시적으로 추론: 
+
+```
+import { reactive } from 'vue'
+// inferred type: { title: string }
+// 추론된 타입: { title: string }
+const book = reactive({ title: 'Vue 3 Guide' })
+```
+
+- 명시적으로 입력하기 위해 인터페이스를 사용:
+
+```
+import { reactive } from 'vue'
+
+interface Book {
+  title: string
+  year?: number
+}
+
+const book: Book = reactive({ title: 'Vue 3 Guide' })
+```
+
+> note: 중첩된 ref unwrapping 을 처리하는 반환 타입이 제네릭 인자 타입과 다르기 때문에 reactive() 의 제네릭 전달인자는 사용하지 않는 것이 좋다.
+> reactive<Book>({ title: 'Vue 3 Guide' })  - X 
+
+
+-------------
+
+
+6. 계산된 속성( computed ) / computed()에 타입 지정하기
+- computed() 는 getter 의 반환 값을 기반으로 해당 타입을 추론:
+
+```
+import { ref, computed } from 'vue'
+
+const count = ref(0)
+
+// 추론된 타입: ComputedRef<number>
+const double = computed(() => count.value * 2)
+
+// => TS Error: Property 'split' does not exist on type 'number'
+const result = double.value.split('')
+```
+
+- 제네릭 인자를 통해 명시적으로 타입을 지정: 
+
+```
+const double = computed<number>(() => {
+  // type error if this doesn't return a number
+})
+```
+
+
+-------------
+
+
+
+7. 이벤트 핸들러에 타입 지정
+```
+<script setup lang="ts">
+function handleChange(event: Event) {
+  console.log((event.target as HTMLInputElement).value)
+}
+</script>
+
+<template>
+  <input type="text" @change="handleChange" />
+</template>
+```
+
+
+-------------
+
+
+
+8. Provide / Inject 에 타입 지정하기
+- provide 및 inject은 일반적으로 별도의 컴포넌트에서 수행된다. 
+  inject 된 값을 적절하게 입력하기 위해 Vue는 Symbol 을 확장하는 제네릭 타입인 InjectionKey 인터페이스를 제공한다. 
+  provider와 consumer 간에 주입된 값의 타입을 동기화하는 데 사용할 수 있다:
+```
+import { provide, inject } from 'vue'
+import type { InjectionKey } from 'vue'
+
+const key = Symbol() as InjectionKey<string>
+provide(key, 'foo') // 문자열이 아닌 값을 제공하면 에러가 발생합니다
+const foo = inject(key) // type of foo: string | undefined
+```
+
+- 여러 컴포넌트에서 가져올 수 있도록 injection key를 별도의 파일에 배치하는 것이 좋다. 
+- 문자열 injection key를 사용할 때 주입된 값의 타입은 unknown 이 되므로, 제너릭 타입 전달인자를 통해 명시적으로 선언해야 한다.
+
+```
+const foo = inject<string>('foo') // type: string | undefined
+```
+
+- 주입된 값은 여전히 undefined 일 수 있습니다. provider가 런타임에 이 값을 제공할 것이라는 보장이 없기 때문입니다. 
+  undefined 타입은 기본값을 제공하여 제거할 수 있습니다:
+
+```
+const foo = inject<string>('foo', 'bar') // type: string
+```
+
+- 값이 항상 제공된다고 확신하는 경우 값을 강제로 캐스팅할 수도 있습니다.
+```
+const foo = inject('foo') as string
+```
+
+
+-------------
+
+
+
+9. 템플릿 Refs 에 타입 지정하기
+- 템플릿 refs는 명시적인 제네릭 타입 전달인자와 초기 값 null 로 생성되어야 합니다:
+- 타입 안전을 위해 el.value 에 접근할 때 옵셔널 체이닝 또는 타입 가드를 사용해야 한다. 
+- 이는 컴포넌트가 마운트될 때까지 초기 ref 값이 null 이고 참조된 ref 가 v-if 에 의해 마운트 해제된 경우에도 null 로 설정될 수 있기 때문.
+
+```
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
+const el = ref<HTMLInputElement | null>(null)
+
+onMounted(() => {
+  el.value?.focus()
+})
+</script>
+
+<template>
+  <input ref="el" />
+</template>
+```
+
+
+-------------
+
+
+
+10. 컴포넌트 템플릿 Template Refs 에 타입 지정
+- 때로는 public 메서드를 호출하기 위해 자식 컴포넌트에 대한 템플릿 ref에 어노테이션이 필요 할 수 있습니다. 
+- 예를 들어, 모달을 여는 메서드가 있는 MyModal 자식 컴포넌트가 있습니다:
+
+```
+<!-- MyModal.vue -->
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const isContentShown = ref(false)
+const open = () => (isContentShown.value = true)
+
+defineExpose({
+  open
+})
+</script>
+```
+
+- MyModal 의 인스턴스 타입을 얻으려면 먼저 `typeof` 를 통해 타입을 가져온 다음 타입스크립트의 내장 
+- `InstanceType` 유틸리티를 사용하여 인스턴스 타입을 추출해야 합니다.
+
+```
+<!-- App.vue -->
+<script setup lang="ts">
+import MyModal from './MyModal.vue'
+
+const modal = ref<InstanceType<typeof MyModal> | null>(null)
+
+const openModal = () => {
+  modal.value?.open()
+}
+</script>
+```
+
+
+11. 컴포넌트 v-model
+- 기본적으로 컴포넌트의 v-model 은 modelValue 를 프로퍼티로, update:modelValue 를 이벤트로 사용
+- 네이티브 `<input>` 앨리먼트의 `value` 속성을 `modelValue` 프로퍼티에 바인딩.
+- 네이티브 `input` 이벤트가 트리거되면 새 값으로 `update:modelValue` 사용자 지정 이벤트를 내보낸다.
+
+```
+<!-- CustomInput.vue -->
+<script setup>
+defineProps(['modelValue'])
+defineEmits(['update:modelValue'])
+</script>
+
+<template>
+  <input
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
+  />
+</template>
+```
+
+```
+<CustomInput v-model="searchText" />
+```
+
+
+
+- v-model arguments
+- v-model에 인자를 전달하여 이름 수정가능:
+
+```
+<MyComponent v-model:title="bookTitle" />
+```
+
+```
+<!-- MyComponent.vue -->
+<script setup>
+defineProps(['title'])
+defineEmits(['update:title'])
+</script>
+
+<template>
+  <input
+    type="text"
+    :value="title"
+    @input="$emit('update:title', $event.target.value)"
+  />
+</template>
+```
+
+
+- v-model 수정자 처리하기
+- Form 양식 입력 바인딩에 대해 배울 때 v-model에 .trim, .number 및 .lazy와 같은 내장 수정자가 있다
+- v-model 컴포넌트에 추가되는 수정자는 modelModifiers 프로퍼티를 통해 컴포넌트에 제공
+- 컴포넌트의 modelModifiers 프로퍼티에 capitalize 가 포함되어 있고 그 값은 v-model 바인딩 
+  v-model.capitalize="myText"에 설정되어 있기 때문에 true 인 것을 알 수 있다.
+```
+<MyComponent v-model.capitalize="myText" />
+```
+
+```
+<script setup>
+const props = defineProps({
+  modelValue: String,
+  modelModifiers: { default: () => ({}) }
+})
+
+const emit = defineEmits(['update:modelValue'])
+console.log(props.modelModifiers) // { capitalize: true }
+
+function emitValue(e) {
+  let value = e.target.value
+  if (props.modelModifiers.capitalize) {
+    value = value.charAt(0).toUpperCase() + value.slice(1)
+  }
+  emit('update:modelValue', value)
+}
+</script>
+
+<template>
+  <input type="text" :value="modelValue" @input="emitValue" />
+</template>
+```

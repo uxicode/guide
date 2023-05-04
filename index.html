@@ -2647,7 +2647,9 @@ eventBus.$on(&#39;이벤트명&#39;, function(데이터){
 <p><strong>클래스 / 스타일 바인딩</strong></p>
 <p><strong>a.객체 구문</strong></p>
 <p><strong>- 인라인 방식</strong></p>
-<p>- active, text-danger 클래스가 적용되려면 true가 할당되면 된다.</p>
+<ul>
+<li>active, text-danger 클래스가 적용되려면 true가 할당되면 된다.</li>
+</ul>
 <pre><code>&lt;div class=&quot;static&quot;
   v-bind:class=&quot;{ active: isActive, &#39;text-danger&#39;: hasError }&quot;&gt;&lt;/div&gt;</code></pre><pre><code>data: {
   isActive: true,
@@ -2715,7 +2717,9 @@ const router = new VueRouter({
     // don&#39;t forget to call next()
   }
 }</code></pre><h3 id="라우터-가드">라우터 가드</h3>
-<p>- 아래 befoeEnter 는 각 라우트에 해당하는 개별 라우트 가드이다.</p>
+<ul>
+<li>아래 befoeEnter 는 각 라우트에 해당하는 개별 라우트 가드이다.</li>
+</ul>
 <pre><code>const router = new VueRouter({
   routes: [
     {
@@ -2993,7 +2997,300 @@ const store = new Vuex.Store({ ...options })</code></pre><h4 id="vuexstore-생�
   opacity: 0;
 }</code></pre><p>참고: <a href="https://kr.vuejs.org/v2/guide/"> https://kr.vuejs.org/v2/guide/</a>   &lt;br/&gt;</p>
 <p><a href="https://vuex.vuejs.org/kr/api/">https://vuex.vuejs.org/kr/api/</a></p>
-</div>
+<hr>
+<h2 id="15-vue3x--간단-정리">15. vue3.x  간단 정리</h2>
+<h3 id="script-setup-사용-ts-방식"><code>&lt;script setup&gt;</code> 사용, ts 방식</h3>
+<ol>
+<li>템플릿 문법</li>
+</ol>
+<ul>
+<li>여러 속성을 동적으로 바인딩</li>
+</ul>
+<pre><code>const objectOfAttrs = {
+  id: &#39;container&#39;,
+  class: &#39;wrapper&#39;
+}</code></pre><pre><code>&lt;div v-bind=&quot;objectOfAttrs&quot;&gt;&lt;/div&gt;</code></pre><ul>
+<li>단축 문법
+<code>&lt;div :id=&quot;dynamicId&quot;&gt;&lt;/div&gt;</code></li>
+</ul>
+<hr>
+<ol start="2">
+<li>Props</li>
+</ol>
+<ul>
+<li><p>문법 제한# 
+올바른 런타임 코드를 생성하려면 defineProps() 의 제너릭 전달인자가 다음 중 하나를 선택.</p>
+<ul>
+<li><p>객체 리터럴 타입:</p>
+<pre><code>
+defineProps&lt;{ /*... */ }&gt;()
+</code></pre></li>
+<li><p>동일한 파일에 있는 인터페이스 또는 객체 리터럴 타입에 대한 참조:</p>
+<pre><code>
+interface Props {/* ... */}
+defineProps&lt;Props&gt;()
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>note : defineProps 의 제네릭 전달인자는 가져온 타입을 사용 할 수 없다</p>
+</blockquote>
+<pre><code>import { Props } from &#39;./other-file&#39;
+
+// 지원하지 않음
+defineProps&lt;Props&gt;()</code></pre><blockquote>
+<p>note: 해결책 -&gt; 컴파일러 매크로 withDefaults </p>
+</blockquote>
+<pre><code>export interface Props {
+  msg?: string
+  labels?: string[]
+}
+
+const props = withDefaults(defineProps&lt;Props&gt;(), {
+  msg: &#39;hello&#39;,
+  labels: () =&gt; [&#39;one&#39;, &#39;two&#39;]
+})</code></pre><hr>
+<ol start="3">
+<li>컴포넌트 Emits 작성</li>
+</ol>
+<pre><code>&lt;script setup lang=&quot;ts&quot;&gt;
+// runtime
+// 런타임
+const emit = defineEmits([&#39;change&#39;, &#39;update&#39;])
+
+// type-based
+// 타입기반
+const emit = defineEmits&lt;{
+  (e: &#39;change&#39;, id: number): void
+  (e: &#39;update&#39;, value: string): void
+}&gt;()
+&lt;/script&gt;</code></pre><hr>
+<ol start="4">
+<li>ref()에 타입 적용하기</li>
+</ol>
+<ul>
+<li>Ref 타입을 사용:<pre><code>import { ref } from &#39;vue&#39;
+import type { Ref } from &#39;vue&#39;
+</code></pre></li>
+</ul>
+<p>const year: Ref&lt;string | number&gt; = ref(‘2020’)</p>
+<p>year.value = 2020 // ok!</p>
+<pre><code>
+- ref() 를 호출할 때 제너릭 전달인자를 전달:
+</code></pre><p>import { ref } from ‘vue’
+const year = ref&lt;string | number&gt;(‘2020’)</p>
+<p>year.value = 2020 // ok!</p>
+<pre><code>
+&gt; note : 제네릭 형식 타입를 지정하지만 초기 **값을 생략하면 결과 타입은 undefined** 를 포함하는 유니온 타입된다.
+&gt; </code></pre><p>// 추론된 타입: Ref&lt;number | undefined&gt;
+const n = ref&lt;number&gt;()</p>
+<pre><code>
+
+-------------
+
+5. reactive()에 타입 지정하기
+
+- 전달인자에서 타입을 암시적으로 추론: 
+</code></pre><p>import { reactive } from ‘vue’
+// inferred type: { title: string }
+// 추론된 타입: { title: string }
+const book = reactive({ title: ‘Vue 3 Guide’ })</p>
+<pre><code>
+- 명시적으로 입력하기 위해 인터페이스를 사용:
+</code></pre><p>import { reactive } from ‘vue’</p>
+<p>interface Book {
+  title: string
+  year?: number
+}</p>
+<p>const book: Book = reactive({ title: ‘Vue 3 Guide’ })</p>
+<pre><code>
+&gt; note: 중첩된 ref unwrapping 을 처리하는 반환 타입이 제네릭 인자 타입과 다르기 때문에 reactive() 의 제네릭 전달인자는 사용하지 않는 것이 좋다.
+&gt; reactive&lt;Book&gt;({ title: &#39;Vue 3 Guide&#39; })  - X 
+
+
+-------------
+
+
+6. 계산된 속성( computed ) / computed()에 타입 지정하기
+- computed() 는 getter 의 반환 값을 기반으로 해당 타입을 추론:
+</code></pre><p>import { ref, computed } from ‘vue’</p>
+<p>const count = ref(0)</p>
+<p>// 추론된 타입: ComputedRef&lt;number&gt;
+const double = computed(() =&gt; count.value * 2)</p>
+<p>// =&gt; TS Error: Property ‘split’ does not exist on type ‘number’
+const result = double.value.split(‘’)</p>
+<pre><code>
+- 제네릭 인자를 통해 명시적으로 타입을 지정: 
+</code></pre><p>const double = computed&lt;number&gt;(() =&gt; {
+  // type error if this doesn’t return a number
+})</p>
+<pre><code>
+
+-------------
+
+
+
+7. 이벤트 핸들러에 타입 지정</code></pre><p>&lt;script setup lang=&quot;ts&quot;&gt;
+function handleChange(event: Event) {
+  console.log((event.target as HTMLInputElement).value)
+}
+&lt;/script&gt;
+
+</p>
+<p>&lt;template&gt;
+  &lt;input type=&quot;text&quot; @change=&quot;handleChange&quot; /&gt;
+&lt;/template&gt;
+```
+
+
+</p>
+<hr>
+<ol start="8">
+<li>Provide / Inject 에 타입 지정하기</li>
+</ol>
+<ul>
+<li>provide 및 inject은 일반적으로 별도의 컴포넌트에서 수행된다. 
+inject 된 값을 적절하게 입력하기 위해 Vue는 Symbol 을 확장하는 제네릭 타입인 InjectionKey 인터페이스를 제공한다. 
+provider와 consumer 간에 주입된 값의 타입을 동기화하는 데 사용할 수 있다:<pre><code>import { provide, inject } from &#39;vue&#39;
+import type { InjectionKey } from &#39;vue&#39;
+</code></pre></li>
+</ul>
+<p>const key = Symbol() as InjectionKey&lt;string&gt;
+provide(key, ‘foo’) // 문자열이 아닌 값을 제공하면 에러가 발생합니다
+const foo = inject(key) // type of foo: string | undefined</p>
+<pre><code>
+- 여러 컴포넌트에서 가져올 수 있도록 injection key를 별도의 파일에 배치하는 것이 좋다. 
+- 문자열 injection key를 사용할 때 주입된 값의 타입은 unknown 이 되므로, 제너릭 타입 전달인자를 통해 명시적으로 선언해야 한다.
+</code></pre><p>const foo = inject&lt;string&gt;(‘foo’) // type: string | undefined</p>
+<pre><code>
+- 주입된 값은 여전히 undefined 일 수 있습니다. provider가 런타임에 이 값을 제공할 것이라는 보장이 없기 때문입니다. 
+  undefined 타입은 기본값을 제공하여 제거할 수 있습니다:
+</code></pre><p>const foo = inject&lt;string&gt;(‘foo’, ‘bar’) // type: string</p>
+<pre><code>
+- 값이 항상 제공된다고 확신하는 경우 값을 강제로 캐스팅할 수도 있습니다.</code></pre><p>const foo = inject(‘foo’) as string</p>
+<pre><code>
+
+-------------
+
+
+
+9. 템플릿 Refs 에 타입 지정하기
+- 템플릿 refs는 명시적인 제네릭 타입 전달인자와 초기 값 null 로 생성되어야 합니다:
+- 타입 안전을 위해 el.value 에 접근할 때 옵셔널 체이닝 또는 타입 가드를 사용해야 한다. 
+- 이는 컴포넌트가 마운트될 때까지 초기 ref 값이 null 이고 참조된 ref 가 v-if 에 의해 마운트 해제된 경우에도 null 로 설정될 수 있기 때문.
+</code></pre><p>&lt;script setup lang=&quot;ts&quot;&gt;
+import { ref, onMounted } from &#39;vue&#39;
+
+const el = ref&lt;HTMLInputElement | null&gt;(null)
+
+onMounted(() =&gt; {
+  el.value?.focus()
+})
+&lt;/script&gt;
+
+</p>
+<p>&lt;template&gt;
+  &lt;input ref=&quot;el&quot; /&gt;
+&lt;/template&gt;
+```
+
+
+</p>
+<hr>
+<ol start="10">
+<li>컴포넌트 템플릿 Template Refs 에 타입 지정</li>
+</ol>
+<ul>
+<li>때로는 public 메서드를 호출하기 위해 자식 컴포넌트에 대한 템플릿 ref에 어노테이션이 필요 할 수 있습니다. </li>
+<li>예를 들어, 모달을 여는 메서드가 있는 MyModal 자식 컴포넌트가 있습니다:</li>
+</ul>
+<pre><code>&lt;!-- MyModal.vue --&gt;
+&lt;script setup lang=&quot;ts&quot;&gt;
+import { ref } from &#39;vue&#39;
+
+const isContentShown = ref(false)
+const open = () =&gt; (isContentShown.value = true)
+
+defineExpose({
+  open
+})
+&lt;/script&gt;</code></pre><ul>
+<li>MyModal 의 인스턴스 타입을 얻으려면 먼저 <code>typeof</code> 를 통해 타입을 가져온 다음 타입스크립트의 내장 </li>
+<li><code>InstanceType</code> 유틸리티를 사용하여 인스턴스 타입을 추출해야 합니다.</li>
+</ul>
+<pre><code>&lt;!-- App.vue --&gt;
+&lt;script setup lang=&quot;ts&quot;&gt;
+import MyModal from &#39;./MyModal.vue&#39;
+
+const modal = ref&lt;InstanceType&lt;typeof MyModal&gt; | null&gt;(null)
+
+const openModal = () =&gt; {
+  modal.value?.open()
+}
+&lt;/script&gt;</code></pre><ol start="11">
+<li>컴포넌트 v-model</li>
+</ol>
+<ul>
+<li>기본적으로 컴포넌트의 v-model 은 modelValue 를 프로퍼티로, update:modelValue 를 이벤트로 사용</li>
+<li>네이티브 <code>&lt;input&gt;</code> 앨리먼트의 <code>value</code> 속성을 <code>modelValue</code> 프로퍼티에 바인딩.</li>
+<li>네이티브 <code>input</code> 이벤트가 트리거되면 새 값으로 <code>update:modelValue</code> 사용자 지정 이벤트를 내보낸다.</li>
+</ul>
+<pre><code>&lt;!-- CustomInput.vue --&gt;
+&lt;script setup&gt;
+defineProps([&#39;modelValue&#39;])
+defineEmits([&#39;update:modelValue&#39;])
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;input
+    :value=&quot;modelValue&quot;
+    @input=&quot;$emit(&#39;update:modelValue&#39;, $event.target.value)&quot;
+  /&gt;
+&lt;/template&gt;</code></pre><pre><code>&lt;CustomInput v-model=&quot;searchText&quot; /&gt;</code></pre><ul>
+<li>v-model arguments</li>
+<li>v-model에 인자를 전달하여 이름 수정가능:</li>
+</ul>
+<pre><code>&lt;MyComponent v-model:title=&quot;bookTitle&quot; /&gt;</code></pre><pre><code>&lt;!-- MyComponent.vue --&gt;
+&lt;script setup&gt;
+defineProps([&#39;title&#39;])
+defineEmits([&#39;update:title&#39;])
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;input
+    type=&quot;text&quot;
+    :value=&quot;title&quot;
+    @input=&quot;$emit(&#39;update:title&#39;, $event.target.value)&quot;
+  /&gt;
+&lt;/template&gt;</code></pre><ul>
+<li>v-model 수정자 처리하기</li>
+<li>Form 양식 입력 바인딩에 대해 배울 때 v-model에 .trim, .number 및 .lazy와 같은 내장 수정자가 있다</li>
+<li>v-model 컴포넌트에 추가되는 수정자는 modelModifiers 프로퍼티를 통해 컴포넌트에 제공</li>
+<li>컴포넌트의 modelModifiers 프로퍼티에 capitalize 가 포함되어 있고 그 값은 v-model 바인딩 
+v-model.capitalize=”myText”에 설정되어 있기 때문에 true 인 것을 알 수 있다.<pre><code>&lt;MyComponent v-model.capitalize=&quot;myText&quot; /&gt;</code></pre></li>
+</ul>
+<pre><code>&lt;script setup&gt;
+const props = defineProps({
+  modelValue: String,
+  modelModifiers: { default: () =&gt; ({}) }
+})
+
+const emit = defineEmits([&#39;update:modelValue&#39;])
+console.log(props.modelModifiers) // { capitalize: true }
+
+function emitValue(e) {
+  let value = e.target.value
+  if (props.modelModifiers.capitalize) {
+    value = value.charAt(0).toUpperCase() + value.slice(1)
+  }
+  emit(&#39;update:modelValue&#39;, value)
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;input type=&quot;text&quot; :value=&quot;modelValue&quot; @input=&quot;emitValue&quot; /&gt;
+&lt;/template&gt;</code></pre></div>
 <div class="btn-top"><a href="#header"><span class="blind">위로가기</span></a></div>
 <script>
   let percentItems=[];
@@ -3017,7 +3314,7 @@ const store = new Vuex.Store({ ...options })</code></pre><h4 id="vuexstore-생�
         $('table a').attr('target', '_blank');
         let i=0;
         let titleVer=$('h1');
-        let replaceTitle=titleVer.text()+'( ver 1.7.3 )';
+        let replaceTitle=titleVer.text()+'( ver 1.7.5 )';
         
         titleVer.text(replaceTitle);
         
