@@ -2192,6 +2192,9 @@ git push origin -d mybranch</code></pre><ul>
 <ul>
 <li>서버와 최신 정보 동기화 시키고 삭제된 브랜치 내역 제거 </li>
 </ul>
+<pre><code>git branch -D mybranch</code></pre><ul>
+<li><code>-D</code> 옵션은 강제 삭제를 의미한다. 만약 머지 중이거나 수정 중인 상태라면 error 를 띄울텐데 그래도 상관없이 지운다면 해당 옵션으로 지우면 된다.</li>
+</ul>
 <hr>
 <h4 id="12-4-스테이징-로컬-임시저장--및-커밋">12-4 스테이징( 로컬 임시저장 ) 및 커밋</h4>
 <p><code>git add test.txt</code></p>
@@ -3007,7 +3010,7 @@ const store = new Vuex.Store({ ...options })</code></pre><h4 id="vuexstore-생�
         $('table a').attr('target', '_blank');
         let i=0;
         let titleVer=$('h1');
-        let replaceTitle=titleVer.text()+'( ver 1.7.1 )';
+        let replaceTitle=titleVer.text()+'( ver 1.7.3 )';
         
         titleVer.text(replaceTitle);
         
