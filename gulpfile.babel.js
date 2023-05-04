@@ -13,7 +13,7 @@ export const clean = () => del([ 'index.html' ]);
  Build or Maintenance Version - 자잘한 버그나 내부적 코드 보완 등의 변화가 발생했을때 이 수치를 올린다.
  */
 
-const CONVENTION_VER='1.7.5'; // 3번째 자리가 10이 될때 2번째 자리수가 1 이 된다.
+const CONVENTION_VER='1.7.6'; // 3번째 자리가 10이 될때 2번째 자리수가 1 이 된다.
 const TITLE_TXT = 'guide';
 const CSS_CODE=`<style>
     h1{font-size:48px;margin:0.7em 0;}
