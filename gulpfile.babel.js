@@ -5,10 +5,14 @@ import cheerio from 'gulp-cheerio';
 import rename from 'gulp-rename';
 
 export const clean = () => del([ 'index.html' ]);
-/*Major Version.Minor Version.Build or Maintenance Version
+
+/*
+ Major Version.Minor Version.Build or Maintenance Version
  Major Version - 1로 시작해서 전체를 뒤엎을 정도의 큰 변화가 발생했을 때 이 수치를 올린다.
  Minor Version - 0으로 시작해서 없던 기능의 추가나 기존 기능의 수정 등의 변화가 발생했을때 이 수치를 올린다.
- Build or Maintenance Version - 자잘한 버그나 내부적 코드 보완 등의 변화가 발생했을때 이 수치를 올린다.*/
+ Build or Maintenance Version - 자잘한 버그나 내부적 코드 보완 등의 변화가 발생했을때 이 수치를 올린다.
+ */
+
 const CONVENTION_VER='1.7.3'; // 3번째 자리가 10이 될때 2번째 자리수가 1 이 된다.
 const TITLE_TXT = 'guide';
 const CSS_CODE=`<style>
