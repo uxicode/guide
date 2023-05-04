@@ -3477,6 +3477,7 @@ const emit = defineEmits<{
 
 
 - Ref 타입을 사용:
+
 ```
 import { ref } from 'vue'
 import type { Ref } from 'vue'
@@ -3496,11 +3497,12 @@ year.value = 2020 // ok!
 ```
 
 > note : 제네릭 형식 타입를 지정하지만 초기 **값을 생략하면 결과 타입은 undefined** 를 포함하는 유니온 타입된다.
-> 
+
+
 ```
 // 추론된 타입: Ref<number | undefined>
 const n = ref<number>()
-  ```
+```
 
 
 -------------
@@ -3528,6 +3530,7 @@ interface Book {
 
 const book: Book = reactive({ title: 'Vue 3 Guide' })
 ```
+
 
 > note: 중첩된 ref unwrapping 을 처리하는 반환 타입이 제네릭 인자 타입과 다르기 때문에 reactive() 의 제네릭 전달인자는 사용하지 않는 것이 좋다.
 > reactive<Book>({ title: 'Vue 3 Guide' })  - X 
@@ -3565,6 +3568,7 @@ const double = computed<number>(() => {
 
 
 7. 이벤트 핸들러에 타입 지정
+
 ```
 <script setup lang="ts">
 function handleChange(event: Event) {
@@ -3586,6 +3590,7 @@ function handleChange(event: Event) {
 - provide 및 inject은 일반적으로 별도의 컴포넌트에서 수행된다. 
   inject 된 값을 적절하게 입력하기 위해 Vue는 Symbol 을 확장하는 제네릭 타입인 InjectionKey 인터페이스를 제공한다. 
   provider와 consumer 간에 주입된 값의 타입을 동기화하는 데 사용할 수 있다:
+
 ```
 import { provide, inject } from 'vue'
 import type { InjectionKey } from 'vue'
@@ -3610,6 +3615,7 @@ const foo = inject<string>('foo', 'bar') // type: string
 ```
 
 - 값이 항상 제공된다고 확신하는 경우 값을 강제로 캐스팅할 수도 있습니다.
+
 ```
 const foo = inject('foo') as string
 ```
@@ -3735,6 +3741,7 @@ defineEmits(['update:title'])
 - v-model 컴포넌트에 추가되는 수정자는 modelModifiers 프로퍼티를 통해 컴포넌트에 제공
 - 컴포넌트의 modelModifiers 프로퍼티에 capitalize 가 포함되어 있고 그 값은 v-model 바인딩 
   v-model.capitalize="myText"에 설정되어 있기 때문에 true 인 것을 알 수 있다.
+
 ```
 <MyComponent v-model.capitalize="myText" />
 ```

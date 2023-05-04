@@ -3070,116 +3070,114 @@ const emit = defineEmits&lt;{
 <li>ref()에 타입 적용하기</li>
 </ol>
 <ul>
-<li>Ref 타입을 사용:<pre><code>import { ref } from &#39;vue&#39;
-import type { Ref } from &#39;vue&#39;
-</code></pre></li>
+<li>Ref 타입을 사용:</li>
 </ul>
-<p>const year: Ref&lt;string | number&gt; = ref(‘2020’)</p>
-<p>year.value = 2020 // ok!</p>
-<pre><code>
-- ref() 를 호출할 때 제너릭 전달인자를 전달:
-</code></pre><p>import { ref } from ‘vue’
-const year = ref&lt;string | number&gt;(‘2020’)</p>
-<p>year.value = 2020 // ok!</p>
-<pre><code>
-&gt; note : 제네릭 형식 타입를 지정하지만 초기 **값을 생략하면 결과 타입은 undefined** 를 포함하는 유니온 타입된다.
-&gt; </code></pre><p>// 추론된 타입: Ref&lt;number | undefined&gt;
-const n = ref&lt;number&gt;()</p>
-<pre><code>
+<pre><code>import { ref } from &#39;vue&#39;
+import type { Ref } from &#39;vue&#39;
 
--------------
+const year: Ref&lt;string | number&gt; = ref(&#39;2020&#39;)
 
-5. reactive()에 타입 지정하기
+year.value = 2020 // ok!</code></pre><ul>
+<li>ref() 를 호출할 때 제너릭 전달인자를 전달:</li>
+</ul>
+<pre><code>import { ref } from &#39;vue&#39;
+const year = ref&lt;string | number&gt;(&#39;2020&#39;)
 
-- 전달인자에서 타입을 암시적으로 추론: 
-</code></pre><p>import { reactive } from ‘vue’
+year.value = 2020 // ok!</code></pre><blockquote>
+<p>note : 제네릭 형식 타입를 지정하지만 초기 <strong>값을 생략하면 결과 타입은 undefined</strong> 를 포함하는 유니온 타입된다.</p>
+</blockquote>
+<pre><code>// 추론된 타입: Ref&lt;number | undefined&gt;
+const n = ref&lt;number&gt;()</code></pre><hr>
+<ol start="5">
+<li>reactive()에 타입 지정하기</li>
+</ol>
+<ul>
+<li>전달인자에서 타입을 암시적으로 추론: </li>
+</ul>
+<pre><code>import { reactive } from &#39;vue&#39;
 // inferred type: { title: string }
 // 추론된 타입: { title: string }
-const book = reactive({ title: ‘Vue 3 Guide’ })</p>
-<pre><code>
-- 명시적으로 입력하기 위해 인터페이스를 사용:
-</code></pre><p>import { reactive } from ‘vue’</p>
-<p>interface Book {
+const book = reactive({ title: &#39;Vue 3 Guide&#39; })</code></pre><ul>
+<li>명시적으로 입력하기 위해 인터페이스를 사용:</li>
+</ul>
+<pre><code>import { reactive } from &#39;vue&#39;
+
+interface Book {
   title: string
   year?: number
-}</p>
-<p>const book: Book = reactive({ title: ‘Vue 3 Guide’ })</p>
-<pre><code>
-&gt; note: 중첩된 ref unwrapping 을 처리하는 반환 타입이 제네릭 인자 타입과 다르기 때문에 reactive() 의 제네릭 전달인자는 사용하지 않는 것이 좋다.
-&gt; reactive&lt;Book&gt;({ title: &#39;Vue 3 Guide&#39; })  - X 
+}
 
+const book: Book = reactive({ title: &#39;Vue 3 Guide&#39; })</code></pre><blockquote>
+<p>note: 중첩된 ref unwrapping 을 처리하는 반환 타입이 제네릭 인자 타입과 다르기 때문에 reactive() 의 제네릭 전달인자는 사용하지 않는 것이 좋다.
+reactive&lt;Book&gt;({ title: ‘Vue 3 Guide’ })  - X </p>
+</blockquote>
+<hr>
+<ol start="6">
+<li>계산된 속성( computed ) / computed()에 타입 지정하기</li>
+</ol>
+<ul>
+<li>computed() 는 getter 의 반환 값을 기반으로 해당 타입을 추론:</li>
+</ul>
+<pre><code>import { ref, computed } from &#39;vue&#39;
 
--------------
+const count = ref(0)
 
+// 추론된 타입: ComputedRef&lt;number&gt;
+const double = computed(() =&gt; count.value * 2)
 
-6. 계산된 속성( computed ) / computed()에 타입 지정하기
-- computed() 는 getter 의 반환 값을 기반으로 해당 타입을 추론:
-</code></pre><p>import { ref, computed } from ‘vue’</p>
-<p>const count = ref(0)</p>
-<p>// 추론된 타입: ComputedRef&lt;number&gt;
-const double = computed(() =&gt; count.value * 2)</p>
-<p>// =&gt; TS Error: Property ‘split’ does not exist on type ‘number’
-const result = double.value.split(‘’)</p>
-<pre><code>
-- 제네릭 인자를 통해 명시적으로 타입을 지정: 
-</code></pre><p>const double = computed&lt;number&gt;(() =&gt; {
-  // type error if this doesn’t return a number
-})</p>
-<pre><code>
-
--------------
-
-
-
-7. 이벤트 핸들러에 타입 지정</code></pre><p>&lt;script setup lang=&quot;ts&quot;&gt;
+// =&gt; TS Error: Property &#39;split&#39; does not exist on type &#39;number&#39;
+const result = double.value.split(&#39;&#39;)</code></pre><ul>
+<li>제네릭 인자를 통해 명시적으로 타입을 지정: </li>
+</ul>
+<pre><code>const double = computed&lt;number&gt;(() =&gt; {
+  // type error if this doesn&#39;t return a number
+})</code></pre><hr>
+<ol start="7">
+<li>이벤트 핸들러에 타입 지정</li>
+</ol>
+<pre><code>&lt;script setup lang=&quot;ts&quot;&gt;
 function handleChange(event: Event) {
   console.log((event.target as HTMLInputElement).value)
 }
 &lt;/script&gt;
 
-</p>
-<p>&lt;template&gt;
+&lt;template&gt;
   &lt;input type=&quot;text&quot; @change=&quot;handleChange&quot; /&gt;
-&lt;/template&gt;
-```
-
-
-</p>
-<hr>
+&lt;/template&gt;</code></pre><hr>
 <ol start="8">
 <li>Provide / Inject 에 타입 지정하기</li>
 </ol>
 <ul>
 <li>provide 및 inject은 일반적으로 별도의 컴포넌트에서 수행된다. 
 inject 된 값을 적절하게 입력하기 위해 Vue는 Symbol 을 확장하는 제네릭 타입인 InjectionKey 인터페이스를 제공한다. 
-provider와 consumer 간에 주입된 값의 타입을 동기화하는 데 사용할 수 있다:<pre><code>import { provide, inject } from &#39;vue&#39;
-import type { InjectionKey } from &#39;vue&#39;
-</code></pre></li>
+provider와 consumer 간에 주입된 값의 타입을 동기화하는 데 사용할 수 있다:</li>
 </ul>
-<p>const key = Symbol() as InjectionKey&lt;string&gt;
-provide(key, ‘foo’) // 문자열이 아닌 값을 제공하면 에러가 발생합니다
-const foo = inject(key) // type of foo: string | undefined</p>
-<pre><code>
-- 여러 컴포넌트에서 가져올 수 있도록 injection key를 별도의 파일에 배치하는 것이 좋다. 
-- 문자열 injection key를 사용할 때 주입된 값의 타입은 unknown 이 되므로, 제너릭 타입 전달인자를 통해 명시적으로 선언해야 한다.
-</code></pre><p>const foo = inject&lt;string&gt;(‘foo’) // type: string | undefined</p>
-<pre><code>
-- 주입된 값은 여전히 undefined 일 수 있습니다. provider가 런타임에 이 값을 제공할 것이라는 보장이 없기 때문입니다. 
-  undefined 타입은 기본값을 제공하여 제거할 수 있습니다:
-</code></pre><p>const foo = inject&lt;string&gt;(‘foo’, ‘bar’) // type: string</p>
-<pre><code>
-- 값이 항상 제공된다고 확신하는 경우 값을 강제로 캐스팅할 수도 있습니다.</code></pre><p>const foo = inject(‘foo’) as string</p>
-<pre><code>
+<pre><code>import { provide, inject } from &#39;vue&#39;
+import type { InjectionKey } from &#39;vue&#39;
 
--------------
-
-
-
-9. 템플릿 Refs 에 타입 지정하기
-- 템플릿 refs는 명시적인 제네릭 타입 전달인자와 초기 값 null 로 생성되어야 합니다:
-- 타입 안전을 위해 el.value 에 접근할 때 옵셔널 체이닝 또는 타입 가드를 사용해야 한다. 
-- 이는 컴포넌트가 마운트될 때까지 초기 ref 값이 null 이고 참조된 ref 가 v-if 에 의해 마운트 해제된 경우에도 null 로 설정될 수 있기 때문.
-</code></pre><p>&lt;script setup lang=&quot;ts&quot;&gt;
+const key = Symbol() as InjectionKey&lt;string&gt;
+provide(key, &#39;foo&#39;) // 문자열이 아닌 값을 제공하면 에러가 발생합니다
+const foo = inject(key) // type of foo: string | undefined</code></pre><ul>
+<li>여러 컴포넌트에서 가져올 수 있도록 injection key를 별도의 파일에 배치하는 것이 좋다. </li>
+<li>문자열 injection key를 사용할 때 주입된 값의 타입은 unknown 이 되므로, 제너릭 타입 전달인자를 통해 명시적으로 선언해야 한다.</li>
+</ul>
+<pre><code>const foo = inject&lt;string&gt;(&#39;foo&#39;) // type: string | undefined</code></pre><ul>
+<li>주입된 값은 여전히 undefined 일 수 있습니다. provider가 런타임에 이 값을 제공할 것이라는 보장이 없기 때문입니다. 
+undefined 타입은 기본값을 제공하여 제거할 수 있습니다:</li>
+</ul>
+<pre><code>const foo = inject&lt;string&gt;(&#39;foo&#39;, &#39;bar&#39;) // type: string</code></pre><ul>
+<li>값이 항상 제공된다고 확신하는 경우 값을 강제로 캐스팅할 수도 있습니다.</li>
+</ul>
+<pre><code>const foo = inject(&#39;foo&#39;) as string</code></pre><hr>
+<ol start="9">
+<li>템플릿 Refs 에 타입 지정하기</li>
+</ol>
+<ul>
+<li>템플릿 refs는 명시적인 제네릭 타입 전달인자와 초기 값 null 로 생성되어야 합니다:</li>
+<li>타입 안전을 위해 el.value 에 접근할 때 옵셔널 체이닝 또는 타입 가드를 사용해야 한다. </li>
+<li>이는 컴포넌트가 마운트될 때까지 초기 ref 값이 null 이고 참조된 ref 가 v-if 에 의해 마운트 해제된 경우에도 null 로 설정될 수 있기 때문.</li>
+</ul>
+<pre><code>&lt;script setup lang=&quot;ts&quot;&gt;
 import { ref, onMounted } from &#39;vue&#39;
 
 const el = ref&lt;HTMLInputElement | null&gt;(null)
@@ -3189,15 +3187,9 @@ onMounted(() =&gt; {
 })
 &lt;/script&gt;
 
-</p>
-<p>&lt;template&gt;
+&lt;template&gt;
   &lt;input ref=&quot;el&quot; /&gt;
-&lt;/template&gt;
-```
-
-
-</p>
-<hr>
+&lt;/template&gt;</code></pre><hr>
 <ol start="10">
 <li>컴포넌트 템플릿 Template Refs 에 타입 지정</li>
 </ol>
@@ -3268,9 +3260,9 @@ defineEmits([&#39;update:title&#39;])
 <li>Form 양식 입력 바인딩에 대해 배울 때 v-model에 .trim, .number 및 .lazy와 같은 내장 수정자가 있다</li>
 <li>v-model 컴포넌트에 추가되는 수정자는 modelModifiers 프로퍼티를 통해 컴포넌트에 제공</li>
 <li>컴포넌트의 modelModifiers 프로퍼티에 capitalize 가 포함되어 있고 그 값은 v-model 바인딩 
-v-model.capitalize=”myText”에 설정되어 있기 때문에 true 인 것을 알 수 있다.<pre><code>&lt;MyComponent v-model.capitalize=&quot;myText&quot; /&gt;</code></pre></li>
+v-model.capitalize=”myText”에 설정되어 있기 때문에 true 인 것을 알 수 있다.</li>
 </ul>
-<pre><code>&lt;script setup&gt;
+<pre><code>&lt;MyComponent v-model.capitalize=&quot;myText&quot; /&gt;</code></pre><pre><code>&lt;script setup&gt;
 const props = defineProps({
   modelValue: String,
   modelModifiers: { default: () =&gt; ({}) }
