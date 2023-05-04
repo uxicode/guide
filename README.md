@@ -3607,14 +3607,14 @@ const foo = inject(key) // type of foo: string | undefined
 const foo = inject<string>('foo') // type: string | undefined
 ```
 
-- 주입된 값은 여전히 undefined 일 수 있습니다. provider가 런타임에 이 값을 제공할 것이라는 보장이 없기 때문입니다. 
-  undefined 타입은 기본값을 제공하여 제거할 수 있습니다:
+- 주입된 값은 여전히 undefined 일 수 있습니다. provider가 런타임에 이 값을 제공할 것이라는 보장이 없기 때문. 
+  undefined 타입은 기본값을 제공하여 제거할 수 있다:
 
 ```
 const foo = inject<string>('foo', 'bar') // type: string
 ```
 
-- 값이 항상 제공된다고 확신하는 경우 값을 강제로 캐스팅할 수도 있습니다.
+- 값이 항상 제공된다고 확신하는 경우 값을 강제로 캐스팅할 수도 있다.
 
 ```
 const foo = inject('foo') as string
@@ -3652,8 +3652,8 @@ onMounted(() => {
 
 
 10. 컴포넌트 템플릿 Template Refs 에 타입 지정
-- 때로는 public 메서드를 호출하기 위해 자식 컴포넌트에 대한 템플릿 ref에 어노테이션이 필요 할 수 있습니다. 
-- 예를 들어, 모달을 여는 메서드가 있는 MyModal 자식 컴포넌트가 있습니다:
+- 때로는 public 메서드를 호출하기 위해 자식 컴포넌트에 대한 템플릿 ref에 어노테이션이 필요 할 수 있다. 
+- 예를 들어, 모달을 여는 메서드가 있는 MyModal 자식 컴포넌트가 있다:
 
 ```
 <!-- MyModal.vue -->
@@ -3670,7 +3670,7 @@ defineExpose({
 ```
 
 - MyModal 의 인스턴스 타입을 얻으려면 먼저 `typeof` 를 통해 타입을 가져온 다음 타입스크립트의 내장 
-- `InstanceType` 유틸리티를 사용하여 인스턴스 타입을 추출해야 합니다.
+- `InstanceType` 유틸리티를 사용하여 인스턴스 타입을 추출해야 한다.
 
 ```
 <!-- App.vue -->
