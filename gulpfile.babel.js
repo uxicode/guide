@@ -136,7 +136,6 @@ const JS_CODE=`<script>
         });
         
         function activeMenus(idx){
-            console.log( idx  )
             if( oldScrollNum===idx ){ return; }
             scrollSpyBtnItems.eq(idx).addClass('active').siblings().removeClass('active');
             oldScrollNum=idx;
