@@ -1496,8 +1496,24 @@ type Partial&lt;T&gt; = {
 
 //사용하기 위해선 아래와 같이
 type PersonPartial = Partial&lt;Person&gt;;
-type ReadonlyPerson = Readonly&lt;Person&gt;;</code></pre><hr>
-<h3 id="객체-순회-노하우">객체 순회 노하우</h3>
+type ReadonlyPerson = Readonly&lt;Person&gt;;</code></pre><pre><code>interface Options{
+   width:number;
+   height: number;
+   color: string;
+   label: string;
+}
+interace OptionsUpate{
+   width? :number;
+   height?: number;
+   color?: string;
+   label?: string;
+}
+
+
+// --&gt; 매핑된 타입과 keyof 를 사용하면 Options 으로부터 OptionsUpdate 를 만들 수 있다.
+type OptionsUpate = { [K in keyof Options]? : Options[K];  
+</code></pre><hr>
+<h3 id="객체-순회-노하우"><strong>객체 순회 노하우</strong></h3>
 <pre><code>
 const obj={
   one: &#39;uno&#39;,

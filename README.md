@@ -1638,6 +1638,7 @@ let value: Dictionary<number>['foo']; // 오류, 프로퍼티 'foo'는 타입 'D
 let value: Dictionary<number>[42]; // 숫자
 ```
 
+
 ------------
 
 
@@ -1658,11 +1659,34 @@ type PersonPartial = Partial<Person>;
 type ReadonlyPerson = Readonly<Person>;
 ```
 
+
+
+
+```
+interface Options{
+   width:number;
+   height: number;
+   color: string;
+   label: string;
+}
+interace OptionsUpate{
+   width? :number;
+   height?: number;
+   color?: string;
+   label?: string;
+}
+
+
+// --> 매핑된 타입과 keyof 를 사용하면 Options 으로부터 OptionsUpdate 를 만들 수 있다.
+type OptionsUpate = { [K in keyof Options]? : Options[K];  
+
+```
+
 ------------
 
 
-### 객체 순회 노하우
-
+### **객체 순회 노하우**
+  
 ```
 
 const obj={
@@ -1682,6 +1706,9 @@ for(k in obj){
   const v=obj[k];
 }
 ```
+
+
+
 
 
 ```
