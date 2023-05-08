@@ -6,6 +6,7 @@ ex) 1.7.2 -> Major.Minor.Maintenance(or Build) 을 의미
 - Major Version : 1로 시작해서 전체를 뒤엎을 정도의 큰 변화가 발생했을 때 이 수치를 올린다.
 - Minor Version : 0으로 시작해서 없던 기능의 추가나 기존 기능의 수정 등의 변화가 발생했을때 이 수치를 올린다.
 - Build or Maintenance Version : 자잘한 버그나 내부적 코드 보완 등의 변화가 발생했을때 이 수치를 올린다.
+- 3번째 자리가 10이 될때 2번째 자리수가 1 이 된다.
 
 ------------------
 ## 1. HTML
@@ -1658,6 +1659,59 @@ type ReadonlyPerson = Readonly<Person>;
 ```
 
 ------------
+
+
+### 객체 순회 노하우
+
+```
+
+const obj={
+  one: 'uno',
+  two: 'dos',
+  three: 'tres'
+}
+let k: keyof typeof obj;
+for(k in obj){
+  const v=obj[k];
+  // ~~~~~~~~~~~에러 :  obj 에 인덱스 시그니처가 없기 때문에 엘리먼트는 암시적으로 'any' 타입입니다.
+}
+
+// k 타입을 구체적으로 명시하면 된다.
+let k: keyof typeof obj;
+for(k in obj){
+  const v=obj[k];
+}
+```
+
+
+```
+interface ABC{
+  a: string;
+  b: string;
+  c: string;
+}
+
+function foo(abc: ABC){
+   for(const k in abc){
+      const v=abc[k];
+      // ~~~~~~~~~~~~~~ 'ABC' 타입에 인덱스 시그니처가 없기 때문에 엘리먼트는 암시적으로 'any'가 됩니다.
+   }
+}
+// const x={ a:'a', b: 'b', c:2, d: new Date()} 
+// foo(x); // 정상 처리 됨.
+// foo 함수는 a,b,c 속성 외에 d 를 가지는 x 객체로 호출이 가능하다. 즉 foo 함수는 ABC 타입에 할당 가능한 어떠한 값이든 매개변수로 허용하기 때문
+
+-> 다음과 같이 수정
+function foo(abc: ABC){
+   for(const [k, v] in Object.entries(abc)){
+      // k => string 타입 
+      // v => any 타입 
+      const v=abc[k];
+   }
+}
+```
+------------
+
 
 
 ### **type 별칭 및 interface 사용 구분** 

@@ -75,6 +75,7 @@
 <li>Major Version : 1로 시작해서 전체를 뒤엎을 정도의 큰 변화가 발생했을 때 이 수치를 올린다.</li>
 <li>Minor Version : 0으로 시작해서 없던 기능의 추가나 기존 기능의 수정 등의 변화가 발생했을때 이 수치를 올린다.</li>
 <li>Build or Maintenance Version : 자잘한 버그나 내부적 코드 보완 등의 변화가 발생했을때 이 수치를 올린다.</li>
+<li>3번째 자리가 10이 될때 2번째 자리수가 1 이 된다.</li>
 </ul>
 <hr>
 <h2 id="1-html">1. HTML</h2>
@@ -1496,6 +1497,47 @@ type Partial&lt;T&gt; = {
 //사용하기 위해선 아래와 같이
 type PersonPartial = Partial&lt;Person&gt;;
 type ReadonlyPerson = Readonly&lt;Person&gt;;</code></pre><hr>
+<h3 id="객체-순회-노하우">객체 순회 노하우</h3>
+<pre><code>
+const obj={
+  one: &#39;uno&#39;,
+  two: &#39;dos&#39;,
+  three: &#39;tres&#39;
+}
+let k: keyof typeof obj;
+for(k in obj){
+  const v=obj[k];
+  // ~~~~~~~~~~~에러 :  obj 에 인덱스 시그니처가 없기 때문에 엘리먼트는 암시적으로 &#39;any&#39; 타입입니다.
+}
+
+// k 타입을 구체적으로 명시하면 된다.
+let k: keyof typeof obj;
+for(k in obj){
+  const v=obj[k];
+}</code></pre><pre><code>interface ABC{
+  a: string;
+  b: string;
+  c: string;
+}
+
+function foo(abc: ABC){
+   for(const k in abc){
+      const v=abc[k];
+      // ~~~~~~~~~~~~~~ &#39;ABC&#39; 타입에 인덱스 시그니처가 없기 때문에 엘리먼트는 암시적으로 &#39;any&#39;가 됩니다.
+   }
+}
+// const x={ a:&#39;a&#39;, b: &#39;b&#39;, c:2, d: new Date()} 
+// foo(x); // 정상 처리 됨.
+// foo 함수는 a,b,c 속성 외에 d 를 가지는 x 객체로 호출이 가능하다. 즉 foo 함수는 ABC 타입에 할당 가능한 어떠한 값이든 매개변수로 허용하기 때문
+
+-&gt; 다음과 같이 수정
+function foo(abc: ABC){
+   for(const [k, v] in Object.entries(abc)){
+      // k =&gt; string 타입 
+      // v =&gt; any 타입 
+      const v=abc[k];
+   }
+}</code></pre><hr>
 <h3 id="type-별칭-및-interface-사용-구분"><strong>type 별칭 및 interface 사용 구분</strong></h3>
 <p>-Use an interface instead of a type literal.
 타입은 리터럴 타입에서만 사용하고 Object 형태의 타입은 인터페이스를 쓰라는 소리다.
@@ -3306,7 +3348,7 @@ function emitValue(e) {
         $('table a').attr('target', '_blank');
         let i=0;
         let titleVer=$('h1');
-        let replaceTitle=titleVer.text()+'( ver 1.7.6 )';
+        let replaceTitle=titleVer.text()+'( ver 1.7.7 )';
         
         titleVer.text(replaceTitle);
         
