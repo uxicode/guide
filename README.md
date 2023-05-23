@@ -2428,6 +2428,7 @@ npm install --save-dev @babel/register @babel/core @babel/preset-env
 
 ```git fsck```
 - Git 저장소의 오브젝트를 검사하여 손상된 파일이나 누락된 파일을 확인하는데 도움
+
 -----------------------
 
 #### 12-3. branch
