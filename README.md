@@ -1777,6 +1777,31 @@ let { a, b }: { a: string, b: number } = o;
 ------------
 
 
+### **값의 형태에 해당하는 타입을 정의하고 싶을때**
+
+```
+const INIT_OPTIONS={
+   width: 640,
+   height: 480,
+   color: '#00FF00',
+   label: 'VGA'
+}
+
+interface Options{
+   width: number;
+   height: number;
+   color: string;
+   label: string;
+}
+
+// 이런 경우 typeof 를 사용하면 된다.
+type Options = types INIT_OPTIONS;
+```
+
+
+------------
+
+
 ### **타입스크립트에서 유용한 유틸** 
 
 #### **Omit<T,K>**
@@ -2398,6 +2423,11 @@ npm install --save-dev @babel/register @babel/core @babel/preset-env
 ```git blame -w test.txt```
 - 공백 변경을 무시
 
+```git gc``` 
+- 저장소에 필요없는 파일을 삭제하고 남은 파일을 압축하는 “Garbage Collection” 명령이다. 직접 실행시켜도 되지만 Git이 자동으로 실행해준다.
+
+```git fsck```
+- Git 저장소의 오브젝트를 검사하여 손상된 파일이나 누락된 파일을 확인하는데 도움
 -----------------------
 
 #### 12-3. branch
