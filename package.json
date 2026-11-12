@@ -1,55 +1,33 @@
 {
   "name": "v6.1",
-  "version": "1.0.0",
+  "version": "1.7.7",
+  "private": true,
   "description": "문서 정의",
-  "main": "gulpfile.babel.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.13.12",
-    "@babel/register": "^7.5.5",
-    "browser-sync": "^2.26.14",
-    "del": "^5.1.0",
-    "fibers": "^4.0.1",
-    "gh-pages": "^4.0.0",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-babel": "^8.0.0",
-    "gulp-cheerio": "^0.6.3",
-    "gulp-clean-css": "^4.2.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-imagemin": "^6.1.1",
-    "gulp-inject": "^5.0.4",
-    "gulp-markdown": "^5.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-sort": "^2.0.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-uglify": "^3.0.2",
-    "gulp-watch": "^5.0.1",
-    "lodash": "^4.17.21",
-    "pygmentize-bundled": "^2.3.0",
-    "stream-series": "^0.1.1"
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc"
   },
   "author": "",
   "license": "ISC",
   "homepage": "https://uxicode.github.io/guide",
-  "dependencies": {
-    "array-uniq": "^1.0.3",
-    "email-addresses": "^3.1.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/uxicode/guide.git"
   },
   "bugs": {
     "url": "https://github.com/uxicode/guide/issues"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "marked": "^18.2.0",
+    "marked-gfm-heading-id": "^4.1.4",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
   }
 }

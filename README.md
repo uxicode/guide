@@ -1,39 +1,49 @@
 # Coding 컨벤션
 
 ## 버전 표기 설명
+
+버전은 Major.Minor.Patch 형태로 구성됩니다.  
 ex) 1.7.2 -> Major.Minor.Maintenance(or Build) 을 의미
 
-- Major Version : 1로 시작해서 전체를 뒤엎을 정도의 큰 변화가 발생했을 때 이 수치를 올린다.
-- Minor Version : 0으로 시작해서 없던 기능의 추가나 기존 기능의 수정 등의 변화가 발생했을때 이 수치를 올린다.
-- Build or Maintenance Version : 자잘한 버그나 내부적 코드 보완 등의 변화가 발생했을때 이 수치를 올린다.
-- 3번째 자리가 10이 될때 2번째 자리수가 1 이 된다.
+- Major: 전체 구조나 기능에 큰 변화가 있을 때 증가
+- Minor: 기능 추가나 수정이 있을 때 증가
+- Patch: 버그 수정이나 코드 보완 시 증가
+
+참고: Patch가 10이 되면 Minor가 1 증가합니다.
 
 ------------------
+
 ## 1. HTML
 
 ### 1-1. Syntax
+
 - 들여쓰기는 2개의 공백 문자(소프트탭)을 사용. 다른 규칙으로 통일하여 작성해도 된다.
 - 모든 엘리먼트 명과 애트리뷰트 명은 케밥 표기법(kebab-case)으로 작성.
 - 모든 애트리뷰트 값은 큰 따옴표(")로 감싸기.
 - 주석 `<!--  --->` 처럼 기본 표기 하고 
-> note : 수정사항 등을 기재하기 위한 주석 ( 주석에 년도날짜 / 수정내용 표기는 반드시 해야 한다 )
+  > note : 수정사항 등을 기재하기 위한 주석 ( 주석에 년도날짜 / 수정내용 표기는 반드시 해야 한다 )
+
 ```
 <!-- start: 20200330 수정 및 추가 --> 
 <div> ......중략....... </div>
 <!-- end : 20200330 수정 및 추가 --> 
-``` 
+```
+
 혹은  
-``` 
+
+```
 <!-- 20200330 수정 및 추가 -->
 <div> ......중략....... </div> 
 <!-- // 20200330 수정 및 추가 -->
- ```
+```
 
 ### 1-2. Doctype
+
 - Doctype 은 HTML5 DTD 로 선언.
-`<!DOCTYPE html>`  html5 로 지정 
+`<!DOCTYPE html>`  html5 로 지정
 
 이어서 자기 마침 태그(Self-Closing Tags)에 후행 슬래시(/)를 사용금지.
+
 ```
 <!-- Bad -->
 <input />
@@ -45,7 +55,8 @@ ex) 1.7.2 -> Major.Minor.Maintenance(or Build) 을 의미
 ```
 
 ### 1-3. Metadata
-```<head>```  엘리먼트의 자식 엘리먼트는 아래의 순서대로 작성.
+
+`<head>`  엘리먼트의 자식 엘리먼트는 아래의 순서대로 작성.
 
 1. Charset
 2. X-UA-Compatible
@@ -72,12 +83,14 @@ ex) 1.7.2 -> Major.Minor.Maintenance(or Build) 을 의미
 
 A. Charset
 문서의 언어셋은 UTF-8으로 선언. 
+
 ```
 <meta charset="utf-8">
 ```
 
 B. X-UA-Compatible
 PC용 웹사이트는 최신 버전의 IE로 렌더링하기 위해 문서모드를 Edge로 선언.
+
 ```
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 ```
@@ -97,11 +110,12 @@ C.Viewport
 
 위의 줌 레벨은 1이 원래크기이고, 0.5 라면 50% 축소를 뜻한다.
 
-
 ### 1-4. Elements
+
 a. 스타일 제어가 어려운 엘리먼트
-  자식 엘리먼트 태그가 한정적이거나(ex. ```<table>```) 스타일 제어에 한계를 가진 엘리먼트(ex. ```<select>```)가 컴포넌트의 루트 역할로 쓰일 땐 
-  나중에 발생할 유지보수를 고려해 ```<div>```나 ```<span>``` 엘리먼트로 감싸는 것을 추천.
+  자식 엘리먼트 태그가 한정적이거나(ex. `<table>`) 스타일 제어에 한계를 가진 엘리먼트(ex. `<select>`)가 컴포넌트의 루트 역할로 쓰일 땐 
+  나중에 발생할 유지보수를 고려해 `<div>`나 `<span>` 엘리먼트로 감싸는 것을 추천.
+
 ```
 <!-- Not Bad -->
 <table class="table"></table>
@@ -117,7 +131,9 @@ a. 스타일 제어가 어려운 엘리먼트
 ```
 
 b. 테이블 제목
-- ```<caption>``` 엘리먼트의 뷰를 숨길 때는 새로운 엘리먼트로 감싸서 숨긴다..  ```<caption>```을 바로 숨긴다면 브라우저에 따라 스타일이 깨질 수도 있다. 
+
+- `<caption>` 엘리먼트의 뷰를 숨길 때는 새로운 엘리먼트로 감싸서 숨긴다..  `<caption>`을 바로 숨긴다면 브라우저에 따라 스타일이 깨질 수도 있다.
+
 테이블의 제목이 필요없거나 이미 제공되었다면 생략. 컨텐츠를 중복 제공 X 
 
 ```
@@ -136,6 +152,7 @@ b. 테이블 제목
 
 c. 입력 필드
 회원가입 폼의 입력 필드처럼 너비, 높이가 유동적이라면 인라인 스타일로 제어. 이렇게 하면 불필요한 클래스 생성을 막을 수 있다.
+
 ```
 <!-- Bad -->
 <input type="text" class="input input--width-120">
@@ -147,11 +164,12 @@ c. 입력 필드
 ```
 
 ### 1-5. Attributes
+
 - 애트리뷰트는 변하지 않는 것부터 먼저 선언. 애트리뷰트의 순서가 비슷한 엘리먼트끼리 통일되므로 검색하기 좋다.
--  id는 하나의 페이지 안에서 이름이 유일해야하고, name 은 중복될 수 있다.  
-   따라서 따로따로 접근할 때는 id 값을 이용하고, 그룹으로 접근하고 할 때는  name 을 활용하는 식으로 편의성을 가질 수 있다. 
-   하지만 대체적으로 ajax 통신을 직접하지 않고 마크업 기준으로만 작업한다면 id만 쓰는 것을 추천. 다수 선택은 class 로 사용하길~~
-   (  name은 주로 form 요소로써 서버와 통신하는 목적으로 주 사용. )
+- id는 하나의 페이지 안에서 이름이 유일해야하고, name 은 중복될 수 있다.  
+따라서 따로따로 접근할 때는 id 값을 이용하고, 그룹으로 접근하고 할 때는  name 을 활용하는 식으로 편의성을 가질 수 있다. 
+하지만 대체적으로 ajax 통신을 직접하지 않고 마크업 기준으로만 작업한다면 id만 쓰는 것을 추천. 다수 선택은 class 로 사용하길~~
+(  name은 주로 form 요소로써 서버와 통신하는 목적으로 주 사용. )
 
 ```
 <input class="input" type="text" id="userId" name="userId" title="아이디" style="width:100px">
@@ -159,6 +177,7 @@ c. 입력 필드
 ```
 
 a. Boolean 애트리뷰트
+
 - HTML5에서는 Boolean 애트리뷰트를 선언하는 것 만으로도 true 값을 가진다. 필요하지 않다면 값을 작성 하지 않는게 좋다.
 
 ```
@@ -170,8 +189,10 @@ a. Boolean 애트리뷰트
 ```
 
 c. name 애트리뷰트
+
 - name 애트리뷰트 값은 비즈니스 로직을 작성하는 언어의 네이밍 규칙에 맞게 작성(캐멀케이스로 작성)하는 것을 권장.
 - name 이 없을시는 id 값을 캐멀케이스로 작성.
+
 ```
 <!-- camelCase -->
 <form class="form-group" id="myForm" name="myForm">
@@ -180,8 +201,9 @@ c. name 애트리뷰트
 ```
 
 ### 1-6. Import
+
 - HTML5 에서 CSS 와 JS 파일을 불러올 때 type 애트리뷰트는 이미 기본값을 가진다. 필요하지 않다면 선언 X.
-`<script> `엘리먼트는 가급적 `<head>` 또는 `<body>` 엘리먼트의 가장 마지막에 작성. 
+`<script>` 엘리먼트는 가급적 `<head>` 또는 `<body>` 엘리먼트의 가장 마지막에 작성. 
 ( 웹브라우저는 `<script>` 엘리먼트를 만나면 처리가 끝날 때까지 HTML 파싱을 멈춘다. )
 
 ```
@@ -195,7 +217,6 @@ c. name 애트리뷰트
     // Javascript code
 </script>
 ```
-
 
 - `<head></head>`태그 내에 로드 순서 지키기( CSS 태그를 자바스크립트 태그 앞에 두기 )
 - 자바스크립트 전에 CSS 태그를 두면 브라우저의 렌더링 속도를 높이는 병렬 다운로드가 가능해 진다.
@@ -215,11 +236,13 @@ c. name 애트리뷰트
 ## 2. CSS
 
 > note: CSS 코드의 작성 및 규칙사항
+>
 > - CSS 파일을 압축하고, 최종 파일에서 주석, 공백, 줄바꿈을 제거한다. ( 유지 보수 및 수정 사항 전달 등에 있어서 주석 처리 예외 )
 > - CSS 파일을 압축하면 클라이언트에게 더 적은 데이터를 전송하게 되며, 콘텐츠가 더 빨리 로드. 
 > - CSS 파일을 압축하는 것은 중요한 이유는 대역폭과 리소스 사용을 줄이고자 하는 모든 부분에 있어서 도움이 된다.
 
 ### preload
+
 - preload 를 통해 브라우저가 페이지의 콘텐츠를 보여지기 전에 CSS 파일을 로드할 수 있다.
 - rel 속성의 값을 preload 로 주고, as="style" 를 `<link>` 태그에 넣는다.
 - 참고 URL : [리소스 우선순위 지정](https://developers.google.com/web/fundamentals/performance/resource-prioritization?hl=ko)
@@ -228,9 +251,8 @@ c. name 애트리뷰트
 <link rel="preload" href="style.min.css" as="style" onload="this.rel='stylesheet'">
 ```
 
-
-
 ### 2-1. Syntax
+
 - Lint 의 사용을 권장!
 - css class 이름은 케밥 표기법 ( kebab-case )으로 작성. 알파벳(대소문자)로 시작하되 숫자/특수문자로 시작하여선 안된다.
 - css id 는 캐멀 케이스 ( Camel case )방식으로 이름을 명기한다.
@@ -241,6 +263,7 @@ c. name 애트리뷰트
 - 사용되지 않는 CSS 선택자는 제거
 
 ### 2-2. Charset
+
 - 문서의 언어셋은 UTF-8으로 최상위에 선언. 
 - 언어셋이 정해진 번들링 파일이라면 선언하지 않는다.
 
@@ -249,11 +272,12 @@ c. name 애트리뷰트
 ```
 
 ### 2-3. Selectors
+
 - 태그이름과 선택자는 가급적 중첩하지 않는다. 
 - Indentation Depth 는 3 Depth 까지, 가급적 1 Depth 만을 사용하는 것을 권장한다.
 
-
 ### 2-4. z-index
+
 - z-index 스택을 0부터 규칙 없이 쌓는다면 순서가 꼬인다. 엘리먼트의 특성에 맞게 계층을 분리하여 체계적으로 관리하는 것이 좋은 방법.
 - CSS 전처리기의 믹스인을 활용한다면 간편하게 작성할 수 있다.
 
@@ -270,11 +294,11 @@ c. name 애트리뷰트
 }
 ```
 
-
 ### 2-5. Import
+
 CSS 의 기본 문법인 @import 는 성능 문제를 가지고 있다. 사용 X.
 
-- 여러개의 ```<link>``` 엘리먼트로 작성하기
+- 여러개의 `<link>` 엘리먼트로 작성하기
 - 하나의 CSS 파일로 작성하기
   - CSS 전처리기의 @import 문법을 사용하기
   - 번들러 등의 도구를 이용하여 하나의 CSS 파일로 병합하기
@@ -297,6 +321,7 @@ CSS 의 기본 문법인 @import 는 성능 문제를 가지고 있다. 사용 X
 ```
 
 ### 2-6. Media Query
+
 - 미디어 쿼리는 컴포넌트 단위로 분류하여 관련 규칙 바로 뒤에 작성.
 혹은 문서의 마지막에 모아서 작성.
 
@@ -321,8 +346,8 @@ CSS 의 기본 문법인 @import 는 성능 문제를 가지고 있다. 사용 X
 ```
 
 ### 2-7. Nesting(중첩)
-- 너무 많은 선택자의 중첩은 피해야 하므로, CSS 전처리기가 지원하는 Nesting 문법은 주의해서 사용해야 한다!
 
+- 너무 많은 선택자의 중첩은 피해야 하므로, CSS 전처리기가 지원하는 Nesting 문법은 주의해서 사용해야 한다!
 
 ```
 /* Bad */
@@ -339,14 +364,16 @@ CSS 의 기본 문법인 @import 는 성능 문제를 가지고 있다. 사용 X
 ```
 
 ### 2-8. Extend
+
 - CSS 전처리기가 지원하는 Extend 문법은  사용하지 X.  Mixin 으로 대체!
 
 ### 2-9. Reset
+
 - 초기화 스타일은 서비스에 맞게 정의. 만약 normalize.css 또는 Bootstrap 등의 프레임워크를 사용한다면 초기화를 생략.
 
 ### 2-10. Vendor Prefix
-- 벤더 프리픽스 프로퍼티는 일반 프로퍼티보다 먼저 선언.
 
+- 벤더 프리픽스 프로퍼티는 일반 프로퍼티보다 먼저 선언.
 
 ```
 /* Bad */
@@ -361,31 +388,30 @@ CSS 의 기본 문법인 @import 는 성능 문제를 가지고 있다. 사용 X
 }
 ```
 
-
 ### 2-11. Naming
+
 - 접두사가 2개 이상 중복 시 기능적인 접두사가 맨 앞부분에 위치할 수 있도록 한다.
 - 단독사용 클래스는 지양하며 접두사를 조합한 형태로 작성한다.
 - on 클래스인 경우, 단일 특정요소에 상태변화 클래스를 적용한다면 접미사로서 적용한다.
 
-| ClassName	   |     | Description          |     |
-| :-----------------|-----|----------------------|-----|
-| wrap / cnt  |     | 일반 영역의 묶음 - ex) btn-cnt / btn-wrap  |     |
-| group  |     | 같은 엘리먼트 묶음 - ex) btn 3개를 묶는 경우 ```<div class="btn-group"><button class="btn">버튼</button><button class="btn">버튼</button><button class="btn">버튼</button></div>``` |     |
-| inner |     | 부모 wrapper 가 존재하며 자식 묶음이 단독으로 사이즈가 필요한 경우 |     |
-| img-cnt  |     | 이미지를 감싸는 경우 |     |
-| txt-cnt  |     | 텍스트를 감싸는 경우 |     |
-| m-tit |     | 메인페이지 타이틀(중) 텍스트 |     |
-| s-tit  |     | 메인페이지 타이틀(소) 텍스트 |     |
-| tit-sub   |     | 서브페이지 타이틀(대) 텍스트 |     |
-| m-tit-sub   |     | 서브페이지 타이틀(중) 텍스트 |     |
-| s-tit-sub   |     | 서브페이지 타이틀(소) 텍스트 |     |
-| tit  |     | 타이틀 텍스트 |     |
-| desc |     | 상세 내용 |     |
-| txt-date  |     | 날짜 |     |
-| btn-cnt |     | 버튼을 감싸는 경우 |     |
-| list-cnt |     | 리스트를 감싸는 경우(ul) |     |
-| tab |     | 탭 메뉴 |     |
-
+| ClassName  |     | Description                                                                                                                                                 |     |
+| :--------- | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| wrap / cnt |     | 일반 영역의 묶음 - ex) btn-cnt / btn-wrap                                                                                                                          |     |
+| group      |     | 같은 엘리먼트 묶음 - ex) btn 3개를 묶는 경우 `<div class="btn-group"><button class="btn">버튼</button><button class="btn">버튼</button><button class="btn">버튼</button></div>` |     |
+| inner      |     | 부모 wrapper 가 존재하며 자식 묶음이 단독으로 사이즈가 필요한 경우                                                                                                                   |     |
+| img-cnt    |     | 이미지를 감싸는 경우                                                                                                                                                 |     |
+| txt-cnt    |     | 텍스트를 감싸는 경우                                                                                                                                                 |     |
+| m-tit      |     | 메인페이지 타이틀(중) 텍스트                                                                                                                                            |     |
+| s-tit      |     | 메인페이지 타이틀(소) 텍스트                                                                                                                                            |     |
+| tit-sub    |     | 서브페이지 타이틀(대) 텍스트                                                                                                                                            |     |
+| m-tit-sub  |     | 서브페이지 타이틀(중) 텍스트                                                                                                                                            |     |
+| s-tit-sub  |     | 서브페이지 타이틀(소) 텍스트                                                                                                                                            |     |
+| tit        |     | 타이틀 텍스트                                                                                                                                                     |     |
+| desc       |     | 상세 내용                                                                                                                                                       |     |
+| txt-date   |     | 날짜                                                                                                                                                          |     |
+| btn-cnt    |     | 버튼을 감싸는 경우                                                                                                                                                  |     |
+| list-cnt   |     | 리스트를 감싸는 경우(ul)                                                                                                                                             |     |
+| tab        |     | 탭 메뉴                                                                                                                                                        |     |
 
 ### 2-12. 유용한 tip
 
@@ -397,27 +423,28 @@ html {
 }
 ```
 
-
 - `webkit-touch-callout` 는 아이폰에서만 적용된다. 롱프레스시 새로운탭에서 열기, 읽기목록 추가, 복사하기, 공유 등 하단에 나오는 ios 네이티브 메뉴바 설정. none 으로 할 때 나오지 않게 됨.
-- `webkit-user-select ` 는 모바일웹에서 엘리먼트 드래그 방지용. 특히 텍스트 같은 경우 드래그 해서 선택 방지시에 많이 사용.
+- `webkit-user-select`  는 모바일웹에서 엘리먼트 드래그 방지용. 특히 텍스트 같은 경우 드래그 해서 선택 방지시에 많이 사용.
 - `webkit-tap-highlight-color` 는 롱프레스시에 해당 엘리먼트가 파랗게 선택되어 보여지는 것을 방지.
-
 
 -------
 
 ## 3. SCSS
+
 > note :
+>
 > - 중첩( Nesting )은 웬만하면 4depth 이하로 작성.
 > - import : 공통 파일을 기능 별로 나누어 _(언더스코어) 붙여서 분할된 파일( partial ) 로 구성한다. ( 컴파일시엔 merge 되어 파일 하나로 볼 수 있다. )
 > - extend : 되도록이면 mixin 으로 사용하는 게 좋다.
 > - 함수 : 자주 사용하는 계산 값에 대해 사용.
 
 1. 기능 별 분리
+
 - _component.scss 의 경우 공통 컴포넌트의 집합체이기에 많은 수의 컴포넌트가 존재한다.
 기능 별로 분리할 필요가 있다. 대표적으로 _variable(공통 변수), _button, _input, _form
 
-
 ### 3-1. Variables (변수)
+
 - sass에서 변수라는 기능을 제공하는 이유는 재사용성을 위함이다. 변수로 등록된 스타일은 쉽게 다른 코드에서 사용할 수 있기 때문이다.
 
 ```
@@ -430,6 +457,7 @@ html {
         font : 100% &font-stack;
         color: $primary-color;
     }
+```
 
 ```
 
@@ -447,8 +475,9 @@ html {
 - 믹스 인을 통해서, 사이트 전체에서 재사용할 CSS declarations를 만들 수 있다. 또한, 값들을 믹스인을 통해서 집어 넣을 수 있으며(파라미터), 이를 통해서 좀더 유연하고 동적인 CSS 구조를 만들 수 있다.
 
 ```
+
 /* _mixin.scss */
-    @mixin transform($property) {		      
+    @mixin transform($property) {		  
         -webkit-transform: $property;
         -ms-transform: $property;
         transform: $property;
@@ -456,11 +485,13 @@ html {
 
 /* _ex.scss */
     .box { @include transform(rotate(30deg)); } 
+
 ```
 
 ```
+
 /* _mixin.scss */
-    @mixin columnWidth( $selector ){          
+    @mixin columnWidth( $selector ){  
         &[data-column="2"]{
             #{$selector}{width:50%;}
         }
@@ -470,19 +501,22 @@ html {
     }
 
 /* _button.scss */
-    .btn-group[data-column]{			     
+    .btn-group[data-column]{			  
           width:100%;
           display: flex;
           flex-wrap: wrap;
           @include columnWidth('.btn');
-    
-         &[data-column="2"]{
-            @include rowChild( 2, '.btn');
-          }
-         &[data-column="3"]{
-           @include rowChild( 3, '.btn');
-         }
+
+```
+     &[data-column="2"]{
+        @include rowChild( 2, '.btn');
+      }
+     &[data-column="3"]{
+       @include rowChild( 3, '.btn');
      }
+ }
+```
+
 ```
 
 믹스인을 만들기 위해 해야 되는 절차는 다음과 같다.
@@ -550,10 +584,6 @@ $max-width: 980px;
   }
 }
 
-
-
-
-
 // Compiled to:
 
 .box_group {
@@ -601,7 +631,8 @@ div {
 
 ```
 
-<!-- bad -->
+
+
 @if ($support-legacy == true) {
   // …
 }
@@ -610,7 +641,7 @@ div {
 }
 
 
-<!-- good -->
+
 @if $support-legacy {
   // …
 } @else {
@@ -622,12 +653,14 @@ div {
 거짓 값을 테스트 하는 경우에 false, null 대신에 not 키워드를 사용 한다.
 ```
 
-<!-- bad -->
+
+
 @if index($list, $item) == null {
   // …
 }
 
-<!-- good -->
+
+
 @if not index($list, $item) {
   // …
 }
@@ -637,12 +670,14 @@ div {
 언제나 변수 부분을 조건문의 왼쪽에, 기대되는 (혹은 기대되지 않는) 결과를 오른쪽에 배치 한다.
 ```
 
-<!-- bad -->
+
+
 @if 42 == $value {
   // …
 }
 
-<!-- good -->
+
+
 @if $value == 42 {
   // …
 }
@@ -652,7 +687,8 @@ div {
 조건에 따라 다른 결과를 반환하는 함수 안에서 조건문을 사용할 때는, 반드시 함수가 조건문 블록 밖에서도 @return문을 갖도록 해야 한다.
 ```
 
-<!-- bad -->
+
+
 @function dummy($condition) {
   @if $condition {
     @return true;
@@ -661,7 +697,8 @@ div {
   }
 }
 
-<!-- good -->
+
+
 @function dummy($condition) {
   @if $condition {
     @return true;
@@ -678,6 +715,7 @@ div {
 - through를 사용하는 형식과 to를 사용하는 형식으로 나뉜다.
 
 ```
+
 // SCSS
 
 // through를 사용하는 경우(1부터 3번 이하 반복)
@@ -687,20 +725,18 @@ div {
   }
 }
 
-
-
 // Compiled to:
 
 .through:nth-child(1) { width: 20px; }
 .through:nth-child(2) { width: 40px; }
 .through:nth-child(3) { width: 60px; }
 
-
 ```
 
 
 
 ```
+
 // SCSS
 
 // to를 사용하는 경우(1부터 3번 미만, 2번 반복)
@@ -709,8 +745,6 @@ div {
     width : 20px * $i
   }
 }
-
-
 
 // Compiled to:
 
@@ -721,8 +755,8 @@ div {
 
 ex)
 ```
-// SCSS
 
+// SCSS
 
 $total:500;
 
@@ -737,8 +771,6 @@ $total:500;
   }
 }
 
-
-
 // Compiled to:
 
 .mgt-0 {
@@ -750,7 +782,6 @@ $total:500;
 }
 
 ......중략.......
-
 
 .mgt-500 {
   margin-top: 500px !important;
@@ -773,19 +804,19 @@ $total:500;
 
 #### 일관성을 유지
 ```
+
 /* Bad */
 const pages_count = 5
 const shouldUpdate = true
-
 
 /* Good */
 const pageCount = 5
 const shouldUpdate = true
 
-
 /* Good as well */
 const page_count = 5
 const should_update = true
+
 ```
 
 
@@ -796,16 +827,17 @@ const should_update = true
 * Descriptive( 설명 ). 이름은 가장 효율적인 방식으로 수행/소유하는 것을 반영해야 한다.
 
 ```
+
 /* Bad */
 const a = 5 // "a" could mean anything
 const isPaginatable = a > 10 // "Paginatable" sounds extremely unnatural
 const shouldPaginatize = a > 10 // Made up verbs are so much fun!
 
-
 /* Good */
 const postCount = 5
 const hasPagination = postCount > 10
 const shouldDisplayPagination = postCount > 10 // alternatively
+
 ```
 
 
@@ -816,11 +848,13 @@ const shouldDisplayPagination = postCount > 10 // alternatively
 
 
 ```
+
 /* Bad */
 const onItmClk = () => {}
 
 /* Good */
 const onItemClick = () => {}
+
 ```
 
 
@@ -829,6 +863,7 @@ const onItemClick = () => {}
 - 이름은 정의된 컨텍스트와 중복되어서는 안된다. 가독성이 떨어지지 않는다면 항상 이름에서 컨텍스트를 제거.
 
 ```
+
 class MenuItem {
   /* 메서드 이름이 컨텍스트("MenuItem")와 중복.*/
   handleMenuItemClick = (event) => { ... }
@@ -836,18 +871,21 @@ class MenuItem {
   /*  `MenuItem.handleClick()` 처럼 쓰는게 훨씬 좋아보인다. */
   handleClick = (event) => { ... }
 }
+
 ```
 
 #### **예상 결과 반영 (Reflect the expected result)**
 - 이름은 예상 결과를 반영해야 합니다.
 
 ```
+
 const isEnabled = itemCount > 3
-return <Button disabled={!isEnabled} />
+return 
 
 /* Good */
 const isDisabled = itemCount <= 3
-return <Button disabled={isDisabled} />
+return 
+
 ```
 /* Bad */
 
@@ -884,9 +922,11 @@ Take a look at how this pattern may be applied in the table below.
 데이터에 즉시 액세스 (즉, 내부 데이터의 약식 getter).
 
 ```
+
 function getFruitCount() {
   return this.fruits.length
 }
+
 ```
 
 
@@ -894,18 +934,21 @@ function getFruitCount() {
 - 값 A를 값 B로 사용하여 선언적 방식으로 변수를 설정한다.
 
 ```
+
 let fruits = 0
 function setFruits(nextFruits) {
   fruits = nextFruits
 }
 setFruits(5)
 console.log(fruits) // 5
+
 ```
 
 **reset**
 - 변수를 초기 값 또는 상태로 다시 설정한다.
 
 ```
+
 const initialFruits = 5
 let fruits = initialFruits
 setFruits(10)
@@ -917,6 +960,7 @@ function resetFruits() {
 
 resetFruits()
 console.log(fruits) // 5
+
 ```
 
 **fetch**
@@ -930,11 +974,13 @@ function fetchPosts(postCount) {
 예를 들어 검색 페이지에 선택된 필터 컬렉션이 있는 경우 컬렉션에서 필터 중 하나를 제거하는 것은 deleteFilter 가 아니라 removeFilter 이다.
 
 ```
+
 function removeFilter(filterName, filters) {
   return filters.filter((name) => name !== filterName)
 }
 const selectedFilters = ['price', 'availability', 'size']
 removeFilter('price', selectedFilters)
+
 ```
 
 
@@ -944,9 +990,11 @@ removeFilter('price', selectedFilters)
 없애고 싶은 게시물이 있을 때  "게시물 삭제" 버튼을 클릭시 메서드 네이밍 및 기능은 removePost 가 아닌 deletePost 작업을 수행해야 한다.
 
 ```
+
 function deletePost(id) {
   return database.find({ id }).delete()
 }
+
 ```
 
 
@@ -954,9 +1002,11 @@ function deletePost(id) {
 - 기존 데이터에서 새 데이터를 생성한다. 주로 문자열, 개체 또는 함수에 적용할 수 있다.
 
 ```
+
 function composePageUrl(pageName, pageId) {
   return `${pageName.toLowerCase()}-${pageId}`
 }
+
 ```
 
 
@@ -964,10 +1014,12 @@ function composePageUrl(pageName, pageId) {
 이벤트 handle 을 처리한다.  콜백 메서드의 이름을 지정할 때 자주 사용됩니다.
 
 ```
+
 function handleLinkClick() {
   console.log('Clicked a link!')
 }
 link.addEventListener('click', handleLinkClick)
+
 ```
 
 
@@ -979,6 +1031,7 @@ link.addEventListener('click', handleLinkClick)
 함수는 종종 무언가에 대한 작업이기에 작동 가능한 도메인이 무엇인지 또는 최소한 예상되는 데이터 유형을 명시하는 것이 중요.
 
 ```
+
 /* 프리미티브로써 작동하는 순수 함수 */
 function filter(predicate, list) {
   return list.filter(predicate)
@@ -988,6 +1041,7 @@ function filter(predicate, list) {
 function getRecentPosts(posts) {
   return filter(posts, (post) => post.date === Date.now())
 }
+
 ```
 
 일부 언어 특유적으로 컨텍스트를 생략할 수 있다. 예를 들어, JavaScript 에서는 필터가 Array 에서 작동하는 것이 일반적.
@@ -1002,6 +1056,7 @@ function getRecentPosts(posts) {
 - 현재 컨텍스트(일반적으로 boolean)의 특성 또는 상태를 설명.
 
 ```
+
 const color = 'blue'
 const isBlue = color === 'blue' // characteristic
 const isPresent = true // state
@@ -1009,27 +1064,32 @@ const isPresent = true // state
 if (isBlue && isPresent) {
   console.log('Blue is present!')
 }
+
 ```
 
 **has**
 - 현재 컨텍스트가 특정 값 또는 상태(보통 부울)를 소유하는지 여부를 설명.
 
 ```
+
 /* Bad */
 const isProductsExist = productsCount > 0
 const areProductsPresent = productsCount > 0
 
 /* Good */
 const hasProducts = productsCount > 0
+
 ```
 
 **should**
 - 특정 작업과 결합된 긍정적인 조건문(보통 부울)을 반영.
 
 ```
+
 function shouldUpdateUrl(url, expectedUrl) {
   return url !== expectedUrl
 }
+
 ```
 
 
@@ -1037,13 +1097,16 @@ function shouldUpdateUrl(url, expectedUrl) {
 - 최소값 또는 최대값을 나타낸다. 경계 또는 한계를 설명할 때 사용.
 
 ```
+
 /**
- * Renders a random amount of posts within
- * the given min/max boundaries.
+
+* Renders a random amount of posts within
+* the given min/max boundaries.
  */
 function renderPosts(posts, minPosts, maxPosts) {
   return posts.slice(0, randomBetween(minPosts, maxPosts))
 }
+
 ```
 
 **prev/next**
@@ -1051,6 +1114,7 @@ function renderPosts(posts, minPosts, maxPosts) {
 
 
 ```
+
 function fetchPosts() {
   const prevPosts = this.state.posts
 
@@ -1059,12 +1123,14 @@ function fetchPosts() {
 
   this.setState({ posts: nextPosts })
 }
+
 ```
 
 #### **단수 / 복수 ( Singular and Plurals )**
 - 접두사와 마찬가지로 변수 이름은 단일 값 또는 여러 값을 보유하는지 여부에 따라 단수 또는 복수로 만들 수 있다.
 
 ```
+
 /* Bad */
 const friends = 'Bob'
 const friend = ['Bob', 'Tony', 'Tanya']
@@ -1072,6 +1138,7 @@ const friend = ['Bob', 'Tony', 'Tanya']
 /* Good */
 const friend = 'Bob'
 const friends = ['Bob', 'Tony', 'Tanya']
+
 ```
 ----------
 
@@ -1105,11 +1172,11 @@ const friends = ['Bob', 'Tony', 'Tanya']
 ```let someValue: "a" | "b" | "c"```
 
 ```
+
 function padLeft(value: string, padding: string | number) {
   // ...
 }
 let indentedString = padLeft("Hello world", true);
-
 
 interface Bird {
   fly(): void;
@@ -1143,6 +1210,7 @@ pet.swim();
 예를 들어, 일관된 에러를 다루는 여러 네트워크 요청이 있다면 해당 에러 핸들링을 분리하여 하나의 응답 타입에 대응하는 결합된 자체 타입으로 만들 수 있다.
 
 ```
+
 interface ErrorHandling {
   success: boolean;
   error?: { message: string };
@@ -1170,6 +1238,7 @@ const handleArtistsResponse = (response: ArtistsResponse) => {
 
   console.log(response.artists);
 };
+
 ```
 
 ------------
@@ -1178,6 +1247,7 @@ const handleArtistsResponse = (response: ArtistsResponse) => {
 ### **교차를 통한 믹스인 (Mixins via Intersections)**
 
 ```
+
 class Person {
   constructor(public name: string) {}
 }
@@ -1211,6 +1281,7 @@ function extend<First extends {}, Second extends {}>(
 
 const jim = extend(new Person("Jim"), ConsoleLogger.prototype);
 jim.log(jim.name);
+
 ```
 
 ------------
@@ -1219,6 +1290,7 @@ jim.log(jim.name);
 ### **상속 (Inheritance)**
 
 ```
+
 class Animal {
     name: string;
     constructor(theName: string) { this.name = theName; }
@@ -1254,6 +1326,7 @@ tom.move(34);
 //Sammy the Python moved 5m.
 //Galloping...
 //Tommy the Palomino moved 34m.
+
 ```
 
 
@@ -1263,6 +1336,7 @@ tom.move(34);
 ### **기본적으로 공개 (Public by default)**
 
 ```
+
 class Animal {
     public name: string;
     public constructor(theName: string) { this.name = theName; }
@@ -1270,6 +1344,7 @@ class Animal {
         console.log(`${this.name} moved ${distanceInMeters}m.`);
     }
 }
+
 ```
 
 ------------
@@ -1278,6 +1353,7 @@ class Animal {
 ### **비공개( private )**
 
 ```
+
 class Animal {
     private name: string;
     constructor(theName: string) { this.name = theName; }
@@ -1298,6 +1374,7 @@ let employee = new Employee("Bob");
 
 animal = rhino;
 animal = employee; // 오류: 'Animal'과 'Employee'은 호환될 수 없음.
+
 ```
 
 ------------
@@ -1308,6 +1385,7 @@ animal = employee; // 오류: 'Animal'과 'Employee'은 호환될 수 없음.
 - 아래 소스에서 Person 클래스의  name 은 사용할 수 없지만, Employee 클래스에서는 Person 에서 파생되었기 때문에 Employee 의 인스턴스 메서드 내에서는 사용 가능.
 
 ```
+
 class Person {
     protected name: string;
     constructor(name: string) { this.name = name; }
@@ -1316,24 +1394,29 @@ class Person {
 class Employee extends Person {
     private department: string;
 
-    constructor(name: string, department: string) {
-        super(name);
-        this.department = department;
-    }
+```
+constructor(name: string, department: string) {
+    super(name);
+    this.department = department;
+}
 
-    public getElevatorPitch() {
-        return `Hello, my name is ${this.name} and I work in ${this.department}.`;
-    }
+public getElevatorPitch() {
+    return `Hello, my name is ${this.name} and I work in ${this.department}.`;
+}
+```
+
 }
 
 let howard = new Employee("Howard", "Sales");
 console.log(howard.getElevatorPitch());
 console.log(howard.name); // 오류
+
 ```
 
 생성자 또한 protected 로 표시될 수도 있다. 이는 클래스를 포함하는 클래스 외부에서 인스턴스화 할 수 없지만 확장 할 수 있음을 의미.
 
 ```
+
 class Person {
     protected name: string;
     protected constructor(theName: string) { this.name = theName; }
@@ -1343,18 +1426,22 @@ class Person {
 class Employee extends Person {
     private department: string;
 
-    constructor(name: string, department: string) {
-        super(name);
-        this.department = department;
-    }
+```
+constructor(name: string, department: string) {
+    super(name);
+    this.department = department;
+}
 
-    public getElevatorPitch() {
-        return `Hello, my name is ${this.name} and I work in ${this.department}.`;
-    }
+public getElevatorPitch() {
+    return `Hello, my name is ${this.name} and I work in ${this.department}.`;
+}
+```
+
 }
 
 let howard = new Employee("Howard", "Sales");
 let john = new Person("John"); // 오류: 'Person'의 생성자는 protected 이다.
+
 ```
 
 ------------
@@ -1366,6 +1453,7 @@ let john = new Person("John"); // 오류: 'Person'의 생성자는 protected 이
 읽기전용 프로퍼티들은 선언 또는 생성자에서 초기화해야 한다.
 
 ```
+
 class Octopus {
     readonly name: string;
     readonly numberOfLegs: number = 8;
@@ -1375,6 +1463,7 @@ class Octopus {
 }
 let dad = new Octopus("Man with the 8 strong legs");
 dad.name = "Man with the 3-piece suit"; // 오류! name은 읽기전용.
+
 ```
 
 ------------
@@ -1384,6 +1473,7 @@ dad.name = "Man with the 3-piece suit"; // 오류! name은 읽기전용.
 체의 멤버에 대한 접근을 가로채는 방식으로 getters/setters를 지원한다. 이를 통해 각 객체의 멤버에 접근하는 방법을 세밀하게 제어할 수 있다.
 
 ```
+
 const fullNameMaxLength = 10;
 
 class Employee {
@@ -1403,6 +1493,7 @@ employee.fullName = "Bob Smith";
 if (employee.fullName) {
     console.log(employee.fullName);
 }
+
 ```
 
 ------------
@@ -1415,6 +1506,7 @@ if (employee.fullName) {
 인스턴스 접근 앞에 this.를 붙이는 것과 비슷하게 여기선 전역 접근 앞에 Grid.를 붙인다.
 
 ```
+
 class Grid {
     static origin = {x: 0, y: 0};
     calculateDistanceFromOrigin(point: {x: number; y: number;}) {
@@ -1430,6 +1522,7 @@ let grid2 = new Grid(5.0);  // 5x scale
 
 console.log(grid1.calculateDistanceFromOrigin({x: 10, y: 10}));
 console.log(grid2.calculateDistanceFromOrigin({x: 10, y: 10}));
+
 ```
 
 ------------
@@ -1440,12 +1533,14 @@ console.log(grid2.calculateDistanceFromOrigin({x: 10, y: 10}));
 추상 클래스는 직접 인스턴스화할 수 없다. **추상 클래스는 인터페이스와 달리 멤버에 대한 구현 세부 정보를 포함할 수 있다**. 
 abstract 키워드는 추상 클래스뿐만 아니라 추상 클래스 내에서 추상 메서드를 정의하는데 사용된다.
 ```
+
 abstract class Animal {
     abstract makeSound(): void;
     move(): void {
         console.log("roaming the earth...");
     }
 }
+
 ```
 
 추상 클래스 내에서 추상으로 표시된 메서드는 구현을 포함하지 않으며 반드시 파생된 클래스에서 구현되어야 한다. 
@@ -1453,6 +1548,7 @@ abstract class Animal {
 그러나 **추상 메서드는 반드시 abstract 키워드를 포함해야 하며, 선택적으로 접근 지정자를 포함할 수 있다**.
 
 ```
+
 abstract class Department {
     constructor(public name: string) {
     }
@@ -1479,6 +1575,7 @@ department = new AccountingDepartment(); // 추상이 아닌 하위 클래스를
 department.printName();
 department.printMeeting();
 department.generateReports(); // 오류: 선언된 추상 타입에 메서드가 존재하지 않습니다
+
 ```
 
 ------------
@@ -1492,6 +1589,7 @@ TypeScript 는 숫자와 문자열-기반 열거형을 제공한다.
 - **숫자 열거형 (Numeric enums)**
 
 ```
+
 //원한다면, 전부 초기화 하지 않을 수도 있다:
 enum Direction {
     Up = 1,
@@ -1502,6 +1600,7 @@ enum Direction {
 //위 코드에서 Up이 1 로 초기화된 숫자 열거형을 선언. 
 //그 지점부터 뒤따르는 멤버들은 자동으로-증가된 값을 갖는다. 
 //즉 Direction.Up 은 1, Down 은 2, Left 는 3, Right 은 4 을 값으로 가진다.
+
 ```
 
 - **문자열 열거형 (String enums)**
@@ -1513,12 +1612,14 @@ enum Direction {
 반면 문자열 열거형을 이용하면 코드를 실행할 때, 열거형 멤버에 지정된 이름과는 무관하게 유의미하고 읽기 좋은 값을 이용하여 실행할 수 있다.
 
 ```
+
 enum Direction {
     Up = "UP",
     Down = "DOWN",
     Left = "LEFT",
     Right = "RIGHT",
 }
+
 ```
 
 > note: 기술적으로 열거형은 숫자와 문자를 섞어서 사용할 수 있지만 굳이 그렇게 할 이유는 없다.
@@ -1529,6 +1630,7 @@ enum Direction {
 ### **다형성 this 타입 (Polymorphic this types)**
 
 ```
+
 class BasicCalculator {
     public constructor(protected value: number = 0) { }
     public currentValue(): number {
@@ -1569,6 +1671,7 @@ let v = new ScientificCalculator(2)
         .currentValue();
 // this 타입 없이, ScientificCalculator는 BasicCalculator를 extend 할 수 없을 것이고 유연한 인터페이스를 유지하지 못한다. 
 // multiply는 sin 메서드를 가지지 않는 BasicCalculator를 반환한다. 하지만, this 타입으로, multiply는 this를 반환하고, 여기서는 ScientificCalculator 을 가르킨다.
+
 ```
 
 ------------
@@ -1579,19 +1682,22 @@ let v = new ScientificCalculator(2)
 일반적인 js 패턴 
 
 ```
+
 function pluck(o, propertyNames) {
     return propertyNames.map(n => o[n]);
 }
+
 ```
 TypeScript 에서 인덱스 타입 패턴
 - 인덱스 타입을 사용하면, 동적인 프로퍼티 이름을 사용하는 코드를 컴파일러가 검사할 수 있다.
 - 인덱스 타입 쿼리와 인덱스 접근 연산자를 사용해서 TypeScript 에서 이 함수를 어떻게 작성하고 사용하는지 보여준다:
 
- ```
+```
+
  function pluck<T, K extends keyof T>(o: T, propertyNames: K[]): T[K][] {
    return propertyNames.map(n => o[n]);
  }
- 
+
  interface Car {
      manufacturer: string;
      model: string;
@@ -1602,14 +1708,15 @@ TypeScript 에서 인덱스 타입 패턴
      model: 'Camry',
      year: 2014
  };
- 
+
  // Manufacturer과 model은 둘 다 문자열 타입.
  // 그래서 둘 다 타이핑된 문자열 배열로 끌어낼 수 있다.
  let makeAndModel: string[] = pluck(taxi, ['manufacturer', 'model']);
- 
+
  // 만약 model과 year를 끌어내려고 하면,
  // 유니언 타입의 배열: (string | number)[] 을 얻게 된다.
  let modelYear = pluck(taxi, ['model', 'year'])
+
 ```
 
 ------------
@@ -1621,21 +1728,23 @@ keyof 와 T[K] 가 인덱스 시그니처와 상호 작용한다. 인덱스 시�
 그리고 T[string]은 인덱스 시그니처의 타입이다.
 
 ```
-interface Dictionary<T> {
+
+interface Dictionary {
     [key: string]: T;
 }
-let keys: keyof Dictionary<number>; // string | number
-let value: Dictionary<number>['foo']; // number
+let keys: keyof Dictionary; // string | number
+let value: Dictionary['foo']; // number
 
 -------------------------------
 
 //숫자 인덱스 시그니처인 타입이 있으면, keyof T는 number일 것이다.
-interface Dictionary<T> {
+interface Dictionary {
     [key: number]: T;
 }
-let keys: keyof Dictionary<number>; // 숫자
-let value: Dictionary<number>['foo']; // 오류, 프로퍼티 'foo'는 타입 'Dictionary<number>'에 존재하지 않습니다.
-let value: Dictionary<number>[42]; // 숫자
+let keys: keyof Dictionary; // 숫자
+let value: Dictionary['foo']; // 오류, 프로퍼티 'foo'는 타입 'Dictionary'에 존재하지 않습니다.
+let value: Dictionary[42]; // 숫자
+
 ```
 
 
@@ -1646,23 +1755,25 @@ let value: Dictionary<number>[42]; // 숫자
 - 기존 타입을 가져와 선택적 프로퍼티로 만드는 것은 일반적인 작업.
 
 ```
-type Readonly<T> = {
+
+type Readonly = {
     readonly [P in keyof T]: T[P];
 }
-type Partial<T> = {
+type Partial = {
     [P in keyof T]?: T[P];
 }
 
-
 //사용하기 위해선 아래와 같이
-type PersonPartial = Partial<Person>;
-type ReadonlyPerson = Readonly<Person>;
-```
-
-
-
+type PersonPartial = Partial;
+type ReadonlyPerson = Readonly;
 
 ```
+
+
+
+
+```
+
 interface Options{
    width:number;
    height: number;
@@ -1675,7 +1786,6 @@ interace OptionsUpate{
    color?: string;
    label?: string;
 }
-
 
 // --> 매핑된 타입과 keyof 를 사용하면 Options 으로부터 OptionsUpdate 를 만들 수 있다.
 type OptionsUpate = { [K in keyof Options]? : Options[K];  
@@ -1705,13 +1815,15 @@ let k: keyof typeof obj;
 for(k in obj){
   const v=obj[k];
 }
-```
-
-
-
-
 
 ```
+
+
+
+
+
+```
+
 interface ABC{
   a: string;
   b: string;
@@ -1736,6 +1848,7 @@ function foo(abc: ABC){
       const v=abc[k];
    }
 }
+
 ```
 ------------
 
@@ -1747,6 +1860,7 @@ function foo(abc: ABC){
 type 별칭은 리터럴 타입의 값에만 사용하고, Object 형태의 타입을 잡아줄 때는 Interface 를 사용하면 고민없이 행복해진다.
 
 ```
+
 export type TSomeMemberTier = "Basic" | "Premium" | "Admin";
 
 export interface ISomeMember {
@@ -1755,16 +1869,19 @@ export interface ISomeMember {
   address: string;
   tier: TSomeMemberTier;
 }
+
 ```
 
 - Destructuring
 - 함수
 ```
+
 function f([first, second]: [number, number]) {
     console.log(first);
     console.log(second);
 }
 f([1, 2]);
+
 ```
 
 - 객체
@@ -1775,7 +1892,6 @@ let { a, b }: { a: string, b: number } = o;
 ```
 
 ------------
-
 
 ### **값의 형태에 해당하는 타입을 정의하고 싶을때**
 
@@ -1798,13 +1914,12 @@ interface Options{
 type Options = types INIT_OPTIONS;
 ```
 
-
 ------------
 
-
-### **타입스크립트에서 유용한 유틸** 
+### **타입스크립트에서 유용한 유틸**
 
 #### **Omit<T,K>**
+
 - T에서 모든 프로퍼티를 선택한 다음 K를 제거한 타입을 구성.
 
 ```
@@ -1823,9 +1938,10 @@ const todo: TodoPreview = {
 
 ---------------
 
-
 #### **Pick<T,K>**
+
 T에서 프로퍼티 K의 집합을 선택해 타입을 구성.
+
 ```
 // 예제 (Example)
 interface Todo {
@@ -1842,8 +1958,8 @@ const todo: TodoPreview = {
 
 ---------------
 
-
 #### **keyof**
+
 keyof 키워드는 타입 값에 존재하는 모든 프로퍼티의 키값을 union 형태로 리턴 받다.
 
 ```
@@ -1852,9 +1968,11 @@ interface Todo {
     text: string;
     due: Date;
 }
+```
 
 // TodoKeys의 타입 = "id" | "text" | "due"
 type TodoKeys = keyof Todo;
+
 ```
 
 ---------------
@@ -1866,6 +1984,7 @@ type TodoKeys = keyof Todo;
 Record<K, V>로 쓰인다. 여기서 K는 key 이고, V는 Value 다. 
 
 ```
+
 //예제 (Example)
 
 export type GlobalColors = 'Red' | 'Blue' | 'Green' | 'Black'
@@ -1902,6 +2021,7 @@ T의 모든 프로퍼티를 선택적으로 만드는 타입을 구성한다.
 이 유틸리티는 주어진 타입의 모든 하위 타입 집합을 나타내는 타입을 반환한다.
 
 ```
+
 예제 (Example)
 
 export type GlobalColors = 'Red' | 'Blue' | 'Green' | 'Black'
@@ -1916,7 +2036,7 @@ type ColorProperties = {
 }
 
 // 이거는
-let PartialColorProperties = Partial<ColorProperties>
+let PartialColorProperties = Partial
 // 이거와 같다.
 let PartialColorProperties = { red?: string, blue?: string, green?: string, black?: string }
 
@@ -1927,7 +2047,7 @@ interface Todo {
     description: string;
 }
 
-function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
+function updateTodo(todo: Todo, fieldsToUpdate: Partial) {
     return { ...todo, ...fieldsToUpdate };
 }
 
@@ -1939,11 +2059,13 @@ const todo1 = {
 const todo2 = updateTodo(todo1, {
     description: 'throw out trash',
 });
+
 ```
 
 정리 
 
 ```
+
 // 글로벌 색으로 4가지를 선언한다.
 export type GlobalColors = 'Red' | 'Blue' | 'Green' | 'Black'
 
@@ -1959,6 +2081,7 @@ const enum ConstGlobalColorSet {
 const CUSTOM_COLORS: Partial<Record<GlobalColors, string>> = {
   gray: '55, 55, 55',
 }
+
 ```
 
 ---------------
@@ -1968,16 +2091,18 @@ const CUSTOM_COLORS: Partial<Record<GlobalColors, string>> = {
 함수 타입 T의 매개변수 타입들의 튜플 타입을 구성.
 
 ```
+
 예제 (Example)
 declare function f1(arg: { a: number, b: string }): void
 type T0 = Parameters<() => string>;  // []
 type T1 = Parameters<(s: string) => void>;  // [string]
-type T2 = Parameters<(<T>(arg: T) => T)>;  // [unknown]
-type T4 = Parameters<typeof f1>;  // [{ a: number, b: string }]
-type T5 = Parameters<any>;  // unknown[]
-type T6 = Parameters<never>;  // never
-type T7 = Parameters<string>;  // 오류
-type T8 = Parameters<Function>;  // 오류
+type T2 = Parameters<((arg: T) => T)>;  // [unknown]
+type T4 = Parameters;  // [{ a: number, b: string }]
+type T5 = Parameters;  // unknown[]
+type T6 = Parameters;  // never
+type T7 = Parameters;  // 오류
+type T8 = Parameters;  // 오류
+
 ```
 
 ---------------
@@ -1987,17 +2112,19 @@ type T8 = Parameters<Function>;  // 오류
 함수 T의 반환 타입으로 구성된 타입을 만듭니다.
 
 ```
+
 예제 (Example)
 declare function f1(): { a: number, b: string }
 type T0 = ReturnType<() => string>;  // string
 type T1 = ReturnType<(s: string) => void>;  // void
-type T2 = ReturnType<(<T>() => T)>;  // {}
+type T2 = ReturnType<(() => T)>;  // {}
 type T3 = ReturnType<(<T extends U, U extends number[]>() => T)>;  // number[]
-type T4 = ReturnType<typeof f1>;  // { a: number, b: string }
-type T5 = ReturnType<any>;  // any
-type T6 = ReturnType<never>;  // any
-type T7 = ReturnType<string>;  // 오류
-type T8 = ReturnType<Function>;  // 오류
+type T4 = ReturnType;  // { a: number, b: string }
+type T5 = ReturnType;  // any
+type T6 = ReturnType;  // any
+type T7 = ReturnType;  // 오류
+type T8 = ReturnType;  // 오류
+
 ```
 
 
@@ -2009,10 +2136,12 @@ type T8 = ReturnType<Function>;  // 오류
 클래스 생성자의 인스턴스 타입을 구한다.
 
 ```
+
 예제 (Example)
 type A={new(): B}
 type B={b: number}
-type I= InstanceType<A> // {b: number}
+type I= InstanceType // {b: number}
+
 ```
  
 
@@ -2024,10 +2153,12 @@ type I= InstanceType<A> // {b: number}
 모든 매개변수 타입을 가지는 튜플 타입(T가 함수가 아닌 경우 never)을 생성.
 
 ```
+
 예제 (Example)
-type T0 = ConstructorParameters<ErrorConstructor>;  // [(string | undefined)?]
-type T1 = ConstructorParameters<FunctionConstructor>;  // string[]
-type T2 = ConstructorParameters<RegExpConstructor>;  // [string, (string | undefined)?]
+type T0 = ConstructorParameters;  // [(string | undefined)?]
+type T1 = ConstructorParameters;  // string[]
+type T2 = ConstructorParameters;  // [string, (string | undefined)?]
+
 ```
 
 
@@ -2097,45 +2228,36 @@ type T2 = ConstructorParameters<RegExpConstructor>;  // [string, (string | undef
 #### head 부분
 
 ```
-<head>
-    <meta charset="UTF-8">
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-    <meta content="" property="og:title">
-    <meta content="" property="og:url">
-    <meta content="" property="og:description">
-    <meta content="" property="og:image">
-    <meta content="website" property="og:type">
-    <meta content="" property="og:site_name">
-    <meta content="" name="title">
-
-    <!-- inject:css -->
-    <link href="../assets/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/vendors/swiper/css/swiper.min.css" rel="stylesheet">
-    <link href="../assets/css/common.css" rel="stylesheet">
-    <link href="../assets/css/sub.css" rel="stylesheet">
-    <!-- endinject -->
 
 
-    <!-- inject:dependency:js -->
-    <script src="../assets/vendors/jquery/jquery-1.10.2.min.js"></script>
-    <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
-    <script src="../assets/vendors/greensock/TweenMax.min.js"></script>
-    <script src="../assets/vendors/swiper/js/swiper.min.js"></script>
-    <!-- endinject -->
 
-    <!-- inject:head:js -->
-    <script src="../assets/js/apps.js"></script>
-    <!-- endinject -->
-</head>
+```
+<!-- inject:css -->
+<link href="../assets/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../assets/vendors/swiper/css/swiper.min.css" rel="stylesheet">
+<link href="../assets/css/common.css" rel="stylesheet">
+<link href="../assets/css/sub.css" rel="stylesheet">
+<!-- endinject -->
+
+
+<!-- inject:dependency:js -->
+<script src="../assets/vendors/jquery/jquery-1.10.2.min.js"></script>
+<script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendors/greensock/TweenMax.min.js"></script>
+<script src="../assets/vendors/swiper/js/swiper.min.js"></script>
+<!-- endinject -->
+
+<!-- inject:head:js -->
+<script src="../assets/js/apps.js"></script>
+<!-- endinject -->
 ```
 
+```
 
 ### body 부분
 
 > note :
+>
 > - 메인페이지일 경우 wrapper 부분은 div class="wrapper main" 라고 지정.
 > - 서브페이지일 경우 wrapper 부분은 div class="wrapper sub" 라고 지정.
 > - 서브페이지에서 추가 구분은 추가명칭 flag 가 붙는다. 회원가입 페이지 경우 div class="wrapper sub sign-up" 처럼 구분 된다.
@@ -2189,6 +2311,7 @@ type T2 = ConstructorParameters<RegExpConstructor>;  // [string, (string | undef
     </section>
 
     <footer id="footer"></footer>
+```
 
 ```
 
@@ -2228,6 +2351,7 @@ command not found 라는 문구가 뜨면서 안되는 경우가 있다.
 
 그리고 다시 설치~ 
 
+```
 
 ### 10-1. nvm 에서 자주 사용할 명령어
 
@@ -2237,30 +2361,39 @@ command not found 라는 문구가 뜨면서 안되는 경우가 있다.
 
 `nvm ls` ( 현재 설치된 버전을 보여준다. )
 
-`nvm ls-remote `( 설치 가능한  node 버전을 알려준다. )
+`nvm ls-remote` ( 설치 가능한  node 버전을 알려준다. )
 
 `nvm install v5`  ( node 5버전대에 latest 버전을 설치한다. )
 
 `nvm use v5`  ( node 설치된 v5버전으로 사용한다. )
 
 ----------------------
+
 ### 10-2. mac m2 환경에서 nvm 설치
+
 1. brew 로 nvm 설치
+
 - `brew install nvm`
 
 2. 설치 되었는지 버전 확인
+
 - `nvm --version`
 
-
 설치가 안되고 nvm not found라는 에러 나오면 환경설정 수정해야 한다.
+
 1. z shell 을 연다.
+
 ( 기본 쉘 (Shell) 이 bash 에서 zsh (Z shell)로 변경 )
+
 - `vi ~/.zshrc`
+
 2. 쉘스크립트가 열리면 아래 코드를 입력한다 ( vi 로 열었을때 i 를 누르면 insert 즉 입력가능해진다 )
+
 ```
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 ```
+
 ```
 export NVM_DIR=~/.nvm
 export PATH=/opt/homebrew/bin:$PATH
@@ -2273,36 +2406,39 @@ export PATH=/opt/homebrew/bin:$PATH 라는 내용은 command not found : brew �
 PATH=/추가경로1:/추가경로2:$PATH
 
 3. 입력이 끝나면 esc키 누른다. 그리고 :wq ( 저장후 종료 ) 타이핑을 치고 엔터 누르면 편집에서 빠져나오게 된다.
-
 4. source 명령어로 아까 입력한 부분을 실행시킨다.
+
 ( 참고로 source 명령어는 command를 읽고 실행하는 bash 내장 명령어 )
+
 - `source ~/.zshrc`
 
+### 10-3. window 에서 nvm 설치
 
-### 10-3. window 에서 nvm 설치 
 1. NVM 설치 파일 다운로드
+
 - [https://github.com/coreybutler/nvm-windows/releases](https://github.com/coreybutler/nvm-windows/releases)
 - 위 주소에 접속하여 nvm-setup.zip 파일을 다운 받는다.
 
 2. NVM 설치 방법
-  - 받은 압축 파일을 풀고 nvm을 install 한다.
-  - windows 명령 프롬프트 cmd를 실행한다.
-  - nvm version을 입력하여 설치된 것을 확인한다.
-  
+   - 받은 압축 파일을 풀고 nvm을 install 한다.
+   - windows 명령 프롬프트 cmd를 실행한다.
+   - nvm version을 입력하여 설치된 것을 확인한다.
 3. nodejs & npm 설치 방법
-  - nvm install v10.16.3 입력 설치
-  - nvm ls 를 입력 > 버전을 확인.
-  - nvm use 10.15.2 를 입력 > 해당 버전의 nodejs 활성
+   - nvm install v10.16.3 입력 설치
+   - nvm ls 를 입력 > 버전을 확인.
+   - nvm use 10.15.2 를 입력 > 해당 버전의 nodejs 활성
 
 ----------------------
 
 ## 11. 개발 환경 설정.
+
 - es6 / scss / readme.md  / 파일등을 컴파일 해서 최종 산출물을 전달한다.
 - 그렇게 하려면 별도의 컴파일 task runner( gulp 로 설정 ) 가 필요하다.
 ( 현재는 모듈화 작업 즉 angular/vue/react 등의 spa 로  entry point 인 하나의 파일로 진입하는 모듈 작업은 거의 없기에 
 webpack 과 같은 모듈러는 사실상 필요가 없다. )
 
 1. 초기 설정. (해당 프로젝트 폴더로 터미널경로를 이동되어 있어야 한다)
+
 매 프로젝트마다 저 선언은 해주어야 package.json 이 생성된다. ( npm에 의한 프로젝트 의존성 모듈 설정 파일 )
 
 ```
@@ -2321,25 +2457,21 @@ npm install -g gulp
 npm install --save-dev gulp
 ```
 
-
 4. gulpfile.babel.js 생성
 
 ```
 touch gulpfile.babel.js
 ```
 
-
-5. Babel  설치( ES2015 + 기능 및 호환성 문제를 피하기 위해) 
+5. Babel  설치( ES2015 + 기능 및 호환성 문제를 피하기 위해)
 
 ```
 npm install --save-dev @babel/register @babel/core @babel/preset-env
 ```
 
-
 6. babel 설정파일 .babelrc 을 생성
 
-```touch .babelrc```
-
+`touch .babelrc`
 
 7. .babelrc 파일을 열고 아래 내용을 입력.
 
@@ -2350,31 +2482,9 @@ npm install --save-dev @babel/register @babel/core @babel/preset-env
 ```
 
 마지막으로 의존성 파일들 설치 ( package.json 에 명시된 라이브러리들 )
- ``` 
-"del": "^5.1.0",
-"fibers": "^4.0.1",
-"gulp-autoprefixer": "^7.0.1",
-"gulp-babel": "^8.0.0",
-"gulp-cheerio": "^0.6.3",
-"gulp-clean-css": "^4.2.0",
-"gulp-concat": "^2.6.1",
-"gulp-imagemin": "^6.1.1",
-"gulp-inject": "^5.0.4",
-"gulp-markdown": "^5.0.0",
-"gulp-rename": "^1.4.0",
-"gulp-sass": "^4.0.2",
-"gulp-sort": "^2.0.0",
-"gulp-sourcemaps": "^2.6.5",
-"gulp-uglify": "^3.0.2",
-"gulp-watch": "^5.0.1",
-"lodash": "^4.17.15",
-"pygmentize-bundled": "^2.3.0",
-"stream-series": "^0.1.1"
-```
 
 위의 내용들을 개별로 설치하기 부담스럽다면  다운로드 링크 : [package.json](./package.json) 을 다운받아서
 프로젝트 폴더내에 root경로에 놓고 터미널에`npm install` 하면 관련 의존성 파일들을 알아서 설치해 줄 것이다.
-
 
 --------
 
@@ -2383,83 +2493,106 @@ npm install --save-dev @babel/register @babel/core @babel/preset-env
 > note : git 기반 - 현재 [비트버킷 https://bitbucket.org/](https://bitbucket.org/)으로 공유 중 
 
 #### 12-1. 원격 저장소 연결
-```git remote add origin <원격저장소 주소>```
+
+`git remote add origin <원격저장소 주소>`
+
 - 원격저장소 등록
 
-```git clone <저장소주소> [새로운 폴더명]```
+`git clone <저장소주소> [새로운 폴더명]`
+
 - 복제하려다 실패하는 대부분의 이유는 폴더명을 생략하면 자동으로 프로젝트 이름과 같은 이름의 폴더가 새로 생성되는데 보통 이름이 이미 존재할 경우라 그런다.
-- 에러 fatal: destination path ‘폴더명’ already exist and is not an empty directory. 
+- 에러 fatal: destination path ‘폴더명’ already exist and is not an empty directory.
 
 -----------------------
-#### 12-2. 커밋 / 히스토리 상태 보기 
 
-```git status```
-- 현재 진행 상태 
+#### 12-2. 커밋 / 히스토리 상태 보기
 
-```git log —oneline```
+`git status`
+
+- 현재 진행 상태
+
+`git log —oneline`
+
 - 간단한 커밋해시와 제목만 보고 싶을때
 
-```git log —oneline —graph —decorate```
+`git log —oneline —graph —decorate`
+
 - HEAD와 관련된 커밋들을 조금 더 자세히 보고 싶을 때
 
-```git log —oneline —graph —all —decorate```
+`git log —oneline —graph —all —decorate`
+
 - 모든 브랜치들을 보고 싶을때 사용하는 명령
 
-```git log —oneline -n5```
+`git log —oneline -n5`
+
 - 내 브랜치의 최신 커밋 5개만 보고 싶을때 사용
 
 ##### git blame
+
 > note 특정 파일의 수정 이력을 확인할 수 있다. 각 라인별로 누가, 언제 마지막으로 수정 했는지 알 수 있다.
 
-```git blame test.txt```
+`git blame test.txt`
+
 - test.txt 파일의 수정 이력을 확인
 
-```git blame -L 5,10 test.txt```
+`git blame -L 5,10 test.txt`
+
 - test.txt 파일의 5부터 10번 라인까지만 확인
 
-```git blame -C newTest.txt```
+`git blame -C newTest.txt`
+
 - 파일명이 변경 되었다면, 변경전의 파일명과 함께 확인
 
-```git blame -w test.txt```
+`git blame -w test.txt`
+
 - 공백 변경을 무시
 
-```git gc``` 
+`git gc` 
+
 - 저장소에 필요없는 파일을 삭제하고 남은 파일을 압축하는 “Garbage Collection” 명령이다. 직접 실행시켜도 되지만 Git이 자동으로 실행해준다.
 
-```git fsck```
+`git fsck`
+
 - Git 저장소의 오브젝트를 검사하여 손상된 파일이나 누락된 파일을 확인하는데 도움
 
 -----------------------
 
 #### 12-3. branch
 
-```git branch```
-- 현재 로컬 브랜치 목록 보기 
+`git branch`
 
-```git branch -r```
-- 현재 원격 저장소 목록 보기 
+- 현재 로컬 브랜치 목록 보기
 
-```git checkout temp```
+`git branch -r`
+
+- 현재 원격 저장소 목록 보기
+
+`git checkout temp`
+
 - 브랜치 이동  git checkout {새로운 로컬 Branch 이름}
 
-```git checkout -b develop master```
+`git checkout -b develop master`
+
 - master을 기준으로 로컬에 새로운 브랜치를 생성합니다
 
-```git checkout -b  develop origin/develop```
+`git checkout -b  develop origin/develop`
+
 - 브랜치 생성 및 체크아웃(이동)
 원격 브런치가 이미 존재 할 경우 원격 브런치를 기준으로 로컬 브랜치를 만드는 방법 
-checkout 명령에 -b 옵션을 넣으면 브랜치 작성과 체크아웃을 한꺼번에 실행 
+checkout 명령에 -b 옵션을 넣으면 브랜치 작성과 체크아웃을 한꺼번에 실행
 
  `git checkout -b {새로운 로컬 Branch 이름} {원격 저장소 별칭}/{원격 Branch 이름}`
 
+`git push origin develop`
 
-```git push origin develop```
 - local 브랜치를 remote로 push하기
 
-```git pull origin master```
+`git pull origin master`
+
 - origin(원격)에서 가져오기
 
-```git branch -m master mymaster```
+`git branch -m master mymaster`
+
 - 브랜치이름 변경 git branch -m `[브랜치명] [새로운 브랜치명]`
 
 ```
@@ -2468,209 +2601,234 @@ git push origin -d mybranch
 ```
 
 - mybranch 라는 브랜치 제거. 두번째 명령어는 삭제된 브렌치를 리모트 저장소에도 동기화 
-> note : `git push origin -d mybranch` 삭제 명령 후에 git unable to delete remote ref does not exist 라는
-> 메세지가 나온다면 remote 된 git 서버와의 최신 동기화가 이루어 지지 않아서 발생하는 문제이다.
-> 깃허브나 비트버킷 사이트로 들어가서 정보를 조회해 보면 삭제된 것을 볼 수 있다. 
-> 하지만 `git branch -r` 로 브랜치를 조회를 하면 삭제한 브랜치가 남아 있는 것을 볼 수 있을 것이다.
-> 결론은 최신 동기화를 해주면 된다. `git fetch -p origin`  여기서 -p 옵션은 더 이상 존재하지 않는 remote 브랜치 정보는 삭제하는 것이다.
+  > note : `git push origin -d mybranch` 삭제 명령 후에 git unable to delete remote ref does not exist 라는
+  > 메세지가 나온다면 remote 된 git 서버와의 최신 동기화가 이루어 지지 않아서 발생하는 문제이다.
+  > 깃허브나 비트버킷 사이트로 들어가서 정보를 조회해 보면 삭제된 것을 볼 수 있다. 
+  > 하지만 `git branch -r` 로 브랜치를 조회를 하면 삭제한 브랜치가 남아 있는 것을 볼 수 있을 것이다.
+  > 결론은 최신 동기화를 해주면 된다. `git fetch -p origin`  여기서 -p 옵션은 더 이상 존재하지 않는 remote 브랜치 정보는 삭제하는 것이다.
 
-```git fetch -p origin```
+`git fetch -p origin`
 
-- 서버와 최신 정보 동기화 시키고 삭제된 브랜치 내역 제거 
-
+- 서버와 최신 정보 동기화 시키고 삭제된 브랜치 내역 제거
 
 ```
 git branch -D mybranch
 ```
+
 - `-D` 옵션은 강제 삭제를 의미한다. 만약 머지 중이거나 수정 중인 상태라면 error 를 띄울텐데 그래도 상관없이 지운다면 해당 옵션으로 지우면 된다.
-
-
 
 -----------------------
 
-#### 12-4 스테이징( 로컬 임시저장 ) 및 커밋 
+#### 12-4 스테이징( 로컬 임시저장 ) 및 커밋
 
-```git add test.txt```
+`git add test.txt`
+
 - test.txt  를 스테이지에 저장.
 
-```git add . ```
+`git add .` 
+
 - 폴더의 전체 변경 사항 지정 ( 현재 디렉토리의 모든 변경 내용을 스테이징 영역에 추가 )
 
-```git add -A ```
+`git add -A` 
+
 - 폴더의 전체 변경 사항 지정 ( 작업 디렉토리 내의 모든 변경 내용을 몽땅 스테이징 영역에 추가 )
 
 > note: 
+>
 > - `git add -A`는 작업 디렉토리 상에 어디에 위치하든 항상 동일하게 모든 변경 내용을 스테이징으로 넘긴다. 
 > 반면에 `git add .`는 명령어를 실행한 디렉토리 이하에서 발생한 변경 내용만 포함하며, 
 > 해당 디렉토리 기준으로 상위 디렉토리의 변경 내용을 포함하지 않는다. 
 > 만약에 `git add .`를 프로젝트 최상위 디렉토리에서 실행한다면 `git add -A`와 동일한 효과를 낸다.
 
-```git commit -m '기록할 메세지' ```
-- 입력한 메세지와 함께 커밋 
+`git commit -m '기록할 메세지'` 
 
-```git commit -am '기록할 메세지' ```
+- 입력한 메세지와 함께 커밋
+
+`git commit -am '기록할 메세지'` 
+
 - 스테이지와 커밋을 한번에 실행.
 
-```git commit --amend```
-- 이전 커밋에 변경사항을 추가할때 
+`git commit --amend`
 
-``` git log```
+- 이전 커밋에 변경사항을 추가할때
+
+ `git log`
+
 - 커밋한 결과 확인 ( 주의 - 모든 목록이 나온다 )
 
-```git show```
+`git show`
+
 - 최근 커밋 확인( 주의 - 변경 내역까지 다 나옴 )
 
-```git show --stat``` 
+`git show --stat` 
+
 - 최근 커밋 요약해서 보기. ( 추천 )
 
-```git log --graph```
+`git log --graph`
+
 - 에디터의 그래프 보듯 예쁘게 히스토리 보기.
 
 --------------------------
 
 #### 12-5 되돌리기.
+
 코드를 작성하다보면 잘못된 코드를 추가하거나 merge한 경우 이를 취소할때,
 
 a. git reset 으로 취소( 단 push 이전 상태이여야 함 )
 
-```git reset```
--  add 한 파일 취소
+`git reset`
 
-```git reset --merge```
+- add 한 파일 취소
+
+`git reset --merge`
+
 - merge 한 코드 취소
 
 b.만약 commit만 취소하고, 작성한 코드는 남겨둘려면? reset --soft 명령어 사용
 
-```git reset --soft HEAD^ ```
+`git reset --soft HEAD^` 
+
 - commit 코드 되살리기
 
-```git reset --hard HEAD^ ```
+`git reset --hard HEAD^` 
+
 - commit 하기 이전 코드로 돌아가기
 
+`git rebase <대상 브랜치>`
 
-```git rebase <대상 브랜치>```
 - 내 브랜치의 커밋들을 대상 브랜치에 재배치 ( 커밋 히스토리를 하나로 합치기에 주의 - 그룹 리더가 책임지고 해야함.)
+- git reset을 이용하여 작성한 코드를 초기화하고 서버로부터 다시 받아 오기.
 
- - git reset을 이용하여 작성한 코드를 초기화하고 서버로부터 다시 받아 오기.
+`git revert <commit id>`
 
-```git revert <commit id>```
 - commit을 유지하면서 내용을 Rollback하는 경우 ( 이미 push 하였을 경우 쓴다 )
 
-```git checkout --<파일이름>```
+`git checkout --<파일이름>`
+
 - 로컬의 변경 내용을 되돌리기
 
-```git stash```
+`git stash`
 -이미 자신의 작업 내역이 있고 변경 내역을 불러와 계속 작업을 이어 나갈 경우
 
-```git stash save <저장할 목록 이름>```
+`git stash save <저장할 목록 이름>`
+
 - 작업코드 임시저장하고 브랜치 바꾸기
 
-```git stash pop```
+`git stash pop`
+
 - 마지막에 저장한 코드 불러오기.
 
-```git stash apply```
+`git stash apply`
+
 - 가장 최근 저장한 stash 를 불러와 복원.
 
-```git stash clear```
+`git stash clear`
+
 - 모든 stash 기록 제거.
 
-```git stash list```
+`git stash list`
+
 - stash로 저장한 목록 보기.
 
 --------
 
 .gitignore 에 제외할 파일 지정후 해당파일을 원격저장소 동기화하여 없애는 역활
 
-```git rm -r —cached```
+`git rm -r —cached`
 
-```git add -A```
+`git add -A`
 
-```git commit -m ‘기재할 내용’```
+`git commit -m ‘기재할 내용’`
 
-```git push```
+`git push`
 
 > note 
-> ```—cached``` 옵션은 git 저장소에만 파일을 지우고자 할때 적용
-  ```-r``` 옵션은 재귀적 탐색 제거 허용
+> `—cached` 옵션은 git 저장소에만 파일을 지우고자 할때 적용
+>   `-r` 옵션은 재귀적 탐색 제거 허용
 
 -------------
-##### 단계별 취소 
+
+##### 단계별 취소
 
 **1. 로컬 변경 취소**
 
 git checkout .
 
->note 신규 추가한 파일에 관해서는 삭제되지 않으므로, 완전히 원래대로 되돌리려면 따로 삭제해야 한다.
+> note 신규 추가한 파일에 관해서는 삭제되지 않으므로, 완전히 원래대로 되돌리려면 따로 삭제해야 한다.
 
-```git clean -n ```
+`git clean -n` 
+
 - git clean 으로 제거될 파일 미리보기
 
-```git clean -f``` 
+`git clean -f` 
+
 - 전체 untracked files 제거
 
-```git clean -f <filename>```
+`git clean -f <filename>`
+
 - 한 개의 untracked files 제거
 
-```git clean -d -f```
-- 전체 untracked files 및 디렉터리까지 삭제
+`git clean -d -f`
 
+- 전체 untracked files 및 디렉터리까지 삭제
 
 **2. add를 취소**
 
-```git reset```
+`git reset`
+
 - 전체 파일 add 취소
 
-```git reset HEAD <filename>```
-- 최신 커밋 / 스테이지 취소 
+`git reset HEAD <filename>`
 
-
+- 최신 커밋 / 스테이지 취소
 
 **3. commit 취소**
 
-```git reset HEAD^```
-- 최근 commit 취소 ```git reset --mixed HEAD^``` 와 동일 
+`git reset HEAD^`
 
-```git reset --soft HEAD^```
+- 최근 commit 취소 `git reset --mixed HEAD^` 와 동일
+
+`git reset --soft HEAD^`
+
 - commit 코드 되살리기( 코드는 살려두고 커밋 취소 )
 
-```git reset --hard HEAD^```
+`git reset --hard HEAD^`
+
 - commit 하기 이전 코드로 돌아가기( 복구 불가 )
 
-```git reset HEAD~2 ```
-- 마지막 2개의 commit 을 취소
+`git reset HEAD~2` 
 
+- 마지막 2개의 commit 을 취소
 
 **4. push 취소**
 
-```git revert <commit_Id>```
-```git push origin <branch-name>```
+`git revert <commit_Id>`
+`git push origin <branch-name>`
 이것은 undo한다는 느낌 보다, 변경 지점을 추가 commit 하는 것.
-
 
 **5. merge 취소 방식** 
 
 a. git 머지(병합) 했더니 충돌. 편집해서 수정하지 않을 경우 한정
- 
-```git merge --abort```
+
+`git merge --abort`
+
 - 병합전의 상태로 되돌린다.
 
 b. git 머지 후 충돌해서 수정하려고 시도했지만, 중간에 그만두고 싶을때! 편집한 내용도 머지(병합)도 모두 취소.
 
-```git reset --hard HEAD```
-
+`git reset --hard HEAD`
 
 c. 머지(병합) 모두 완료 후. 근데 역시 되돌리고 싶을때. 
 revert 커맨드를 사용하여 Merge commit 을 취소.
-```git revert <commit_Id>```
-
+`git revert <commit_Id>`
 
 d. 머지(병합) 모두 완료 후 되돌리고 싶을때.( 추천하지 않음 - 이력이 남지 않는다. )
-```git reset --hard ORIG_HEAD```
+`git reset --hard ORIG_HEAD`
+
 - 머지(병합)하기 전의 HEAD로 돌아갑니다. 이 방법은 한번 생긴 커밋을 취소하는 것. 이력이 남지 않는다.
 
 e. reset, revert 후 저장소 강제 업데이트 
-``` git push -f origin <브랜치이름>```
-
+ `git push -f origin <브랜치이름>`
 
 #### 12-7 동기화
 
@@ -2682,51 +2840,59 @@ git reset --hard origin/master
 - **로컬에 있는 모든 변경 내용과 확정본을 포기**. 원격 저장소의 최신 이력을 가져오고
  로컬 master브랜치의 상태를 가져온 최신이력으로 변경.
 
+`git cherry-pick <commit id>`
 
-```git cherry-pick <commit id>```
 - 다른 커밋 버전을 현재의 브렌치에 업데이트하기.
 
-```git cherry-pick <commit id> -continue```
+`git cherry-pick <commit id> -continue`
+
 - conflict 등으로 실패하는 경우 계속해서 해결하기 위한 방법을 찾는다.
 
-```git cherry-pick <commit id> -n```
+`git cherry-pick <commit id> -n`
+
 - 파일변경, 커밋은 하지 않는다.
 
-```git cherry-pick <commit id> -quit```
+`git cherry-pick <commit id> -quit`
+
 - 실패하는 경우 더 진행하지 않고 현재 상태를 빠져나온다.
 
-```git cherry-pick <commit id> -abort```
+`git cherry-pick <commit id> -abort`
+
 - 체리픽 이전 상태로 돌리고 취소한다.
 
-
 #### 12-8 git 협업을 위한 flow.
+
 1. 저장소와 자신의 로컬 연동. (git clone)
+
 - 만약 최종 결정권자라면 원격 저장소생성하고 그 원격저장소와 로컬 연결. git remote
+
 2. develop 브랜치를 가져와 자신의 브랜치 로컬 및 원격저장소에 생성. `git checkout -b develop origin/develop`
- ( 최종 결정권자는 develop 브랜치가 없다면 생성. )
+
+   최종 결정권자는 develop 브랜치가 없다면 생성. )
 3. develop 에서 분리된 자신작업 공간 브랜치 생성 그리고 아래와 같은 작업순으로 이루어진다.
-- pull origin develop > add > commit > push 
-4. 작업 완료 되면 pull request 요청 
+
+- pull origin develop > add > commit > push
+
+4. 작업 완료 되면 pull request 요청
 5. 최종 결정권자는 오픈된 pull request 사항을 체크 후 develop 에 merge 혹은 decline 시킨다.
-6. 최종 작업 마무리는  develop 의 모든 사항은 master 에 merge 
+6. 최종 작업 마무리는  develop 의 모든 사항은 master 에 merge
 
 ![./gitWorkFlow.jpg](./gitWorkFlow.jpg)
 
-
 ### 12-9 기타 주의 사항.
+
 > note : package-lock.json 
+>
 > - package-lock.json 파일은 의존성 트리에 대한 정보를 가지고 있으며, 작성된 시점의 의존성 트리가 다시 생성될 수 있도록 보장해준다.
 > - package-lock.json 파일은 저장소에 꼭 같이 커밋해야 한다.
 > - package-lock.json 파일은 node_modules 없이 배포하는 경우 반드시 필요하다.
-
-
-
 
 -------
 
 ## 13. 기타 ( 오픈그래프 / 파비콘 / 아이콘 폰트 만들기 )
 
-### 1. 오픈 그래프 
+### 1. 오픈 그래프
+
 - 오픈그래프 프로토콜은 페이스북에서 처음 만들어졌으며, Dublin Core, link-rel canonical, Microformats, 그리고 RDFa로부터 영감을 받았다. 
 오픈그래프는 어떤 HTML 문서의 메타정보를 쉽게 표시하기 위해서 메타정보에 해당하는 제목, 설명, 문서의 타입, 대표 URL 등 다양한 요소들에 대해서 사람들이 
 통일해서 쓸 수 있도록 정의해놓은 프로토콜이며 페이스북에 의하여 기존의 다양한 메타 데이터 표기 방법을 참조하여 만들어졌다. 그 간편함으로 인하여 현재는 그 창시자인 페이스북은 물론이고, 네이버 블로그, 카카오톡 등에서도 널리 사용하고 있다.
@@ -2739,6 +2905,7 @@ git reset --hard origin/master
 5. 그리고 그 정보를 바탕으로 미리보기 화면을 생성해주게 된다.
 
 아래는 예시 코드
+
 ```
 <meta property="og:title" content="MINTIT UX">
 <meta property="og:url" content="http://mintit.inition.kr/">
@@ -2757,19 +2924,20 @@ git reset --hard origin/master
 | og:site_name   | 웹 사이트의 이름 (주소 아님)        |
 
 > note : image size 는 800x800 혹은 270x270 이며
+>
 > - 보여주고자 하는 아이콘 및 텍스트는 가로 세로 중앙정렬로 배치 되어야 한다.
 
 > note: 카카오 경우 아래와 같은 가이드로 진행됨( 디자인 가이드 )
- > - 스크랩 이미지의 권장 크기는 800px x 800px (*실제 컨텐츠 사이즈가 아니라 캔버스 사이즈)
- > - png 타입으로 15kb 내외
- > - 워드마크로 제작시 800px * 800px 이미지내 정중앙에 600px * 120px 크기의 이미지로 설정.
- > - 심볼로 만들때는 800px * 800px 이미지내 정중앙에 160px * 160px 크기의 이미지로 설정.
-
+>
+> - 스크랩 이미지의 권장 크기는 800px x 800px (*실제 컨텐츠 사이즈가 아니라 캔버스 사이즈)
+> - png 타입으로 15kb 내외
+> - 워드마크로 제작시 800px * 800px 이미지내 정중앙에 600px * 120px 크기의 이미지로 설정.
+> - 심볼로 만들때는 800px * 800px 이미지내 정중앙에 160px * 160px 크기의 이미지로 설정.
 
 -----------------
 
-
 ### 2. 파비콘
+
 - 파비콘은 웹페이지에 접속했을때, 상단 탭에 보여지는 아이콘을 일컫는다. 이 아이콘은 즐겨찾기에 웹페이지를 등록할때도 사용된다. 
 웹사이트를 대표하는 로고(logo)의 개념과 비슷하며, 사이트의 성격을 드러내기도 한다.
 
@@ -2784,9 +2952,11 @@ git reset --hard origin/master
 ------------------
 
 ### 3. 아이콘 폰트 만들기( svg icon font )
+
 [https://icomoon.io/](https://icomoon.io/)
 
 > note ( 무료 svg icon font )
+>
 > - [https://iconsvg.xyz/](https://iconsvg.xyz/)
 > - [https://basicons.xyz/](https://basicons.xyz/)
 > - [https://lucide.dev/](https://lucide.dev/)
@@ -2800,152 +2970,356 @@ git reset --hard origin/master
 
 ----------
 
+2. IcoMoon버튼을 눌러 아래와 같이 페이지가 이동되었다면
 
-2. IcoMoon버튼을 눌러 아래와 같이 페이지가 이동되었다면  
 그림처럼 좌측 상단 Import Icons 를 눌러 제작한 svg 파일을 임포트 하면 된다.  
 ( 만약 이미 아이콘 폰트를 발행한 적이 있으면서 환경 설정 json 파일을 가지고 있다면 svg 파일 대신 json 파일을 임포트 하면 된다. )  
 
 ![2번](./docs/images/icomoon2.jpg)
 
-
 ----------
- 
 
-3. svg파일을 올렸다면 아래 그림처럼 파일들이 보인다. 아이콘 폰트화 할 것들을 클릭해서 선택한다.   
+3. svg파일을 올렸다면 아래 그림처럼 파일들이 보인다. 아이콘 폰트화 할 것들을 클릭해서 선택한다.
+
 그리고 맨 하단 3번째 Generate Font 버튼을 클릭하여 생성시킨다.
 
 ![3번](./docs/images/icomoon3.jpg)
 
 ----------
- 
 
-4. 아래 그림처럼 우측 하단에 Download 를 클릭하면 최종 생성된 아이콘 폰트 파일을 다운 받을 수 있다.  
+4. 아래 그림처럼 우측 하단에 Download 를 클릭하면 최종 생성된 아이콘 폰트 파일을 다운 받을 수 있다.
+
 생성된 아이콘 및 web에서 css에 적용할 수 있겠끔 코드가 적혀 있다. 코드 값은 사용자에 맞게 수정할 수 있다.   
 
 ![5번](./docs/images/icomoon5.jpg)
 
-
 -------
 
-5. 마지막으로 상단 우측에 프로젝트 네임이 보일 것이다.  <br/>   클릭해 보면 아래 그림처럼 프로젝트 리스트로 전환된다.  
+5. 마지막으로 상단 우측에 프로젝트 네임이 보일 것이다.    
+   클릭해 보면 아래 그림처럼 프로젝트 리스트로 전환된다.
+
 우측 중단에 Download 클릭하면 프로젝트 설정한 환경 세팅  json 파일을 다운로드 받을 수 있다.  
-그리고 다운로드 받는 위치를 잘 지정해야 한다.  svg 원본파일이 있는 폴더의 위치와 같은 경로로 지정해 주는 것이 가장 좋다.   
-이 환경 설정 json 파일 잘 갖고 있어야지만 다시 세팅하게 되는 불필요한 작업을 방지할 수 있다.    
+그리고 다운로드 받는 위치를 잘 지정해야 한다.  svg 원본파일이 있는 폴더의 위치와 같은 경로로 지정해 주는 것이 가장 좋다.  
+이 환경 설정 json 파일 잘 갖고 있어야지만 다시 세팅하게 되는 불필요한 작업을 방지할 수 있다.  
 ( json 파일 누락시 사이트에서 일일히 아이콘의 코드값을 입력해야 한다. )   
 
 ![4번](./docs/images/icomoon4.jpg)
 
-
-
 ---------------------
 
+## 14. 프로젝트 초기 진행시 체크 사항
 
-## 14. 프로젝트 초기 진행시 체크 사항 
 - **font 종류** ( 폰트 종류는 2개를 넘지 않는게 좋다.) 
-
 - **font 범위** ( 웹폰트 유무 체크 / 라이선스 체크 )
-
 - 웹에선 **font-size 가 11px 이하**로 설정 되지 않게 해야 한다.
-
 - **웹접근성 체크**( 접근성 LEVEL 체크 - 수준 A(웹 접근성이 요구하는 최소한의 수준), 수준 AA ) 
-
 - **반응형**( 태블릿까지 지원하는지 체크 ) / **적응형**( 태블릿까지 지원하는지 체크 ) 체크  - 모바일 버전까지 지원시 테스트 디바이스 체크 
-
 - **크로스브라우징 체크** ( 크롬, 파이어폭스, 오페라, 엣지, IE 등 )
-
 - **웹퍼블리싱 / SPA**( Single page application ) 둘 중 어느 타입의 프로젝트인지 체크 
-
 - **라이브러리 및 프레임워크** 사용 체크 ( bootstrap, tailwindcss, jquery - 웹퍼블리싱만 하는 경우 / vue, react - spa 로 진행시 )
-
 - **컴포넌트 단위의 라이브러리/플러그인 호환성 및 버전 체크**( date-picker, time-picker, calendar, rich text editor, chart 등)
-
 - **max-width** / **min-width** 체크( 사이즈 수치값으로 1024 혹은 1280 로 작업. 그 결정하는 기준은 사이즈가 작은 랩탑까지도 지원해야 한다 했을 때 1024 을 선택 )
-
 - 단색 위주의 아이콘이 많다면 **svg icon font 제작** / 아이콘 개수가 많은데 png 이미지로 해야 하는 경우는 **image sprite 방식**으로 제작 ( 만약 수정이 잦아지거나 운영 맡게 된다면 해당 기법은 패스 )
-
 - 간단하게 sprite image 제작 [image sprite 제작 바로가기](https://spritegen.website-performance.org/)
-
-
 
 ------------
 
+## 15. vue3.x 정리
 
-## 15. vue2.x  간단 정리
+> 기준 버전 : vue 3.5 / vue-router 5 / pinia 4 / axios 1.x  
+> vue2 는 2023년 12월 31일 지원 종료(EOL)되었으므로 신규 프로젝트는 vue3 + `<script setup>` + TypeScript 로 진행한다.
+
+### 0. 프로젝트 생성
+
+- vue-cli(webpack) 는 유지보수 모드이므로 공식 스캐폴딩 도구인 **create-vue(Vite 기반)** 를 사용한다.
+- 생성 시 TypeScript, Vue Router, Pinia, ESLint, Prettier, Vitest 등을 선택해서 추가할 수 있다.
+
+```
+npm create vue@latest
+```
+
+- `new Vue()` 대신 `createApp()` 으로 앱 인스턴스를 생성한다. 플러그인은 전역(`Vue.use`)이 아닌 **앱 인스턴스 단위**로 등록한다.
+
+```
+// main.ts
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
+import router from './router'
+
+const app = createApp(App)
+
+app.use(createPinia())
+app.use(router)
+app.mount('#app')
+```
+
+**vue2 → vue3 주요 변경 사항**
+
+| vue2 | vue3 |
+|------|------|
+| `new Vue({ el: '#app' })` | `createApp(App).mount('#app')` |
+| `Vue.component()` 전역 등록 | `.vue` 파일(SFC) import 후 바로 사용 ( `<script setup>` ) |
+| `Vue.prototype.$http` | `app.config.globalProperties.$http` ( 모듈 import 권장 ) |
+| 이벤트 버스 `$on` / `$off` / `$once` | 제거됨 → props/emit, provide/inject, Pinia, mitt |
+| 필터 `{{ msg \| upper }}` | 제거됨 → computed 또는 함수 호출 |
+| `.native` 이벤트 수식어 | 제거됨 |
+| `beforeDestroy` / `destroyed` | `onBeforeUnmount` / `onUnmounted` |
+| `v-model` = `value` + `input` | `v-model` = `modelValue` + `update:modelValue` |
+| 단일 루트 엘리먼트 필수 | 여러 루트 엘리먼트(Fragment) 허용 |
+| Vuex | Pinia ( 공식 상태관리 ) |
 
 ### 1. 컴포넌트
 
-Vue.component('컴포넌트 이름', { } );
+- 컴포넌트는 SFC(`.vue`) 파일 단위로 작성하고 `<script setup lang="ts">` 를 사용한다.
+- `<script setup>` 안에서 import 한 컴포넌트는 별도의 등록(`components: {}`) 없이 템플릿에서 바로 사용한다.
+- 컴포넌트 파일명은 PascalCase 로 작성한다. ( ex. `MyComp.vue` )
 
 ```
-<body>
-<div id="app">
-  <mycomp></mycomp> 
-</div>
+<!-- MyComp.vue -->
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"></script>
-<script>
-    Vue.component('mycomp', {
-          template:`<div>mycomp 컴포넌트</div>`
-     } );
-    new Vue({
-       el:'#app'
-    });
+const count = ref(0)
+const double = computed(() => count.value * 2)
+
+function increment() {
+  count.value++
+}
+
+onMounted(() => {
+  console.log('mounted')
+})
 </script>
-</body>
+
+<template>
+  <button type="button" @click="increment">{{ count }} / {{ double }}</button>
+</template>
 ```
 
-**상\*하위 컴포넌트 관계**
+```
+<!-- App.vue -->
+<script setup lang="ts">
+import MyComp from './components/MyComp.vue'
+</script>
+
+<template>
+  <MyComp />
+</template>
+```
+
+**상하위 컴포넌트 관계**
 
 - 컴포넌트는 각각 고유한 유효범위를 갖고 있기 때문에 직접 다른 컴포넌트의 값을 참조할 수 없다. 따라서 뷰에서 정한 데이터 전달 방법을 따라야 한다.
 
 **기본적인 데이터 전달 방법**
 
-**1. 상위에서 > 하위로는 props** 라는 속성으로 값을 전달.
+**1. 상위에서 > 하위로는 props** 로 값을 전달.
+
+- `defineProps<Props>()` 처럼 제네릭으로 타입을 선언한다.
+- vue 3.5 부터 props 를 구조 분해 할당으로 받을 수 있고, 기본값도 함께 지정할 수 있다. ( `withDefaults` 불필요 )
 
 ```
-<child v-bind:props 속성이름="상위 컴포넌트의 data속성"></child>
-```
-
-**2. 뷰는 단방향 데이터 바인딩**을 구현하기에 **하위에서 > 상위로는 이벤트 버스**를 이용하여 데이터를 전달한다.
-
-```
-this.$emit('이벤트명'); //이벤트 발생시킴.
-
-<child v-on:이벤트명="상위 컴포넌트의 메서드명"></child> // v-on으로 이벤트 수신.
-```
-
-**3. 관계 없는 컴포넌트 간 통신( 이벤트 버스)** - 지정한 2개의 컴포넌트 간에 데이터를 주고 받을 수 있다.
-```
-//이벤트 버스 인스턴스 1개 생성.
-
-var eventBus=new Vue();
-
-//이벤트를 보내는 컴포넌트
-
-methods:{
-
-메서드명:function(){
-
-eventBus.$emit('이벤트명', 데이터);
-
+<!-- Child.vue -->
+<script setup lang="ts">
+interface Props {
+  title: string
+  count?: number
+  labels?: string[]
 }
 
-//이벤트를 받는 컴포넌트
+const { title, count = 0, labels = ['one', 'two'] } = defineProps<Props>()
+</script>
 
-methods:{
-
-created:function(){
-
-eventBus.$on('이벤트명', function(데이터){
-
-.......
-
-}
+<template>
+  <p>{{ title }} - {{ count }}</p>
+</template>
 ```
 
----------   
+```
+<Child :title="pageTitle" :count="total" />
+```
+
+> note : 구조 분해한 props 를 watch 할 때는 getter 로 감싸야 반응성이 유지된다.  
+> `watch(() => count, ...)` - O / `watch(count, ...)` - X
+
+> note : vue 3.3 부터 다른 파일에서 import 한 타입도 `defineProps<Props>()` 에 사용할 수 있다.  
+> ( 단, 조건부 타입 등 컴파일러가 분석할 수 없는 복잡한 타입은 지원하지 않는다. )
+
+- 구조 분해를 사용하지 않고 `props.xxx` 로 접근하는 경우에는 컴파일러 매크로 `withDefaults` 로 기본값을 지정한다.
+
+```
+const props = withDefaults(defineProps<Props>(), {
+  count: 0,
+  labels: () => ['one', 'two']
+})
+```
+
+**2. 하위에서 > 상위로는 emit** 으로 이벤트를 발생시켜 전달한다.
+
+- vue 3.3 부터 `이벤트명: [인자 목록]` 형태의 간결한 타입 문법을 사용한다.
+
+```
+<!-- Child.vue -->
+<script setup lang="ts">
+const emit = defineEmits<{
+  change: [id: number]
+  update: [value: string]
+}>()
+
+function select(id: number) {
+  emit('change', id)
+}
+</script>
+```
+
+```
+<Child @change="handleChange" />
+```
+
+**3. 양방향 바인딩( v-model )은 defineModel** ( vue 3.4 이상 )
+
+- 컴포넌트의 `v-model` 은 `modelValue` 프로퍼티 + `update:modelValue` 이벤트로 동작한다.
+- `defineModel()` 을 사용하면 props + emit 을 직접 선언하지 않아도 된다.
+
+```
+<!-- CustomInput.vue -->
+<script setup lang="ts">
+const model = defineModel<string>({ required: true })
+</script>
+
+<template>
+  <input v-model="model" />
+</template>
+```
+
+```
+<CustomInput v-model="searchText" />
+```
+
+- **v-model 인자** : v-model 에 인자를 전달하여 이름을 지정할 수 있다. 여러 개의 v-model 도 가능하다.
+
+```
+<MyComponent v-model:title="bookTitle" v-model:content="bookContent" />
+```
+
+```
+<!-- MyComponent.vue -->
+<script setup lang="ts">
+const title = defineModel<string>('title')
+const content = defineModel<string>('content')
+</script>
+
+<template>
+  <input type="text" v-model="title" />
+  <textarea v-model="content"></textarea>
+</template>
+```
+
+- **v-model 수정자** : `.trim`, `.number`, `.lazy` 같은 내장 수정자 외에 커스텀 수정자를 만들 수 있다.
+- 구조 분해로 수정자 객체를 받고, `set` 옵션에서 값을 변환한다.
+
+```
+<MyComponent v-model.capitalize="myText" />
+```
+
+```
+<script setup lang="ts">
+const [model, modifiers] = defineModel<string, 'capitalize'>({
+  set(value) {
+    if (value && modifiers.capitalize) {
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+    return value
+  }
+})
+</script>
+
+<template>
+  <input type="text" v-model="model" />
+</template>
+```
+
+**4. 관계 없는 컴포넌트 간 통신**
+
+- vue3 에서는 `$on` / `$off` 가 제거되어 `new Vue()` 이벤트 버스를 사용할 수 없다.
+- 우선순위 : **Pinia(공유 상태)** > **provide / inject(조상 → 자손)** > **mitt(이벤트 버스가 꼭 필요한 경우)**
+
+**- provide / inject**
+
+- 조상 컴포넌트에서 provide 한 값을 깊이에 상관없이 자손 컴포넌트에서 inject 할 수 있다.
+- 타입 안전을 위해 Symbol 을 확장하는 제네릭 타입인 **InjectionKey** 로 키를 만들고, 여러 컴포넌트에서 가져올 수 있도록 별도 파일에 둔다.
+
+```
+// keys.ts
+import type { InjectionKey, Ref } from 'vue'
+
+export const themeKey = Symbol() as InjectionKey<Ref<string>>
+```
+
+```
+// 조상 컴포넌트
+import { provide, ref } from 'vue'
+import { themeKey } from '@/keys'
+
+const theme = ref('dark')
+provide(themeKey, theme) // 다른 타입의 값을 제공하면 에러가 발생한다.
+
+// 자손 컴포넌트
+import { inject } from 'vue'
+import { themeKey } from '@/keys'
+
+const theme = inject(themeKey) // type: Ref<string> | undefined
+```
+
+- provider 가 런타임에 값을 제공한다는 보장이 없으므로 inject 결과에는 undefined 가 포함된다. 기본값을 전달하면 undefined 가 제거된다.
+- 문자열 키를 사용하면 타입이 unknown 이 되므로 제네릭으로 명시한다.
+
+```
+const theme = inject(themeKey, ref('light')) // type: Ref<string>
+const foo = inject<string>('foo', 'bar') // type: string
+```
+
+**- mitt ( 이벤트 버스 )**
+
+```
+npm install mitt
+```
+
+```
+// eventBus.ts
+import mitt from 'mitt'
+
+type Events = {
+  'user:selected': number
+}
+
+export const eventBus = mitt<Events>()
+```
+
+```
+// 이벤트를 보내는 컴포넌트
+import { eventBus } from '@/eventBus'
+
+eventBus.emit('user:selected', 10)
+
+// 이벤트를 받는 컴포넌트 - 언마운트 시 반드시 해제한다.
+import { onMounted, onUnmounted } from 'vue'
+import { eventBus } from '@/eventBus'
+
+function handleSelected(id: number) {
+  console.log(id)
+}
+
+onMounted(() => eventBus.on('user:selected', handleSelected))
+onUnmounted(() => eventBus.off('user:selected', handleSelected))
+```
+
+---------
 
 **클래스 / 스타일 바인딩**
+
+- 템플릿 문법은 vue2 와 동일하고 `data` / `computed` 옵션 대신 `ref()` / `computed()` 를 사용한다.
 
 **a.객체 구문**
 
@@ -2954,327 +3328,371 @@ eventBus.$on('이벤트명', function(데이터){
 - active, text-danger 클래스가 적용되려면 true가 할당되면 된다.
 
 ```
-<div class="static"
-  v-bind:class="{ active: isActive, 'text-danger': hasError }"></div>
+<div class="static" :class="{ active: isActive, 'text-danger': hasError }"></div>
 ```
 
 ```
-data: {
-  isActive: true,
-  hasError: false
-}
+const isActive = ref(true)
+const hasError = ref(false)
 ```
 
 **- 객체 대입 방식**
 
 ```
-<div v-bind:class="classObject"></div>
+<div :class="classObject"></div>
 ```
 
 ```
-data: {
-  classObject: {
-    active: true,
-    'text-danger': false
-  }
-}
+const classObject = reactive({
+  active: true,
+  'text-danger': false
+})
 ```
 
-**- 객체 (함수리턴) 대입 방식**
+**- 객체 (computed 리턴) 대입 방식**
 
 ```
-<div v-bind:class="classObject"></div>
+<div :class="classObject"></div>
 ```
 
 ```
-data: {
-  isActive: true,
-  error: null
-},
-computed: {
-  classObject() {
-    return {
-      active: this.isActive && !this.error,
-      'text-danger': this.error && this.error.type === 'fatal'
-    }
-  }
-}
+const isActive = ref(true)
+const error = ref<{ type: string } | null>(null)
+
+const classObject = computed(() => ({
+  active: isActive.value && !error.value,
+  'text-danger': error.value?.type === 'fatal'
+}))
 ```
 
 **b.배열 구문**
+
 - errorClass는 항상 적용되고 isActive 가 true 일 경우에만 active 적용.
 
 ```
-<div v-bind:class="[{ active: isActive }, errorClass]"></div>
+<div :class="[{ active: isActive }, errorClass]"></div>
+```
+
+**c.스타일 바인딩**
+
+```
+<div :style="{ color: activeColor, fontSize: `${fontSize}px` }"></div>
+```
+
+- `<style scoped>` 안에서 `v-bind()` 로 스크립트의 상태값을 CSS 에 바로 연결할 수 있다.
+
+```
+<script setup lang="ts">
+const themeColor = ref('#2f4dc9')
+</script>
+
+<style scoped>
+.title {
+  color: v-bind(themeColor);
+}
+</style>
 ```
 
 ### 2. 라우터 & HTTP
-- 터미널에 아래와 같은 구문으로 라우터를 추가
-  (TypeScript 사용자는 vue-router@3.0+와 vue@2.5+를 사용 )
+
+- 터미널에 아래와 같은 구문으로 라우터를 추가 ( vue3 는 vue-router 4 이상 사용. 최신은 5.x )
 
 ```
 npm install vue-router
 ```
 
-설치한 라우터 사용(라우터를 명시적 추가 및 선언 )
+- `new VueRouter()` 대신 `createRouter()` 를 사용하고, `mode: 'history'` 대신 `history` 옵션에 히스토리 함수를 지정한다.
+- 라우트 컴포넌트는 `() => import()` 로 지연 로딩(코드 분할)하는 것을 권장한다.
 
 ```
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+// router/index.ts
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '@/views/HomeView.vue'
 
-Vue.use(VueRouter)
-```
-
-```
-const User = {
-  template: '<div>User</div>'
-}
-
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // 동적 세그먼트는 콜론으로 시작합니다.
-    { path: '/user/:id', component: User }
+    { path: '/', name: 'home', component: HomeView },
+    // 동적 세그먼트는 콜론으로 시작한다.
+    { path: '/user/:id', name: 'user', component: () => import('@/views/UserView.vue') },
+    // vue2 의 '*' 대신 정규식 파라미터로 404 를 처리한다.
+    { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/views/NotFound.vue') }
   ]
 })
+
+export default router
 ```
+
+| 히스토리 | 설명 |
+|------|------|
+| `createWebHistory()` | HTML5 history 모드 ( 서버에서 모든 경로를 index.html 로 연결하는 설정 필요 ) |
+| `createWebHashHistory()` | `#` 해시 모드 ( 서버 설정 불필요 / GitHub Pages 등 정적 호스팅 ) |
 
 동적 세그먼트는 콜론 : 으로 표시한다.
 
-라우트가 이리하면 동적 세그먼트의 값은 모든 컴포넌트에서 this.$route.params 로 표신된다.
+`<script setup>` 에서는 `this.$route` / `this.$router` 대신 **useRoute()** / **useRouter()** 를 사용한다.
 
 ```
-const User = {
-  template: '<div>User {{ $route.params.id }}</div>'
+<script setup lang="ts">
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
+const router = useRouter()
+
+function goHome() {
+  router.push({ name: 'home' })
 }
+</script>
+
+<template>
+  <div>User {{ route.params.id }}</div>
+</template>
 ```
 
-동일한 라우트에 여러 동적 세그먼트를 가질 수 있으며, $route.params 의 해당 필드에 매핑된다.
+동일한 라우트에 여러 동적 세그먼트를 가질 수 있으며, route.params 의 해당 필드에 매핑된다.
 
 /user/:username -->/user/tom --> { username:'tom'}
 
-$route.params 외에도 $route 객체는 **$route.query** (URL에 쿼리가 있는 경우), $route.hash 등의 유용한 정보를 제공한다.
+route.params 외에도 route 객체는 **route.query** (URL에 쿼리가 있는 경우), route.hash 등의 유용한 정보를 제공한다.
 
-동일한 컴포넌트의 params 변경 사항에 반응하려면 $route 객체를 watch 로 체크할 수 있다.
+동일한 컴포넌트에서 params 변경 사항에 반응하려면 watch 에 getter 를 전달한다.
 
 ```
-const User = {
-  template: '...',
-  watch: {
-    '$route' (to, from) {
-      // 경로 변경에 반응하여...
-    }
+import { watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+watch(
+  () => route.params.id,
+  (newId, oldId) => {
+    // 경로 변경에 반응하여...
   }
-}
+)
 ```
 
-혹은 beforeRouteUpdate 가드를 사용 할 수 있다.
+혹은 onBeforeRouteUpdate 가드를 사용 할 수 있다.
 
 ```
-const User = {
-  template: '...',
-  beforeRouteUpdate (to, from, next) {
-    // react to route changes...
-    // don't forget to call next()
-  }
-}
+import { onBeforeRouteUpdate } from 'vue-router'
+
+onBeforeRouteUpdate(async (to, from) => {
+  // react to route changes...
+})
 ```
 
 ### 라우터 가드
 
-- 아래 befoeEnter 는 각 라우트에 해당하는 개별 라우트 가드이다.
+- vue-router 4 부터 가드는 **next() 를 호출하지 않고 값을 반환**하는 방식을 사용한다. ( vue-router 5 에서 `next` 는 deprecated )
 
 ```
-const router = new VueRouter({
+router.beforeEach((to, from) => {
+  const auth = useAuthStore()
+
+  if (to.meta.requiresAuth && !auth.isLoggedIn) {
+    return { name: 'login', query: { redirect: to.fullPath } }
+  }
+})
+```
+
+- 아래 beforeEnter 는 각 라우트에 해당하는 개별 라우트 가드이다.
+
+```
+const router = createRouter({
+  history: createWebHistory(),
   routes: [
     {
       path: '/foo',
       component: Home,
-      beforeEnter: (to, from, next) => {
+      beforeEnter: (to, from) => {
         // ...
+        return true
       }
     }
   ]
 })
 ```
 
-네비게이션이 트리거될 때마다 가드가 작성 순서에 따라 호출되기 전의 모든 경우에 발생한다.
+네비게이션이 트리거될 때마다 가드가 작성 순서에 따라 호출된다.
 
-가드는 비동기식으로 실행 될 수 있으며 네비게이션은 모든 훅이 해결되기 전까지 **보류 중** 으로 진행된다.
+가드는 비동기식(async)으로 실행 될 수 있으며 네비게이션은 모든 가드가 해결되기 전까지 **보류 중** 으로 진행된다.
 
-모든 가드 기능은 세 가지 전달인자를 받는다.
+가드 함수는 두 가지 전달인자를 받는다.
 
--   **to: 라우트**: 대상 Route객체로 이동
--   **from: 라우트**: 현재 라우트로 오기전 라우트
--   **next: 함수**: 이 함수는 **훅을 해결하기 위해** 호출 되어야 한다.
--   **next()**: 파이프라인의 다음 훅으로 이동. 훅이 없는 경우 네비게이션은 **승인**.
--   **next(false)**: 현재 네비게이션을 중단. 브라우저 URL 이 변경되면(사용자 또는 뒤로 버튼을 통해 수동으로 변경됨) from 경로의 URL 로 재설정된다.
--   **next('/') 또는 next({ path: '/' })**: 다른 위치로 리디렉션.
--   **next(error)**: (2.4.0 이후 추가) next 에 전달된 인자가 Error 의 인스턴스이면 탐색이 중단되고 router.onError() 를 이용해 등록 된 콜백에 에러가 전달.
+- **to**: 이동할 대상 라우트 객체
+- **from**: 현재 라우트로 오기전 라우트 객체
+
+가드의 반환 값에 따라 네비게이션이 결정된다.
+
+- **반환 값 없음(undefined) 또는 true**: 네비게이션 **승인**.
+- **false**: 현재 네비게이션을 중단. 브라우저 URL 이 변경되었다면 from 경로의 URL 로 재설정된다.
+- **'/' 또는 { name: 'login' } (라우트 위치)**: 다른 위치로 리디렉션.
+- **에러 throw**: 탐색이 중단되고 router.onError() 로 등록 된 콜백에 에러가 전달.
 
 ### axios
 
-vue-resource 라고는 있지만 더이상 업데이트 되지 않고 있고 해결되지 않은 이슈도 많다고 해서
-공식 홈페이지에선 axios를 더 추천함. 터미널에서 아래의 코드로 설치.
+vue3 에서도 HTTP 통신은 axios 를 주로 사용한다. ( 브라우저 내장 `fetch` 를 사용해도 무방 ) 터미널에서 아래의 코드로 설치.
 
 ```
-npm install --save axios
+npm install axios
 ```
 
-전역으로 사용하려면 Vue의 프로토타입에 추가해서 사용하면 된다.
+- `Vue.prototype.$http` 방식 대신 **axios 인스턴스를 모듈로 만들어 import** 해서 사용한다. ( 타입 추론, 테스트 모킹에 유리 )
+- API 주소는 하드코딩하지 않고 `.env` 파일의 `VITE_` 접두어 환경 변수로 관리한다.
 
 ```
-import Vue from 'vue'
-import App from './App'
+// .env
+VITE_API_BASE_URL=https://api.example.com
+```
+
+```
+// api/http.ts
 import axios from 'axios'
 
-Vue.prototype.$http=axios
+export const http = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  timeout: 10000
+})
+```
 
-new Vue({
-  el:'#app',
-  template:'<App />',
-  components:{ App }
-  })
+- 꼭 전역 속성이 필요하다면 `app.config.globalProperties` 를 사용한다.
+
+```
+app.config.globalProperties.$http = http
 ```
 
 Request Method
 
 **axios.request(config)**
 
-**axios.get(url\[, config\])**
+**axios.get(url, config)**
 
-**axios.delete(url\[, config\])**
+**axios.delete(url, config)**
 
-**axios.head(url\[, config\])**
+**axios.head(url, config)**
 
-**axios.options(url\[, config\])**
+**axios.options(url, config)**
 
-**axios.post(url\[, data\[, config\]\])**
+**axios.post(url, data, config)**
 
-**axios.put(url\[, data\[, config\]\])**
+**axios.put(url, data, config)**
 
-**axios.patch(url\[, data\[, config\]\])**
+**axios.patch(url, data, config)**
 
-기본 사용법
+기본 사용법 ( async / await + 응답 타입 지정 )
 
 ```
-const axios = require('axios');
+import { http } from '@/api/http'
 
-// Make a request for a user with a given ID
-axios.get('/user?ID=12345')
-  .then(function (response) {
-    // handle success
-    console.log(response);
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  .then(function () {
-    // always executed
-  });
+interface User {
+  id: number
+  name: string
+}
 
-// Optionally the request above could also be done as
-axios.get('/user', {
-    params: {
-      ID: 12345
+export async function fetchUser(id: number): Promise<User> {
+  const { data } = await http.get<User>(`/user/${id}`)
+  return data
+}
+
+// 쿼리 파라미터는 params 로 전달
+const { data } = await http.get<User[]>('/user', {
+  params: { ID: 12345 }
+})
+```
+
+컴포넌트에서는 로딩 / 에러 상태를 함께 관리하는 composable 로 분리해서 사용한다.
+
+```
+// composables/useUser.ts
+import { ref } from 'vue'
+import { fetchUser } from '@/api/user'
+import type { User } from '@/api/user'
+
+export function useUser() {
+  const user = ref<User | null>(null)
+  const isLoading = ref(false)
+  const error = ref<Error | null>(null)
+
+  async function load(id: number) {
+    isLoading.value = true
+    error.value = null
+    try {
+      user.value = await fetchUser(id)
+    } catch (e) {
+      error.value = e instanceof Error ? e : new Error(String(e))
+    } finally {
+      isLoading.value = false
     }
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  })
-  .then(function () {
-    // always executed
-  });  
-
-// Want to use async/await? Add the `async` keyword to your outer function/method.
-async function getUser() {
-  try {
-    const response = await axios.get('/user?ID=12345');
-    console.log(response);
-  } catch (error) {
-    console.error(error);
   }
+
+  return { user, isLoading, error, load }
 }
 ```
 
 #### 동시요청 수행
 
+- `axios.all` / `axios.spread` 는 deprecated 이므로 `Promise.all` 을 사용한다.
+
 ```
-function getUserAccount() {
-  return axios.get('/user/12345');
-}
+const [account, permissions] = await Promise.all([
+  http.get('/user/12345'),
+  http.get('/user/12345/permissions')
+])
+```
 
-function getUserPermissions() {
-  return axios.get('/user/12345/permissions');
-}
+#### 요청 취소
 
-axios.all([getUserAccount(), getUserPermissions()])
-  .then(axios.spread(function (acct, perms) {
-    // Both requests are now complete
-  }));
+- `CancelToken` 은 deprecated 이므로 `AbortController` 를 사용한다.
+
+```
+const controller = new AbortController()
+
+http.get('/user', { signal: controller.signal })
+
+// 요청 취소 ( ex. 컴포넌트 언마운트 시 )
+controller.abort()
 ```
 
 #### axios API
 
 ```
 // Send a POST request
-axios({
+http({
   method: 'post',
   url: '/user/12345',
   data: {
     firstName: 'Fred',
     lastName: 'Flintstone'
   }
-});
-
-// GET request for remote image
-axios({
-  method:'get',
-  url:'http://bit.ly/2mTM3nY',
-  responseType:'stream'
 })
-  .then(function (response) {
-    response.data.pipe(fs.createWriteStream('ada_lovelace.jpg'))
-  });
-```
-
-#### 전역적 axios 지정
-
-```
-axios.defaults.baseURL = 'https://api.example.com';
-axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 ```
 
 #### interceptors
 
--요청 또는 응답이 처리되거나 처리되기 전에 해당요청 또는 응답을 인터셉트 할 수 있다.
+- 요청 또는 응답이 처리되거나 처리되기 전에 해당요청 또는 응답을 인터셉트 할 수 있다.
 
 ```
 //요청에 대한 interceptor 추가
-axios.interceptors.request.use(function (config) {
-    // ~ 요청 전에 무언가 보낼 코드 부분 ~
-    return config;
-  }, function (error) {
-     //에러 응답
-    return Promise.reject(error);
-  });
+http.interceptors.request.use(
+  (config) => {
+    // ~ 요청 전에 무언가 보낼 코드 부분 ~ ( ex. 인증 토큰 헤더 추가 )
+    return config
+  },
+  (error) => Promise.reject(error)
+)
 
 //응답에 대한 interceptor 추가
-axios.interceptors.response.use(function (response) {
-    // ~ 응답에 대한 무언가의 코드 부분 ~
-    return response;
-  }, function (error) {
-    //에러 응답
-    return Promise.reject(error);
-  });
+http.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // ~ 공통 에러 처리 ( ex. 401 이면 로그인 페이지로 이동 ) ~
+    return Promise.reject(error)
+  }
+)
 ```
 
 ### 3. 뷰 템플릿
-- 
+
 - 디렉티브
 
 **1. v-bind**
@@ -3284,221 +3702,13 @@ axios.interceptors.response.use(function (response) {
 <a v-bind:href="url"> ... </a>
 <!-- 약어 -->
 <a :href="url"> ... </a>
+<!-- 속성명과 변수명이 같으면 값 생략 가능 (vue 3.4 이상) - :id="id" 와 동일 -->
+<div :id></div>
+<!-- 동적 속성명 -->
+<a :[attributeName]="url"> ... </a>
 ```
 
-**2. v-on**
-
-```
-<!-- 전체 문법 -->
-<a v-on:click="doSomething"> ... </a>
-<!-- 약어 -->
-<a @click="doSomething"> ... </a>
-```
-
-**3. **v-for****
-
-**v-for 디렉티브를 사용하여 배열을 기반으로 리스트 렌더링.**
-
-**형식 - item in items**
-
-**items 는 원본 데이터 배열**
-
-**item 은 반복되는 배열 엘리먼트의 **별칭**.**
-
-```
-<ul id="example-2">
-  <li v-for="(item, index) in items">
-    {{ parentMessage }} - {{ index }} - {{ item.message }}
-  </li>
-</ul>
-```
-
-```
-var example2 = new Vue({
-  el: '#example-2',
-  data: {
-    parentMessage: 'Parent',
-    items: [
-      { message: 'Foo' },
-      { message: 'Bar' }
-    ]
-  }
-})
-```
-
-키에 대한 두번째 전달 인자를 제공.
-
-```
-<div v-for="(value, key) in object">
-  {{ key }}: {{ value }}
-</div>
-```
-
-**4. v-for에서 :key ( 2.2.0 이상에서 v-for는 key 가 필수. )**
-
-Vue가 각 노드의 ID를 추적하고 기존 엘리먼트를 재사용하고 재정렬할 수 있도록d
-힌트를 제공하려면 각 항목에 고유한 key 속성을 제공. **(key 에 대한 이상적인 값은 각 항목의 고유한 ID. )**
-
-```
-<div v-for="item in items" :key="item.id">
-  <!-- content -->
-</div>
-```
-
-반복되는 DOM 내용이 단순하지 않거나 의도적인 성능 향상을 위해 기본 동작에 의존하지 않는한 가능하면
-언제나 v-for에 key 를 추가하는 것이 좋다. key 는 Vue 가 노드를 식별하는 일반적인 메커니즘이기 때문에
-v- for 와 특별히 연관되지 않는 다른 용도로도 사용된다.
-- 데이터 바인딩
-
-템플릿 문법 - {{ }}
-
-### 4. 상태관리 Vuex.Store
-
-```
-import Vuex from 'vuex'
-
-const store = new Vuex.Store({ ...options })
-```
-
-#### Vuex.Store 생성자 옵션
-
-#### state
-
--   자료형: Object | Function 오브젝트를 반환하는 함수를 전달하면, 반환된 오브젝트가 루트 상태로 사용.이것은 모듈 재사용을 위해 상태 객체를 재사용하고자 할 때 유용하다.
--   Vuex 저장소의 루트 상태 객체.
-
-#### mutations
-
--   자료형: { \[type: string\]: Function }(모듈에 정의 된 경우 모듈 로컬 상태가 된다). 두 번째 payload 전달인자가 있으면 처리.
--   저장소에 변이를 등록. 핸들러 함수는 항상 첫 번째 전달인자로 state 를 받는다
-
-#### actions
-
-\- 자료형: { \[type: string\]: Function }
-
--   저장소에 액션을 등록한다. 핸들러 함수는 다음 속성을 노출하는 context 객체를 받는다.
-
-```
-{
-  state,      // store.state와 같습니다. 또는 모듈에 있는 경우 로컬 상태
-  rootState,  // store.state와 같습니다. 모듈 안에만 존재합니다
-  commit,     // store.commit와 같습니다.
-  dispatch,   // store.dispatch와 같습니다.
-  getters,    // store.getters와 같습니다. 또는 모듈에 있는 로컬 getters
-  rootGetters // store.getters와 같습니다. 모듈 안에만 존재합니다
-}
-```
-
-두 번째 payload 전달인자가 있으면 처리한다.
-
-##### 컴포넌트 바인딩 헬퍼 ( 반복적이고 복잡한 코드선언 입력을 간소화 시킨다 )
-
-**mapState**(namespace?: string, map: Array<string> | Object<string | function>): Object
-
-컴포넌트가 여러 저장소 상태 속성이나 getter 를 사용해야하는 경우 계산된 속성을 모두 선언하면 반복적이고 장황해진다.
-
-이를 처리하기 위해 **계산된 getter 함수를 생성하는** **mapState 헬퍼를 사용하여 키 입력을 줄일 수 있다.**
-
-첫번째 인자값에 namespace는 타입이 string으로써 ?로 기재된 즉, **optional 파라미터** 타입이기에 생략 혹은 호출할 수 있다.
-
-두번째 인자값은 **유니언타입**( let c = a | b  즉 c는 a또는 b 이다. )으로써 Array 혹은 오브젝트이다.
-
-오브젝트 내부 속성들 타입도 유니언타입으로써 string 혹은 함수가 될 수 있다.
-
-**mapMutations**(namespace?: string, map: Array<string> | Object<string | function>): Object
-
-변이를 커밋하는 컴포넌트 메소드 옵션을 만든다.
-
-첫번째인자값은 string 타입의 namespace가 될 수 있다. (**optional 파라미터**타입이기에 생략 혹은 호출할 수 있다. )
-
-두번째 인자값은**유니언타입**(let c = a | b 즉 c는 a또는 b 이다. )으로써 Array 혹은 오브젝트이다.
-
-오브젝트 내부 속성들 타입도 유니언타입으로써 string 혹은 함수\[ **function(commit: function, ...args: any\[\])** \]가 될 수 있다.
-
-### 5. 트랜지션
-
-Vue 는 트랜지션 래퍼 컴포넌트를 제공하므로 다음과 같은 상황에서 모든 엘리먼트 또는
-
-컴포넌트에 대한 진입 / 진출 트랜지션을 추가 할 수 있다.
-
-1. 조건부 렌더링 (v-if 사용)
-2. 조건부 출력 (v-show 사용)
-3. 동적 컴포넌트
-4. 컴포넌트 루트 노드
-
-트랜지션 클래스
-
-진입 : v-enter-active(v-enter + v-enter-to )
-
-진출 : v-leave-active(v-leave + v-leave-to )
-
-- **v-enter**: enter 의 시작 상태. 엘리먼트가 삽입되기 전에 적용되고 한 프레임 후에 제거.
-
-- **v-enter-active**: enter 에 대한 활성 및 종료 상태. 엘리먼트가 삽입되기 전에 적용. 트랜지션 / 애니메이션이 완료되면 제거.
-
-- **v-enter-to**: **2.1.8 이상 버전에서 지원합니다.** 진입 상태의 끝에서 실행. 엘리먼트가 삽입된 후 (동시에 v-leave 가 제거됨), 트랜지션/애니메이션이 끝나면 제거되는 하나의 프레임을 추가.
-
-- **v-leave** : leave 를 위한 시작 상태. 진출 트랜지션이 트리거 될 때 적용되고 한 프레임 후에 제거
-
-- **v-leave-active**: leave 에 대한 활성 및 종료 상태. 진출 트랜지션이 트리거되면 적용되고 트랜지션 / 애니메이션이 완료되면 제거.
-
-- **v-leave-to**: **2.1.8 이상 버전에서 지원합니다.**  진출 상태의 끝에서 실행. 진출 트랜지션이 트리거되고 (동시에 v-leave 가 제거됨), 트랜지션/애니메이션이 끝나면 제거되는 하나의 프레임을 추가.
-
-여기서 v-접두어는 이름없이 <transition>엘리먼트를 사용할 때의 기본값이다.
-
-예를 들어<transition name = "my-trans">을 사용하면 v-enter클래스는 my-trans\-enter 가 됩니다.
-
-v-enter-active 와v-leave-active 는 입/출력 트랜지션을 위한 다른 easing curve를 지정할 수있는 기능을 제공한다.
-
-```
-<div id="example-1">
-  <button @click="show = !show">
-    Toggle render
-  </button>
-  <transition name="slide-fade">
-    <p v-if="show">hello</p>
-  </transition>
-</div>
-```
-
-```
-new Vue({
-  el: '#example-1',
-  data: {
-    show: true
-  }
-})
-```
-
-```
-/* 애니메이션 진입 및 진출은 다른 지속 시간 및 */
-/* 타이밍 기능을 사용할 수 있습니다. */
-.slide-fade-enter-active {
-  transition: all .3s ease;
-}
-.slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to{
-  transform: translateX(10px);
-  opacity: 0;
-}
-```
-
-참고: [ https://kr.vuejs.org/v2/guide/](https://kr.vuejs.org/v2/guide/)   <br/>
-
-
-[https://vuex.vuejs.org/kr/api/](https://vuex.vuejs.org/kr/api/)
-
-
--------------
-
-## 15. vue3.x  간단 정리
-
-
-### `<script setup>` 사용, ts 방식 
-1. 템플릿 문법
-- 여러 속성을 동적으로 바인딩
+- 객체를 전달하면 여러 속성을 한 번에 바인딩한다.
 
 ```
 const objectOfAttrs = {
@@ -3511,126 +3721,322 @@ const objectOfAttrs = {
 <div v-bind="objectOfAttrs"></div>
 ```
 
-- 단축 문법
-```<div :id="dynamicId"></div>```
-
-
--------------
-
-
-2. Props
-
-- 문법 제한# 
-  올바른 런타임 코드를 생성하려면 defineProps() 의 제너릭 전달인자가 다음 중 하나를 선택.
-  
-  * 객체 리터럴 타입:
-
-    ```
-    
-    defineProps<{ /*... */ }>()
-    
-    ````
-
-  * 동일한 파일에 있는 인터페이스 또는 객체 리터럴 타입에 대한 참조:
-
-    ```
-    
-    interface Props {/* ... */}
-    defineProps<Props>()
-    
-    ```
-    
-> note : defineProps 의 제네릭 전달인자는 가져온 타입을 사용 할 수 없다
+**2. v-on**
 
 ```
-import { Props } from './other-file'
-
-// 지원하지 않음
-defineProps<Props>()
+<!-- 전체 문법 -->
+<a v-on:click="doSomething"> ... </a>
+<!-- 약어 -->
+<a @click="doSomething"> ... </a>
 ```
 
-> note: 해결책 -> 컴파일러 매크로 withDefaults 
+**3. v-for**
 
-```
-export interface Props {
-  msg?: string
-  labels?: string[]
-}
+**v-for 디렉티브를 사용하여 배열을 기반으로 리스트 렌더링.**
 
-const props = withDefaults(defineProps<Props>(), {
-  msg: 'hello',
-  labels: () => ['one', 'two']
-})
-```
+**형식 - item in items**
 
--------------
+**items 는 원본 데이터 배열**
 
-3. 컴포넌트 Emits 작성
+**item 은 반복되는 배열 엘리먼트의 별칭.**
 
 ```
 <script setup lang="ts">
-// runtime
-// 런타임
-const emit = defineEmits(['change', 'update'])
+import { ref } from 'vue'
 
-// type-based
-// 타입기반
-const emit = defineEmits<{
-  (e: 'change', id: number): void
-  (e: 'update', value: string): void
-}>()
+const parentMessage = ref('Parent')
+const items = ref([
+  { id: 1, message: 'Foo' },
+  { id: 2, message: 'Bar' }
+])
+</script>
+
+<template>
+  <ul>
+    <li v-for="(item, index) in items" :key="item.id">
+      {{ parentMessage }} - {{ index }} - {{ item.message }}
+    </li>
+  </ul>
+</template>
+```
+
+키에 대한 두번째 전달 인자를 제공.
+
+```
+<div v-for="(value, key) in object" :key="key">
+  {{ key }}: {{ value }}
+</div>
+```
+
+**4. v-for에서 :key**
+
+Vue가 각 노드의 ID를 추적하고 기존 엘리먼트를 재사용하고 재정렬할 수 있도록
+힌트를 제공하려면 각 항목에 고유한 key 속성을 제공. **(key 에 대한 이상적인 값은 각 항목의 고유한 ID. index 는 사용하지 않는다. )**
+
+- vue3 에서는 `<template v-for>` 의 key 를 자식이 아닌 `<template>` **태그에** 지정한다.
+
+```
+<template v-for="item in items" :key="item.id">
+  <dt>{{ item.title }}</dt>
+  <dd>{{ item.desc }}</dd>
+</template>
+```
+
+**5. v-if 와 v-for**
+
+- vue3 에서는 **v-if 가 v-for 보다 우선순위가 높다.** ( vue2 와 반대 ) 같은 엘리먼트에 함께 사용하지 않는다.
+- 목록 필터링은 computed 로 처리한다.
+
+```
+<!-- Bad -->
+<li v-for="user in users" v-if="user.isActive" :key="user.id">{{ user.name }}</li>
+
+<!-- Good -->
+<li v-for="user in activeUsers" :key="user.id">{{ user.name }}</li>
+```
+
+```
+const activeUsers = computed(() => users.value.filter((user) => user.isActive))
+```
+
+**6. 템플릿 ref**
+
+- vue 3.5 부터 `useTemplateRef()` 로 템플릿의 엘리먼트를 참조한다. ( 인자는 템플릿의 ref 속성값 )
+- 컴포넌트가 마운트되기 전이나 v-if 로 언마운트된 경우 값이 null 이므로 옵셔널 체이닝(`?.`)으로 접근한다.
+
+```
+<script setup lang="ts">
+import { onMounted, useTemplateRef } from 'vue'
+
+const inputRef = useTemplateRef<HTMLInputElement>('search-input')
+
+onMounted(() => {
+  inputRef.value?.focus()
+})
+</script>
+
+<template>
+  <input ref="search-input" />
+</template>
+```
+
+- **자식 컴포넌트 ref** : `<script setup>` 컴포넌트는 기본적으로 닫혀 있으므로, 부모에서 호출할 메서드는 `defineExpose()` 로 공개한다.
+
+```
+<!-- MyModal.vue -->
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const isContentShown = ref(false)
+
+function open() {
+  isContentShown.value = true
+}
+
+defineExpose({ open })
 </script>
 ```
 
+- 자식 컴포넌트의 인스턴스 타입은 `typeof` 로 컴포넌트 타입을 가져온 뒤 `InstanceType` 유틸리티로 추출한다.
 
--------------
+```
+<!-- App.vue -->
+<script setup lang="ts">
+import { useTemplateRef } from 'vue'
+import MyModal from './MyModal.vue'
 
-4. ref()에 타입 적용하기
+const modal = useTemplateRef<InstanceType<typeof MyModal>>('modal')
 
+function openModal() {
+  modal.value?.open()
+}
+</script>
 
-- Ref 타입을 사용:
+<template>
+  <button type="button" @click="openModal">모달 열기</button>
+  <MyModal ref="modal" />
+</template>
+```
+
+- 데이터 바인딩
+
+템플릿 문법 - {{ }}
+
+### 4. 상태관리 Pinia
+
+- vue3 공식 상태관리 라이브러리는 **Pinia** 이다. ( Vuex 는 유지보수 모드 )
+- Vuex 와 달리 **mutations 가 없고**, 모듈 대신 **스토어를 여러 개** 정의한다. TypeScript 타입 추론이 기본 지원된다.
+
+```
+npm install pinia
+```
+
+**Vuex → Pinia 대응 관계**
+
+| Vuex | Pinia ( setup store ) |
+|------|------|
+| state | `ref()` / `reactive()` |
+| getters | `computed()` |
+| mutations | 없음 ( action 또는 상태 직접 변경 ) |
+| actions | 일반 함수 ( 동기 / 비동기 모두 가능 ) |
+| modules | 스토어 파일 분리 ( `useUserStore`, `useCartStore` ... ) |
+
+#### defineStore
+
+- 첫번째 인자는 스토어 고유 id, 두번째 인자는 setup 함수(권장) 또는 옵션 객체이다.
+- setup 함수에서 **return 한 값만** 스토어의 state / getters / actions 로 노출된다.
+
+```
+// stores/counter.ts
+import { defineStore } from 'pinia'
+import { computed, ref } from 'vue'
+import { http } from '@/api/http'
+
+export const useCounterStore = defineStore('counter', () => {
+  const count = ref(0)
+  const doubleCount = computed(() => count.value * 2)
+
+  function increment() {
+    count.value++
+  }
+
+  async function fetchCount() {
+    const { data } = await http.get<number>('/count')
+    count.value = data
+  }
+
+  return { count, doubleCount, increment, fetchCount }
+})
+```
+
+#### 컴포넌트에서 사용
+
+- 스토어를 구조 분해하면 반응성을 잃기 때문에 state / getters 는 **storeToRefs()** 로 감싸서 꺼낸다.
+- actions 는 함수이므로 스토어에서 바로 구조 분해해도 된다.
+
+```
+<script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useCounterStore } from '@/stores/counter'
+
+const counterStore = useCounterStore()
+const { count, doubleCount } = storeToRefs(counterStore)
+const { increment } = counterStore
+</script>
+
+<template>
+  <button type="button" @click="increment">{{ count }} / {{ doubleCount }}</button>
+</template>
+```
+
+> note : Options API 를 유지하는 컴포넌트에서는 Vuex 처럼 mapState / mapActions 헬퍼도 사용할 수 있다.
+
+### 5. 트랜지션
+
+Vue 는 트랜지션 래퍼 컴포넌트(`<Transition>`)를 제공하므로 다음과 같은 상황에서 모든 엘리먼트 또는
+
+컴포넌트에 대한 진입 / 진출 트랜지션을 추가 할 수 있다.
+
+1. 조건부 렌더링 (v-if 사용)
+2. 조건부 출력 (v-show 사용)
+3. 동적 컴포넌트 ( `<component :is>` )
+4. key 속성 변경
+
+트랜지션 클래스 ( vue3 에서 **v-enter → v-enter-from**, **v-leave → v-leave-from** 으로 이름이 변경 )
+
+진입 : v-enter-active(v-enter-from + v-enter-to )
+
+진출 : v-leave-active(v-leave-from + v-leave-to )
+
+- **v-enter-from**: enter 의 시작 상태. 엘리먼트가 삽입되기 전에 적용되고 한 프레임 후에 제거.
+- **v-enter-active**: enter 에 대한 활성 및 종료 상태. 엘리먼트가 삽입되기 전에 적용. 트랜지션 / 애니메이션이 완료되면 제거.
+- **v-enter-to**: 진입 상태의 끝. 엘리먼트가 삽입된 후 한 프레임 뒤에 추가(동시에 v-enter-from 이 제거됨)되고, 트랜지션/애니메이션이 끝나면 제거.
+- **v-leave-from** : leave 를 위한 시작 상태. 진출 트랜지션이 트리거 될 때 적용되고 한 프레임 후에 제거
+- **v-leave-active**: leave 에 대한 활성 및 종료 상태. 진출 트랜지션이 트리거되면 적용되고 트랜지션 / 애니메이션이 완료되면 제거.
+- **v-leave-to**: 진출 상태의 끝. 진출 트랜지션이 트리거되고 한 프레임 뒤에 추가(동시에 v-leave-from 이 제거됨)되고, 트랜지션/애니메이션이 끝나면 제거.
+
+여기서 v-접두어는 이름없이 `<Transition>` 을 사용할 때의 기본값이다.
+
+예를 들어 `<Transition name="my-trans">` 을 사용하면 v-enter-from 클래스는 my-trans-enter-from 이 된다.
+
+v-enter-active 와 v-leave-active 는 입/출력 트랜지션을 위한 다른 easing curve를 지정할 수있는 기능을 제공한다.
+
+```
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const show = ref(true)
+</script>
+
+<template>
+  <button type="button" @click="show = !show">Toggle render</button>
+  <Transition name="slide-fade">
+    <p v-if="show">hello</p>
+  </Transition>
+</template>
+```
+
+```
+/* 애니메이션 진입 및 진출은 다른 지속 시간 및 */
+/* 타이밍 기능을 사용할 수 있습니다. */
+.slide-fade-enter-active {
+  transition: all .3s ease-out;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter-from, .slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+```
+
+- 리스트 항목의 추가 / 삭제 / 순서 변경 애니메이션은 `<TransitionGroup>` 을 사용한다.
+
+### 6. TypeScript 타입 지정
+
+> props / emits / defineModel / provide·inject / 템플릿 ref 의 타입 지정은 위 각 항목 참고.
+
+**1. ref()에 타입 지정하기**
+
+- 초기값에서 타입이 추론되며, 다른 타입을 허용하려면 제네릭 전달인자를 전달한다.
+
+```
+import { ref } from 'vue'
+
+const year = ref<string | number>('2020')
+
+year.value = 2020 // ok!
+```
+
+- `Ref` 타입으로 직접 지정할 수도 있다.
 
 ```
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
 const year: Ref<string | number> = ref('2020')
-
-year.value = 2020 // ok!
 ```
 
-- ref() 를 호출할 때 제너릭 전달인자를 전달:
-
-```
-import { ref } from 'vue'
-const year = ref<string | number>('2020')
-
-year.value = 2020 // ok!
-```
-
-> note : 제네릭 형식 타입를 지정하지만 초기 **값을 생략하면 결과 타입은 undefined** 를 포함하는 유니온 타입된다.
-
+> note : 제네릭 타입을 지정하고 **초기값을 생략하면 결과 타입은 undefined** 를 포함하는 유니온 타입이 된다.
 
 ```
 // 추론된 타입: Ref<number | undefined>
 const n = ref<number>()
 ```
 
+**2. reactive()에 타입 지정하기**
 
--------------
-
-5. reactive()에 타입 지정하기
-
-- 전달인자에서 타입을 암시적으로 추론: 
+- 전달인자에서 타입을 암시적으로 추론한다.
 
 ```
 import { reactive } from 'vue'
-// inferred type: { title: string }
+
 // 추론된 타입: { title: string }
 const book = reactive({ title: 'Vue 3 Guide' })
 ```
 
-- 명시적으로 입력하기 위해 인터페이스를 사용:
+- 명시적으로 지정할 때는 인터페이스를 사용한다.
 
 ```
 import { reactive } from 'vue'
@@ -3643,16 +4049,12 @@ interface Book {
 const book: Book = reactive({ title: 'Vue 3 Guide' })
 ```
 
+> note : 중첩된 ref 언래핑을 처리하는 반환 타입이 제네릭 인자 타입과 다르기 때문에 reactive() 의 제네릭 전달인자는 사용하지 않는 것이 좋다.  
+> `reactive<Book>({ title: 'Vue 3 Guide' })` - X
 
-> note: 중첩된 ref unwrapping 을 처리하는 반환 타입이 제네릭 인자 타입과 다르기 때문에 reactive() 의 제네릭 전달인자는 사용하지 않는 것이 좋다.
-> reactive<Book>({ title: 'Vue 3 Guide' })  - X 
+**3. computed()에 타입 지정하기**
 
-
--------------
-
-
-6. 계산된 속성( computed ) / computed()에 타입 지정하기
-- computed() 는 getter 의 반환 값을 기반으로 해당 타입을 추론:
+- computed() 는 getter 의 반환 값을 기반으로 타입을 추론한다.
 
 ```
 import { ref, computed } from 'vue'
@@ -3666,20 +4068,18 @@ const double = computed(() => count.value * 2)
 const result = double.value.split('')
 ```
 
-- 제네릭 인자를 통해 명시적으로 타입을 지정: 
+- 제네릭 인자를 통해 명시적으로 타입을 지정할 수 있다.
 
 ```
 const double = computed<number>(() => {
-  // type error if this doesn't return a number
+  // number 를 반환하지 않으면 타입 에러
+  return count.value * 2
 })
 ```
 
+**4. 이벤트 핸들러에 타입 지정하기**
 
--------------
-
-
-
-7. 이벤트 핸들러에 타입 지정
+- 네이티브 DOM 이벤트는 `Event` 타입으로 받고, `event.target` 은 타입 단언으로 좁힌다.
 
 ```
 <script setup lang="ts">
@@ -3693,191 +4093,11 @@ function handleChange(event: Event) {
 </template>
 ```
 
+참고:
 
--------------
-
-
-
-8. Provide / Inject 에 타입 지정하기
-- provide 및 inject은 일반적으로 별도의 컴포넌트에서 수행된다. 
-  inject 된 값을 적절하게 입력하기 위해 Vue는 Symbol 을 확장하는 제네릭 타입인 InjectionKey 인터페이스를 제공한다. 
-  provider와 consumer 간에 주입된 값의 타입을 동기화하는 데 사용할 수 있다:
-
-```
-import { provide, inject } from 'vue'
-import type { InjectionKey } from 'vue'
-
-const key = Symbol() as InjectionKey<string>
-provide(key, 'foo') // 문자열이 아닌 값을 제공하면 에러가 발생합니다
-const foo = inject(key) // type of foo: string | undefined
-```
-
-- 여러 컴포넌트에서 가져올 수 있도록 injection key를 별도의 파일에 배치하는 것이 좋다. 
-- 문자열 injection key를 사용할 때 주입된 값의 타입은 unknown 이 되므로, 제너릭 타입 전달인자를 통해 명시적으로 선언해야 한다.
-
-```
-const foo = inject<string>('foo') // type: string | undefined
-```
-
-- 주입된 값은 여전히 undefined 일 수 있습니다. provider가 런타임에 이 값을 제공할 것이라는 보장이 없기 때문. 
-  undefined 타입은 기본값을 제공하여 제거할 수 있다:
-
-```
-const foo = inject<string>('foo', 'bar') // type: string
-```
-
-- 값이 항상 제공된다고 확신하는 경우 값을 강제로 캐스팅할 수도 있다.
-
-```
-const foo = inject('foo') as string
-```
-
-
--------------
-
-
-
-9. 템플릿 Refs 에 타입 지정하기
-- 템플릿 refs는 명시적인 제네릭 타입 전달인자와 초기 값 null 로 생성되어야 합니다:
-- 타입 안전을 위해 el.value 에 접근할 때 옵셔널 체이닝 또는 타입 가드를 사용해야 한다. 
-- 이는 컴포넌트가 마운트될 때까지 초기 ref 값이 null 이고 참조된 ref 가 v-if 에 의해 마운트 해제된 경우에도 null 로 설정될 수 있기 때문.
-
-```
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-
-const el = ref<HTMLInputElement | null>(null)
-
-onMounted(() => {
-  el.value?.focus()
-})
-</script>
-
-<template>
-  <input ref="el" />
-</template>
-```
-
-
--------------
-
-
-
-10. 컴포넌트 템플릿 Template Refs 에 타입 지정
-- 때로는 public 메서드를 호출하기 위해 자식 컴포넌트에 대한 템플릿 ref에 어노테이션이 필요 할 수 있다. 
-- 예를 들어, 모달을 여는 메서드가 있는 MyModal 자식 컴포넌트가 있다:
-
-```
-<!-- MyModal.vue -->
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const isContentShown = ref(false)
-const open = () => (isContentShown.value = true)
-
-defineExpose({
-  open
-})
-</script>
-```
-
-- MyModal 의 인스턴스 타입을 얻으려면 먼저 `typeof` 를 통해 타입을 가져온 다음 타입스크립트의 내장 
-- `InstanceType` 유틸리티를 사용하여 인스턴스 타입을 추출해야 한다.
-
-```
-<!-- App.vue -->
-<script setup lang="ts">
-import MyModal from './MyModal.vue'
-
-const modal = ref<InstanceType<typeof MyModal> | null>(null)
-
-const openModal = () => {
-  modal.value?.open()
-}
-</script>
-```
-
-
-11. 컴포넌트 v-model
-- 기본적으로 컴포넌트의 v-model 은 modelValue 를 프로퍼티로, update:modelValue 를 이벤트로 사용
-- 네이티브 `<input>` 앨리먼트의 `value` 속성을 `modelValue` 프로퍼티에 바인딩.
-- 네이티브 `input` 이벤트가 트리거되면 새 값으로 `update:modelValue` 사용자 지정 이벤트를 내보낸다.
-
-```
-<!-- CustomInput.vue -->
-<script setup>
-defineProps(['modelValue'])
-defineEmits(['update:modelValue'])
-</script>
-
-<template>
-  <input
-    :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
-  />
-</template>
-```
-
-```
-<CustomInput v-model="searchText" />
-```
-
-
-
-- v-model arguments
-- v-model에 인자를 전달하여 이름 수정가능:
-
-```
-<MyComponent v-model:title="bookTitle" />
-```
-
-```
-<!-- MyComponent.vue -->
-<script setup>
-defineProps(['title'])
-defineEmits(['update:title'])
-</script>
-
-<template>
-  <input
-    type="text"
-    :value="title"
-    @input="$emit('update:title', $event.target.value)"
-  />
-</template>
-```
-
-
-- v-model 수정자 처리하기
-- Form 양식 입력 바인딩에 대해 배울 때 v-model에 .trim, .number 및 .lazy와 같은 내장 수정자가 있다
-- v-model 컴포넌트에 추가되는 수정자는 modelModifiers 프로퍼티를 통해 컴포넌트에 제공
-- 컴포넌트의 modelModifiers 프로퍼티에 capitalize 가 포함되어 있고 그 값은 v-model 바인딩 
-  v-model.capitalize="myText"에 설정되어 있기 때문에 true 인 것을 알 수 있다.
-
-```
-<MyComponent v-model.capitalize="myText" />
-```
-
-```
-<script setup>
-const props = defineProps({
-  modelValue: String,
-  modelModifiers: { default: () => ({}) }
-})
-
-const emit = defineEmits(['update:modelValue'])
-console.log(props.modelModifiers) // { capitalize: true }
-
-function emitValue(e) {
-  let value = e.target.value
-  if (props.modelModifiers.capitalize) {
-    value = value.charAt(0).toUpperCase() + value.slice(1)
-  }
-  emit('update:modelValue', value)
-}
-</script>
-
-<template>
-  <input type="text" :value="modelValue" @input="emitValue" />
-</template>
-```
+- [vue3 공식 가이드(한국어)](https://ko.vuejs.org/guide/introduction.html)
+- [vue3 TypeScript 가이드(한국어)](https://ko.vuejs.org/guide/typescript/composition-api.html)
+- [vue2 → vue3 마이그레이션 가이드](https://v3-migration.vuejs.org/)
+- [Vue Router](https://router.vuejs.org/)
+- [Pinia](https://pinia.vuejs.org/)
+- [axios](https://axios-http.com/)
