@@ -12,38 +12,33 @@ ex) 1.7.2 -> Major.Minor.Maintenance(or Build) 을 의미
 참고: Patch가 10이 되면 Minor가 1 증가합니다.
 
 ------------------
-
 ## 1. HTML
 
 ### 1-1. Syntax
-
 - 들여쓰기는 2개의 공백 문자(소프트탭)을 사용. 다른 규칙으로 통일하여 작성해도 된다.
 - 모든 엘리먼트 명과 애트리뷰트 명은 케밥 표기법(kebab-case)으로 작성.
 - 모든 애트리뷰트 값은 큰 따옴표(")로 감싸기.
 - 주석 `<!--  --->` 처럼 기본 표기 하고 
-  > note : 수정사항 등을 기재하기 위한 주석 ( 주석에 년도날짜 / 수정내용 표기는 반드시 해야 한다 )
-
+> note : 수정사항 등을 기재하기 위한 주석 ( 주석에 년도날짜 / 수정내용 표기는 반드시 해야 한다 )
 ```
 <!-- start: 20200330 수정 및 추가 --> 
 <div> ......중략....... </div>
 <!-- end : 20200330 수정 및 추가 --> 
-```
-
+``` 
 혹은  
-
-```
+``` 
 <!-- 20200330 수정 및 추가 -->
 <div> ......중략....... </div> 
 <!-- // 20200330 수정 및 추가 -->
-```
+ ```
 
 ### 1-2. Doctype
-
 - Doctype 은 HTML5 DTD 로 선언.
-`<!DOCTYPE html>`  html5 로 지정
+`<!DOCTYPE html>`  html5 로 지정 
+- `<html>` 엘리먼트에 문서의 주 언어를 `lang` 애트리뷰트로 반드시 지정. ( 스크린 리더 발음, 번역, 맞춤법 검사에 사용 )
+`<html lang="ko">`
 
 이어서 자기 마침 태그(Self-Closing Tags)에 후행 슬래시(/)를 사용금지.
-
 ```
 <!-- Bad -->
 <input />
@@ -55,22 +50,20 @@ ex) 1.7.2 -> Major.Minor.Maintenance(or Build) 을 의미
 ```
 
 ### 1-3. Metadata
-
-`<head>`  엘리먼트의 자식 엘리먼트는 아래의 순서대로 작성.
+```<head>```  엘리먼트의 자식 엘리먼트는 아래의 순서대로 작성.
 
 1. Charset
-2. X-UA-Compatible
-3. Viewport
-4. Title
-5. Meta
-6. Style
-7. JavaScript
+2. Viewport
+3. Title
+4. Meta
+5. Style
+6. JavaScript
 
 ```
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" >
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hello, World!</title>
+<meta name="description" content="">
 <meta content="" property="og:title">
 <meta content="" property="og:url">
 <meta content="" property="og:description">
@@ -78,29 +71,27 @@ ex) 1.7.2 -> Major.Minor.Maintenance(or Build) 을 의미
 <meta content="website" property="og:type">
 <meta content="" property="og:site_name">
 <link rel="stylesheet" href="foo.css">
-<script src="bar.js"></script>
+<script src="bar.js" defer></script>
 ```
 
 A. Charset
 문서의 언어셋은 UTF-8으로 선언. 
-
 ```
 <meta charset="utf-8">
 ```
 
-B. X-UA-Compatible
-PC용 웹사이트는 최신 버전의 IE로 렌더링하기 위해 문서모드를 Edge로 선언.
-
-```
-<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-```
+B. X-UA-Compatible ( 사용하지 않음 )
+- IE 문서모드를 지정하던 메타 태그. IE 는 2022년 6월 지원 종료되었고 최신 브라우저는 이 태그를 무시하므로 **선언하지 않는다**.
 
 C.Viewport
 모바일 기기에서 실제 렌더링되는 영역과 뷰포트의 크기를 조절. 또한 줌 레벨도 조정 가능.
 
 ```
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 ```
+
+> note : `user-scalable=no`, `maximum-scale=1.0` 처럼 **사용자의 확대/축소를 막지 않는다.**  
+> 저시력 사용자가 화면을 확대할 수 없게 되어 웹 접근성 지침(WCAG 1.4.4 텍스트 크기 조절) 위반이 된다. ( iOS Safari 는 해당 값을 무시하기도 한다. )
 
 - width=device-width : 페이지의 너비를 기기의 스크린 너비로 설정합니다. 즉, 렌더링 영역을 기기의 뷰포트의 크기와 같게 만들어 준다.
 - initial-scale=1.0 : 처음 페이지 로딩시 확대/축소가 되지 않은 원래 크기를 사용하도록 합니다. 0~10 사이의 값을 가진다.
@@ -110,12 +101,11 @@ C.Viewport
 
 위의 줌 레벨은 1이 원래크기이고, 0.5 라면 50% 축소를 뜻한다.
 
+
 ### 1-4. Elements
-
 a. 스타일 제어가 어려운 엘리먼트
-  자식 엘리먼트 태그가 한정적이거나(ex. `<table>`) 스타일 제어에 한계를 가진 엘리먼트(ex. `<select>`)가 컴포넌트의 루트 역할로 쓰일 땐 
-  나중에 발생할 유지보수를 고려해 `<div>`나 `<span>` 엘리먼트로 감싸는 것을 추천.
-
+  자식 엘리먼트 태그가 한정적이거나(ex. ```<table>```) 스타일 제어에 한계를 가진 엘리먼트(ex. ```<select>```)가 컴포넌트의 루트 역할로 쓰일 땐 
+  나중에 발생할 유지보수를 고려해 ```<div>```나 ```<span>``` 엘리먼트로 감싸는 것을 추천.
 ```
 <!-- Not Bad -->
 <table class="table"></table>
@@ -131,9 +121,7 @@ a. 스타일 제어가 어려운 엘리먼트
 ```
 
 b. 테이블 제목
-
-- `<caption>` 엘리먼트의 뷰를 숨길 때는 새로운 엘리먼트로 감싸서 숨긴다..  `<caption>`을 바로 숨긴다면 브라우저에 따라 스타일이 깨질 수도 있다.
-
+- ```<caption>``` 엘리먼트의 뷰를 숨길 때는 새로운 엘리먼트로 감싸서 숨긴다..  ```<caption>```을 바로 숨긴다면 브라우저에 따라 스타일이 깨질 수도 있다. 
 테이블의 제목이 필요없거나 이미 제공되었다면 생략. 컨텐츠를 중복 제공 X 
 
 ```
@@ -152,7 +140,6 @@ b. 테이블 제목
 
 c. 입력 필드
 회원가입 폼의 입력 필드처럼 너비, 높이가 유동적이라면 인라인 스타일로 제어. 이렇게 하면 불필요한 클래스 생성을 막을 수 있다.
-
 ```
 <!-- Bad -->
 <input type="text" class="input input--width-120">
@@ -164,12 +151,11 @@ c. 입력 필드
 ```
 
 ### 1-5. Attributes
-
 - 애트리뷰트는 변하지 않는 것부터 먼저 선언. 애트리뷰트의 순서가 비슷한 엘리먼트끼리 통일되므로 검색하기 좋다.
-- id는 하나의 페이지 안에서 이름이 유일해야하고, name 은 중복될 수 있다.  
-따라서 따로따로 접근할 때는 id 값을 이용하고, 그룹으로 접근하고 할 때는  name 을 활용하는 식으로 편의성을 가질 수 있다. 
-하지만 대체적으로 ajax 통신을 직접하지 않고 마크업 기준으로만 작업한다면 id만 쓰는 것을 추천. 다수 선택은 class 로 사용하길~~
-(  name은 주로 form 요소로써 서버와 통신하는 목적으로 주 사용. )
+-  id는 하나의 페이지 안에서 이름이 유일해야하고, name 은 중복될 수 있다.  
+   따라서 따로따로 접근할 때는 id 값을 이용하고, 그룹으로 접근하고 할 때는  name 을 활용하는 식으로 편의성을 가질 수 있다. 
+   하지만 대체적으로 ajax 통신을 직접하지 않고 마크업 기준으로만 작업한다면 id만 쓰는 것을 추천. 다수 선택은 class 로 사용하길~~
+   (  name은 주로 form 요소로써 서버와 통신하는 목적으로 주 사용. )
 
 ```
 <input class="input" type="text" id="userId" name="userId" title="아이디" style="width:100px">
@@ -177,7 +163,6 @@ c. 입력 필드
 ```
 
 a. Boolean 애트리뷰트
-
 - HTML5에서는 Boolean 애트리뷰트를 선언하는 것 만으로도 true 값을 가진다. 필요하지 않다면 값을 작성 하지 않는게 좋다.
 
 ```
@@ -189,10 +174,8 @@ a. Boolean 애트리뷰트
 ```
 
 c. name 애트리뷰트
-
 - name 애트리뷰트 값은 비즈니스 로직을 작성하는 언어의 네이밍 규칙에 맞게 작성(캐멀케이스로 작성)하는 것을 권장.
 - name 이 없을시는 id 값을 캐멀케이스로 작성.
-
 ```
 <!-- camelCase -->
 <form class="form-group" id="myForm" name="myForm">
@@ -201,10 +184,16 @@ c. name 애트리뷰트
 ```
 
 ### 1-6. Import
+- HTML5 에서 CSS 와 JS 파일을 불러올 때 type 애트리뷰트는 이미 기본값을 가진다. 필요하지 않다면 선언 X. ( 단, ES 모듈은 `type="module"` 지정 )
+- 웹브라우저는 일반 `<script>` 엘리먼트를 만나면 다운로드와 실행이 끝날 때까지 HTML 파싱을 멈춘다.  
+  예전에는 `<body>` 마지막에 두었지만, 지금은 `<head>` 안에 **`defer`** 를 붙여 선언하는 것을 권장한다.
 
-- HTML5 에서 CSS 와 JS 파일을 불러올 때 type 애트리뷰트는 이미 기본값을 가진다. 필요하지 않다면 선언 X.
-`<script>` 엘리먼트는 가급적 `<head>` 또는 `<body>` 엘리먼트의 가장 마지막에 작성. 
-( 웹브라우저는 `<script>` 엘리먼트를 만나면 처리가 끝날 때까지 HTML 파싱을 멈춘다. )
+| 방식 | 다운로드 | 실행 시점 | 용도 |
+|------|------|------|------|
+| `<script>` | 파싱 중단 | 즉시 | 사용 지양 |
+| `<script defer>` | 병렬 | HTML 파싱 완료 후, 선언 순서대로 | 일반적인 페이지 스크립트 ( 권장 ) |
+| `<script async>` | 병렬 | 다운로드 완료 즉시, 순서 보장 X | 광고, 애널리틱스 등 독립 스크립트 |
+| `<script type="module">` | 병렬 | defer 와 동일 | ES 모듈 ( import / export ) |
 
 ```
 <!-- bad  -->
@@ -218,41 +207,46 @@ c. name 애트리뷰트
 </script>
 ```
 
+
 - `<head></head>`태그 내에 로드 순서 지키기( CSS 태그를 자바스크립트 태그 앞에 두기 )
 - 자바스크립트 전에 CSS 태그를 두면 브라우저의 렌더링 속도를 높이는 병렬 다운로드가 가능해 진다.
 
 ```
 <!-- Not recommended -->
-<script src="jquery.js"></script>
+<script src="vendor.js"></script>
 <script src="foo.js"></script>
-<link rel="stylesheet" href="foo.css"/>
+<link rel="stylesheet" href="foo.css">
 
 <!-- Recommended -->
-<link rel="stylesheet" href="foo.css"/>
-<script src="jquery.js"></script>
-<script src="foo.js"></script>
+<link rel="stylesheet" href="foo.css">
+<script src="vendor.js" defer></script>
+<script src="foo.js" defer></script>
 ```
 
 ## 2. CSS
 
 > note: CSS 코드의 작성 및 규칙사항
->
 > - CSS 파일을 압축하고, 최종 파일에서 주석, 공백, 줄바꿈을 제거한다. ( 유지 보수 및 수정 사항 전달 등에 있어서 주석 처리 예외 )
 > - CSS 파일을 압축하면 클라이언트에게 더 적은 데이터를 전송하게 되며, 콘텐츠가 더 빨리 로드. 
 > - CSS 파일을 압축하는 것은 중요한 이유는 대역폭과 리소스 사용을 줄이고자 하는 모든 부분에 있어서 도움이 된다.
 
 ### preload
-
 - preload 를 통해 브라우저가 페이지의 콘텐츠를 보여지기 전에 CSS 파일을 로드할 수 있다.
 - rel 속성의 값을 preload 로 주고, as="style" 를 `<link>` 태그에 넣는다.
-- 참고 URL : [리소스 우선순위 지정](https://developers.google.com/web/fundamentals/performance/resource-prioritization?hl=ko)
+- 참고 URL : [중요한 애셋을 미리 로드하여 로딩 속도 개선](https://web.dev/articles/preload-critical-assets?hl=ko)
+- 웹폰트처럼 늦게 발견되는 리소스에 특히 효과적이다. ( 폰트는 `crossorigin` 애트리뷰트 필수 )
+
+```
+<link rel="preload" href="/fonts/pretendard.woff2" as="font" type="font/woff2" crossorigin>
+```
 
 ```
 <link rel="preload" href="style.min.css" as="style" onload="this.rel='stylesheet'">
 ```
 
-### 2-1. Syntax
 
+
+### 2-1. Syntax
 - Lint 의 사용을 권장!
 - css class 이름은 케밥 표기법 ( kebab-case )으로 작성. 알파벳(대소문자)로 시작하되 숫자/특수문자로 시작하여선 안된다.
 - css id 는 캐멀 케이스 ( Camel case )방식으로 이름을 명기한다.
@@ -263,7 +257,6 @@ c. name 애트리뷰트
 - 사용되지 않는 CSS 선택자는 제거
 
 ### 2-2. Charset
-
 - 문서의 언어셋은 UTF-8으로 최상위에 선언. 
 - 언어셋이 정해진 번들링 파일이라면 선언하지 않는다.
 
@@ -272,12 +265,11 @@ c. name 애트리뷰트
 ```
 
 ### 2-3. Selectors
-
 - 태그이름과 선택자는 가급적 중첩하지 않는다. 
 - Indentation Depth 는 3 Depth 까지, 가급적 1 Depth 만을 사용하는 것을 권장한다.
 
-### 2-4. z-index
 
+### 2-4. z-index
 - z-index 스택을 0부터 규칙 없이 쌓는다면 순서가 꼬인다. 엘리먼트의 특성에 맞게 계층을 분리하여 체계적으로 관리하는 것이 좋은 방법.
 - CSS 전처리기의 믹스인을 활용한다면 간편하게 작성할 수 있다.
 
@@ -294,11 +286,11 @@ c. name 애트리뷰트
 }
 ```
 
-### 2-5. Import
 
+### 2-5. Import
 CSS 의 기본 문법인 @import 는 성능 문제를 가지고 있다. 사용 X.
 
-- 여러개의 `<link>` 엘리먼트로 작성하기
+- 여러개의 ```<link>``` 엘리먼트로 작성하기
 - 하나의 CSS 파일로 작성하기
   - CSS 전처리기의 @import 문법을 사용하기
   - 번들러 등의 도구를 이용하여 하나의 CSS 파일로 병합하기
@@ -321,7 +313,6 @@ CSS 의 기본 문법인 @import 는 성능 문제를 가지고 있다. 사용 X
 ```
 
 ### 2-6. Media Query
-
 - 미디어 쿼리는 컴포넌트 단위로 분류하여 관련 규칙 바로 뒤에 작성.
 혹은 문서의 마지막에 모아서 작성.
 
@@ -345,9 +336,46 @@ CSS 의 기본 문법인 @import 는 성능 문제를 가지고 있다. 사용 X
 }
 ```
 
-### 2-7. Nesting(중첩)
+- 최신 브라우저는 **범위 문법(Range syntax)** 을 지원하므로 min/max 대신 비교 연산자로 작성할 수 있다.
 
+```
+@media (width >= 768px) {}
+@media (768px <= width < 1280px) {}
+```
+
+- **컨테이너 쿼리** : 뷰포트가 아닌 **부모 컨테이너의 크기**에 따라 스타일을 바꾼다. 여러 위치에 재사용되는 컴포넌트(카드, 위젯 등)에 적합하다.
+
+```
+.card-list {
+  container-type: inline-size;
+}
+
+@container (width >= 480px) {
+  .card {
+    display: flex;
+  }
+}
+```
+
+### 2-7. Nesting(중첩)
 - 너무 많은 선택자의 중첩은 피해야 하므로, CSS 전처리기가 지원하는 Nesting 문법은 주의해서 사용해야 한다!
+- 2023년부터 모든 주요 브라우저가 **CSS 네이티브 중첩**을 지원하므로 전처리기 없이도 중첩을 사용할 수 있다. 동일하게 깊이를 최소화한다.
+
+```
+/* 네이티브 CSS 중첩 */
+.card {
+  padding: 16px;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
+  .card-title {
+    font-size: 18px;
+  }
+}
+```
+
 
 ```
 /* Bad */
@@ -364,16 +392,22 @@ CSS 의 기본 문법인 @import 는 성능 문제를 가지고 있다. 사용 X
 ```
 
 ### 2-8. Extend
-
 - CSS 전처리기가 지원하는 Extend 문법은  사용하지 X.  Mixin 으로 대체!
 
 ### 2-9. Reset
-
 - 초기화 스타일은 서비스에 맞게 정의. 만약 normalize.css 또는 Bootstrap 등의 프레임워크를 사용한다면 초기화를 생략.
 
 ### 2-10. Vendor Prefix
+- 벤더 프리픽스는 직접 작성하지 않고 **Autoprefixer(PostCSS)** 로 빌드 시 자동 추가한다. 지원 브라우저 범위는 `package.json` 의 `browserslist` 로 지정한다.  
+  ( Vite 는 PostCSS 설정 파일(`postcss.config.js`)을 자동으로 읽는다. )
 
-- 벤더 프리픽스 프로퍼티는 일반 프로퍼티보다 먼저 선언.
+```
+// package.json
+"browserslist": ["> 0.5%", "last 2 versions", "not dead"]
+```
+
+- 부득이하게 직접 작성할 경우 벤더 프리픽스 프로퍼티는 일반 프로퍼티보다 먼저 선언.
+
 
 ```
 /* Bad */
@@ -388,78 +422,618 @@ CSS 의 기본 문법인 @import 는 성능 문제를 가지고 있다. 사용 X
 }
 ```
 
-### 2-11. Naming
 
+### 2-11. Naming
 - 접두사가 2개 이상 중복 시 기능적인 접두사가 맨 앞부분에 위치할 수 있도록 한다.
 - 단독사용 클래스는 지양하며 접두사를 조합한 형태로 작성한다.
 - on 클래스인 경우, 단일 특정요소에 상태변화 클래스를 적용한다면 접미사로서 적용한다.
 
-| ClassName  |     | Description                                                                                                                                                 |     |
-| :--------- | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
-| wrap / cnt |     | 일반 영역의 묶음 - ex) btn-cnt / btn-wrap                                                                                                                          |     |
-| group      |     | 같은 엘리먼트 묶음 - ex) btn 3개를 묶는 경우 `<div class="btn-group"><button class="btn">버튼</button><button class="btn">버튼</button><button class="btn">버튼</button></div>` |     |
-| inner      |     | 부모 wrapper 가 존재하며 자식 묶음이 단독으로 사이즈가 필요한 경우                                                                                                                   |     |
-| img-cnt    |     | 이미지를 감싸는 경우                                                                                                                                                 |     |
-| txt-cnt    |     | 텍스트를 감싸는 경우                                                                                                                                                 |     |
-| m-tit      |     | 메인페이지 타이틀(중) 텍스트                                                                                                                                            |     |
-| s-tit      |     | 메인페이지 타이틀(소) 텍스트                                                                                                                                            |     |
-| tit-sub    |     | 서브페이지 타이틀(대) 텍스트                                                                                                                                            |     |
-| m-tit-sub  |     | 서브페이지 타이틀(중) 텍스트                                                                                                                                            |     |
-| s-tit-sub  |     | 서브페이지 타이틀(소) 텍스트                                                                                                                                            |     |
-| tit        |     | 타이틀 텍스트                                                                                                                                                     |     |
-| desc       |     | 상세 내용                                                                                                                                                       |     |
-| txt-date   |     | 날짜                                                                                                                                                          |     |
-| btn-cnt    |     | 버튼을 감싸는 경우                                                                                                                                                  |     |
-| list-cnt   |     | 리스트를 감싸는 경우(ul)                                                                                                                                             |     |
-| tab        |     | 탭 메뉴                                                                                                                                                        |     |
+| ClassName	   |     | Description          |     |
+| :-----------------|-----|----------------------|-----|
+| wrap / cnt  |     | 일반 영역의 묶음 - ex) btn-cnt / btn-wrap  |     |
+| group  |     | 같은 엘리먼트 묶음 - ex) btn 3개를 묶는 경우 ```<div class="btn-group"><button class="btn">버튼</button><button class="btn">버튼</button><button class="btn">버튼</button></div>``` |     |
+| inner |     | 부모 wrapper 가 존재하며 자식 묶음이 단독으로 사이즈가 필요한 경우 |     |
+| img-cnt  |     | 이미지를 감싸는 경우 |     |
+| txt-cnt  |     | 텍스트를 감싸는 경우 |     |
+| m-tit |     | 메인페이지 타이틀(중) 텍스트 |     |
+| s-tit  |     | 메인페이지 타이틀(소) 텍스트 |     |
+| tit-sub   |     | 서브페이지 타이틀(대) 텍스트 |     |
+| m-tit-sub   |     | 서브페이지 타이틀(중) 텍스트 |     |
+| s-tit-sub   |     | 서브페이지 타이틀(소) 텍스트 |     |
+| tit  |     | 타이틀 텍스트 |     |
+| desc |     | 상세 내용 |     |
+| txt-date  |     | 날짜 |     |
+| btn-cnt |     | 버튼을 감싸는 경우 |     |
+| list-cnt |     | 리스트를 감싸는 경우(ul) |     |
+| tab |     | 탭 메뉴 |     |
+
 
 ### 2-12. 유용한 tip
 
 ```
 html {
 -webkit-touch-callout:none;
--webkit-user-select:none;
 -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+user-select:none;
 }
 ```
 
+
 - `webkit-touch-callout` 는 아이폰에서만 적용된다. 롱프레스시 새로운탭에서 열기, 읽기목록 추가, 복사하기, 공유 등 하단에 나오는 ios 네이티브 메뉴바 설정. none 으로 할 때 나오지 않게 됨.
-- `webkit-user-select`  는 모바일웹에서 엘리먼트 드래그 방지용. 특히 텍스트 같은 경우 드래그 해서 선택 방지시에 많이 사용.
+- `user-select` 는 엘리먼트 드래그(텍스트 선택) 방지용. 표준 프로퍼티이므로 `-webkit-` 접두어 없이 작성하고 필요한 접두어는 Autoprefixer 에 맡긴다.  
+  ( 본문 텍스트 복사까지 막으면 사용성이 떨어지므로 버튼 등 필요한 요소에만 적용 )
 - `webkit-tap-highlight-color` 는 롱프레스시에 해당 엘리먼트가 파랗게 선택되어 보여지는 것을 방지.
+
+### 2-13. 모던 CSS ( 적극 활용 )
+- 아래 기능은 모든 주요 브라우저에서 지원된다. ( 지원 여부는 [caniuse](https://caniuse.com/) / [Baseline](https://web.dev/baseline?hl=ko) 으로 확인 )
+
+| 기능 | 설명 |
+|------|------|
+| CSS 변수 ( `--color-primary` / `var()` ) | 런타임에 변경 가능한 디자인 토큰. 다크모드, 테마 전환에 사용 |
+| `clamp()` | 최소/권장/최대 값 지정. 반응형 폰트 크기에 사용 ( `font-size: clamp(16px, 2vw, 20px)` ) |
+| `gap` | flex / grid 아이템 간격. 자식 margin 계산 불필요 |
+| `aspect-ratio` | 비율 유지 박스. padding-top 트릭 대체 ( `aspect-ratio: 16 / 9` ) |
+| 논리 속성 | `margin-inline`, `padding-block` 등 방향(LTR/RTL)에 독립적인 속성 |
+| `:is()` / `:where()` | 선택자 그룹화. `:where()` 는 명시도(specificity)가 0 |
+| `:has()` | 자식 상태로 부모 선택 ( `.form:has(input:invalid)` ) |
+| `@layer` | 캐스케이드 레이어로 reset / 라이브러리 / 컴포넌트 스타일 우선순위 관리 |
+
+```
+:root {
+  --color-primary: #2f4dc9;
+  --space-md: 16px;
+}
+
+.btn {
+  padding-block: 8px;
+  padding-inline: var(--space-md);
+  background-color: var(--color-primary);
+}
+
+.form:has(input:invalid) .btn-submit {
+  opacity: 0.5;
+}
+```
+
+- **`aspect-ratio` 로 비디오 비율 지정** : 너비만 정하면 높이가 비율에 맞춰 자동 계산된다. 예전처럼 `padding-top: 56.25%` 와 `position: absolute` 를 조합할 필요가 없다.
+- 높이가 고정되어 있으면 비율이 무시되므로 `height: auto` 로 둔다.
+
+```
+/* Bad : padding-top 트릭 ( 16:9 = 9 / 16 = 56.25% ) */
+.video-container {
+  position: relative;
+  padding-top: 56.25%;
+}
+
+.video-container iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Good : aspect-ratio */
+.video-container {
+  position: relative;
+  width: 100%;
+  text-align: center;
+
+  /* 유튜브 영상이 활성화된 경우 3:2 비율 */
+  &.youtube-active {
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
+
+  /* 영상(iframe / video)이 컨테이너를 꽉 채우도록 */
+  iframe,
+  video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* video 태그는 비율이 달라도 잘리거나 늘어나지 않게 */
+  video {
+    object-fit: cover;
+  }
+}
+
+/* 자주 쓰는 비율 */
+.ratio-16x9 { aspect-ratio: 16 / 9; } /* 유튜브 기본, 가로형 영상 */
+.ratio-4x3  { aspect-ratio: 4 / 3; }
+.ratio-1x1  { aspect-ratio: 1; }      /* 정사각형 썸네일 */
+.ratio-9x16 { aspect-ratio: 9 / 16; } /* 쇼츠 / 릴스 세로형 영상 */
+
+/* 화면이 넓어지면 비율 변경 */
+@media (width >= 768px) {
+  .video-container.youtube-active {
+    aspect-ratio: 16 / 9;
+  }
+}
+```
+
+```
+<div class="video-container youtube-active">
+  <iframe
+    src="https://www.youtube.com/embed/영상ID"
+    title="영상 제목"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
+```
+
+> note : `<iframe>` 에는 스크린 리더용 `title` 을 꼭 넣고, 첫 화면 밖 영상은 `loading="lazy"` 로 지연 로딩한다.
+
+### 2-14. 2022년 이후 추가된 CSS
+- 2-13 에 정리한 기능( 범위 문법, 컨테이너 쿼리, 네이티브 중첩, `:has()`, `@layer` ) 외에 2022년 이후 브라우저에 추가된 기능을 지원 범위별로 정리한다.
+- 지원 범위는 [Baseline](https://web.dev/baseline?hl=ko) 기준이다. ( 2026년 11월 web-features 데이터 기준 / 실제 적용 전 [caniuse](https://caniuse.com/) 로 프로젝트 지원 브라우저와 비교 )
+  - **Baseline 널리 사용 가능** : 모든 주요 브라우저( 크롬, 엣지, 파이어폭스, 사파리 )에서 지원된 지 30개월 이상 → 바로 사용
+  - **Baseline 신규** : 최근 모든 주요 브라우저 최신 버전에서 지원 → 구형 브라우저 지원이 필요하면 대체 스타일과 함께 사용
+  - **일부 브라우저만 지원** : 미지원 브라우저에서 무시되어도 문제없는 곳에만 사용 ( 점진적 향상 / `@supports` 로 분기 )
+
+**1. Baseline 널리 사용 가능 ( 바로 사용 )**
+
+| 기능 | 설명 |
+|------|------|
+| `dvh` / `svh` / `lvh` | 모바일 주소창 높이를 고려한 뷰포트 단위. `100vh` 가 화면을 넘치는 문제 해결 |
+| `oklch()` / `oklab()` | 사람 눈에 균일한 밝기 기준의 색상 함수. 명도만 바꾼 색 단계 만들기에 유리 |
+| `color-mix()` | 두 색상을 비율로 섞기. hover / disabled 색을 변수 하나로 파생 |
+| `subgrid` | 자식 grid 가 부모 grid 의 행/열 라인을 공유. 카드 목록의 제목 / 버튼 높이 정렬 |
+| `translate` / `rotate` / `scale` | transform 을 개별 속성으로 분리. 서로 덮어쓰지 않고 따로 애니메이션 가능 |
+| `:user-valid` / `:user-invalid` | 사용자가 입력을 마친 뒤에만 유효성 스타일 적용. 페이지 진입 시 빨간 테두리 문제 해결 |
+| `align-content` ( block ) | flex / grid 없이 일반 블록에서 세로 가운데 정렬 ( `align-content: center` ) |
+| `:focus-visible` | 키보드로 포커스한 경우에만 포커스 링 표시 ( `:focus` 대신 사용 ) |
+| `sin()` / `cos()` 등 삼각함수 | 원형 배치 등 계산 값을 CSS 에서 바로 사용 |
+
+**2. Baseline 신규 ( 지원 범위 확인 후 사용 )**
+
+| 기능 | Baseline 시점 | 설명 |
+|------|------|------|
+| `text-wrap: balance` | 2024.05 | 제목의 줄 길이를 균등하게 맞춤. 한 단어만 다음 줄로 넘어가는 문제 해결 |
+| `light-dark()` | 2024.05 | `color-scheme` 과 함께 라이트/다크 색상을 한 줄로 지정 |
+| `round()` / `mod()` / `rem()` | 2024.05 | CSS 에서 반올림 / 나머지 계산 |
+| `@property` | 2024.07 | CSS 변수에 타입 지정. 그라데이션 각도 등 변수 값을 애니메이션 가능 |
+| `font-size-adjust` | 2024.07 | 대체 폰트로 바뀌어도 글자 크기(x-height) 유지 |
+| `@starting-style` | 2024.08 | 요소가 처음 나타날 때의 시작 스타일 지정. JS 없이 등장 애니메이션 |
+| 상대 색상 문법 | 2024.09 | 기존 색에서 채널만 바꾸기 ( `oklch(from var(--c) l c h / 50%)` ) |
+| `scrollbar-gutter` / `scrollbar-width` | 2024.12 | 스크롤바 생김에 따른 레이아웃 밀림 방지 / 스크롤바 두께 지정 |
+| `scrollbar-color` | 2025.12 | 스크롤바 색상 지정. `::-webkit-scrollbar` 대체 |
+| `content-visibility` | 2025.09 | 화면 밖 영역의 렌더링을 건너뛰어 긴 페이지 성능 개선 |
+| `::details-content` | 2025.09 | `<details>` 펼침 영역 스타일링 |
+| View Transitions ( 같은 문서 ) | 2025.10 | `document.startViewTransition()` 으로 화면 상태 전환 애니메이션 |
+| `@scope` | 2026.03 | 스타일 적용 범위를 특정 영역 안으로 제한 ( BEM 없이 컴포넌트 스타일 격리 ) |
+| 컨테이너 스타일 쿼리 | 2026.05 | 부모의 CSS 변수 값에 따라 스타일 분기 ( `@container style(--theme: dark)` ) |
+| `field-sizing: content` | 2026.06 | input / textarea 가 입력 내용에 맞춰 자동으로 늘어남 |
+| `sibling-index()` / `sibling-count()` | 2026.08 | 형제 요소 중 순서 / 개수를 값으로 사용. 순차 애니메이션 딜레이 등 |
+| 스크롤 기반 애니메이션 | 2026.10 | `animation-timeline: scroll()` / `view()` 로 JS 없이 스크롤 연동 애니메이션 |
+
+**3. 일부 브라우저만 지원 ( 점진적 향상 )**
+
+| 기능 | 미지원 | 설명 |
+|------|------|------|
+| `text-wrap: pretty` | 파이어폭스 | 본문 마지막 줄에 단어 하나만 남는 문제 방지 |
+| `display: none` 전환 애니메이션 | 파이어폭스 | `transition-behavior: allow-discrete` 로 사라질 때도 애니메이션 |
+| View Transitions ( 페이지 간 ) | 파이어폭스 | `@view-transition { navigation: auto; }` 로 MPA 페이지 이동 애니메이션 |
+| `text-box` | 파이어폭스 | 폰트의 위/아래 여백을 잘라 텍스트 세로 정렬을 정확하게 맞춤 |
+| 앵커 포지셔닝 | 파이어폭스 | 툴팁 / 드롭다운을 기준 요소에 붙여서 배치 ( `anchor-name` / `position-anchor` ) |
+| 커스텀 select | 파이어폭스 | `appearance: base-select` 로 기본 `<select>` 디자인 변경 |
+| `interpolate-size` / `calc-size()` | 파이어폭스, 사파리 | `height: auto` 로 펼치는 애니메이션 |
+| `if()` | 파이어폭스, 사파리 | CSS 안에서 조건 분기 |
+
+```
+/* 모바일 주소창을 고려한 전체 높이 ( 미지원 브라우저는 100vh 사용 ) */
+.hero {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* 색상 : oklch / color-mix / 상대 색상 */
+:root {
+  --color-primary: oklch(55% 0.2 265);
+  --color-primary-hover: color-mix(in oklch, var(--color-primary), black 15%);
+  --color-primary-alpha: oklch(from var(--color-primary) l c h / 20%);
+}
+
+/* 다크모드 : 시스템 설정에 따라 자동 전환 */
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  color: light-dark(#222, #eee);
+  background-color: light-dark(#fff, #121212);
+}
+
+/* subgrid : 카드마다 제목 길이가 달라도 설명 / 버튼 줄 위치를 맞춤 */
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+}
+
+/* 제목 / 본문 줄바꿈 ( 미지원 브라우저는 무시되므로 그대로 사용 가능 ) */
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* 입력을 마친 뒤에만 에러 스타일 */
+input:user-invalid {
+  border-color: #d93025;
+}
+```
+
+```
+/* @starting-style : 요소가 나타날 때 페이드인 */
+.toast {
+  opacity: 1;
+  transition: opacity 0.3s;
+
+  @starting-style {
+    opacity: 0;
+  }
+}
+
+/* display: none 전환 : 미지원 브라우저( 파이어폭스 )는 애니메이션 없이 바로 열리고 닫힌다 */
+.dropdown {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.2s, display 0.2s allow-discrete;
+}
+
+.dropdown.is-open {
+  display: block;
+  opacity: 1;
+}
+
+@starting-style {
+  .dropdown.is-open {
+    opacity: 0;
+  }
+}
+```
+
+```
+/* @property : 타입을 지정한 변수는 애니메이션 가능 */
+@property --angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.gradient-border {
+  background: conic-gradient(from var(--angle), #2f4dc9, #8f5cff, #2f4dc9);
+  animation: rotate-angle 3s linear infinite;
+}
+
+@keyframes rotate-angle {
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* @scope : .card 안에만 적용하고 .card-content 내부( 에디터 본문 등 )는 제외 */
+@scope (.card) to (.card-content) {
+  img {
+    border-radius: 8px;
+  }
+}
+
+/* 스크롤 진행률 바 ( JS 없음 ) */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #2f4dc9;
+  transform-origin: 0 50%;
+  animation: grow-progress linear;
+  animation-timeline: scroll();
+}
+
+@keyframes grow-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* 일부 브라우저만 지원하는 기능은 @supports 로 분기 */
+@supports (anchor-name: --trigger) {
+  .tooltip-trigger {
+    anchor-name: --trigger;
+  }
+
+  .tooltip {
+    position: absolute;
+    position-anchor: --trigger;
+    position-area: top;
+  }
+}
+```
+
+> note : 움직임이 큰 애니메이션( 스크롤 연동, 화면 전환 등 )은 `@media (prefers-reduced-motion: reduce)` 에서 끄거나 줄인다. ( 웹접근성 )
+
+### 2-15. CSS 변수 ( Custom Properties ) 활용
+- `--` 로 시작하는 이름으로 선언하고 `var()` 로 사용한다. 이름은 **대소문자를 구분**한다. ( `--Color` 와 `--color` 는 다른 변수 )
+- 일반 CSS 속성처럼 **상속되고 캐스케이드** 된다. `:root` 에 선언하면 전역, 특정 선택자에 선언하면 그 요소와 자식에서만 적용된다.
+- Sass 변수와 달리 **브라우저에서 실행 중에 값을 바꿀 수 있다.** ( 미디어쿼리, 클래스, JS 로 변경 → 사용하는 곳 전체에 즉시 반영 )
+
+**1. 기본 사용법 / 기본값( fallback )**
+
+```
+:root {
+  --color-primary: #2f4dc9;
+  --radius: 8px;
+}
+
+.btn {
+  /* 두 번째 인자는 변수가 선언되지 않았을 때의 기본값 */
+  color: var(--btn-color, #fff);
+  background-color: var(--color-primary);
+  border-radius: var(--radius);
+
+  /* 기본값 안에 다른 변수를 중첩할 수 있다 */
+  border-color: var(--btn-border, var(--color-primary));
+}
+```
+
+**2. 디자인 토큰 2단계 구성**
+- 실제 색상 값( 원시 토큰 )과 용도( 의미 토큰 )를 분리하면, 테마를 바꿀 때 의미 토큰만 다시 연결하면 된다.
+- 컴포넌트에서는 의미 토큰만 사용한다.
+
+```
+:root {
+  /* 원시 토큰 : 실제 값 */
+  --blue-500: #2f4dc9;
+  --blue-600: #2440b0;
+  --gray-50: #f8f9fa;
+  --gray-900: #212529;
+
+  /* 의미 토큰 : 용도 */
+  --color-primary: var(--blue-500);
+  --color-primary-hover: var(--blue-600);
+  --color-bg: var(--gray-50);
+  --color-text: var(--gray-900);
+
+  /* 간격 / 폰트 크기도 토큰으로 관리 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+}
+```
+
+**3. 다크모드 / 테마 전환**
+- 시스템 설정( `prefers-color-scheme` )을 따르고, 사용자가 직접 고른 테마( `data-theme` )가 있으면 그것을 우선한다.
+- 컴포넌트 CSS 는 수정할 필요 없이 변수 값만 바뀐다. ( 라이트/다크 2가지만 필요하면 2-14 의 `light-dark()` 도 사용 가능 )
+
+```
+:root {
+  --color-bg: #fff;
+  --color-text: #222;
+  --color-border: #e0e0e0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #121212;
+    --color-text: #eee;
+    --color-border: #333;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #121212;
+  --color-text: #eee;
+  --color-border: #333;
+}
+
+body {
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+```
+
+```
+// 테마 변경 버튼 ( 선택값은 localStorage 에 저장해서 다음 방문 시 유지 )
+const toggleTheme = () => {
+  const root = document.documentElement;
+  const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+
+  root.dataset.theme = nextTheme;
+  localStorage.setItem('theme', nextTheme);
+};
+```
+
+**4. 컴포넌트 변형( variant )을 변수로 처리**
+- 기본 스타일은 한 번만 작성하고, 변형 클래스에서는 **변수 값만 바꾼다.** 같은 속성을 반복해서 덮어쓰지 않아도 된다.
+
+```
+.btn {
+  --btn-bg: var(--color-primary);
+  --btn-color: #fff;
+  --btn-padding: var(--space-sm) var(--space-md);
+
+  padding: var(--btn-padding);
+  color: var(--btn-color);
+  background-color: var(--btn-bg);
+  border: 1px solid var(--btn-bg);
+  border-radius: var(--radius);
+
+  &:hover {
+    --btn-bg: var(--color-primary-hover);
+  }
+}
+
+.btn-outline {
+  --btn-color: var(--color-primary);
+
+  background-color: transparent;
+}
+
+.btn-lg {
+  --btn-padding: var(--space-md) var(--space-lg);
+}
+```
+
+**5. 반응형 : 미디어쿼리에서는 변수 값만 변경**
+
+```
+:root {
+  --header-height: 56px;
+  --container-padding: var(--space-md);
+}
+
+@media (width >= 1024px) {
+  :root {
+    --header-height: 80px;
+    --container-padding: var(--space-lg);
+  }
+}
+
+.header {
+  height: var(--header-height);
+}
+
+.main {
+  padding-top: var(--header-height);
+  padding-inline: var(--container-padding);
+}
+```
+
+**6. HTML / JS 와 연동**
+- `style` 속성으로 요소마다 다른 값을 넘길 수 있다. 진행률, 순서별 애니메이션 딜레이처럼 값만 다른 경우에 클래스를 여러 개 만들 필요가 없다.
+- 단위가 없는 숫자를 넘긴 경우 `calc()` 로 단위를 붙인다. ( `var(--i)px` 처럼 붙여 쓰는 것은 동작하지 않는다 )
+
+```
+<div class="progress" style="--progress: 40%">
+  <span class="progress-bar"></span>
+</div>
+
+<ul class="list">
+  <li style="--i: 0">항목 1</li>
+  <li style="--i: 1">항목 2</li>
+  <li style="--i: 2">항목 3</li>
+</ul>
+```
+
+```
+.progress-bar {
+  display: block;
+  width: var(--progress, 0%);
+  height: 8px;
+  background-color: var(--color-primary);
+  transition: width 0.3s;
+}
+
+.list li {
+  animation: fade-in 0.4s both;
+  animation-delay: calc(var(--i) * 100ms);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+}
+```
+
+```
+const root = document.documentElement;
+const progress = document.querySelector('.progress');
+
+// 값 변경
+progress.style.setProperty('--progress', '75%');
+
+// 값 읽기 ( 앞뒤 공백이 포함될 수 있으므로 trim )
+const primaryColor = getComputedStyle(root).getPropertyValue('--color-primary').trim();
+
+// 값 제거 ( CSS 에 선언된 값으로 돌아감 )
+progress.style.removeProperty('--progress');
+```
+
+**7. Sass / Vue 에서 사용**
+
+```
+// Sass 변수 값을 CSS 변수에 넣을 때는 #{} 보간이 필요하다
+$primary: #2f4dc9;
+
+:root {
+  --color-primary: #{$primary};
+}
+```
+
+```
+<!-- Vue : 컴포넌트 상태 값을 CSS 변수로 전달 -->
+<template>
+  <div class="progress" :style="{ '--progress': `${percent}%` }">
+    <span class="progress-bar"></span>
+  </div>
+</template>
+
+<!-- 또는 style 안에서 v-bind() 사용 ( 내부적으로 CSS 변수로 변환된다 ) -->
+<style scoped>
+.progress-bar {
+  background-color: v-bind(barColor);
+}
+</style>
+```
+
+**8. 주의 사항**
+
+| 상황 | 설명 |
+|------|------|
+| 미디어쿼리 조건에는 사용 불가 | `@media (width >= var(--bp))` 는 동작하지 않는다. 브레이크포인트는 Sass 변수 등 빌드 시점 상수로 관리 |
+| 잘못된 값이 들어간 경우 | 변수가 선언은 되어 있지만 속성에 맞지 않는 값이면 fallback 이 아닌 **상속값 / 초기값**이 적용된다. ( 예: `--size: red` 를 `width` 에 사용 ) |
+| 선택자 / 속성 이름에는 사용 불가 | 값 위치에만 사용할 수 있다. ( `var(--prop): 10px` 불가 ) |
+| 애니메이션 | 일반 CSS 변수는 중간값 없이 한 번에 바뀐다. 변수 자체를 부드럽게 애니메이션하려면 `@property` 로 타입을 지정한다. ( 2-14 참고 ) |
+| 남용 금지 | 한 곳에서만 쓰는 값까지 변수로 만들지 않는다. 재사용되거나 바뀔 수 있는 값( 색상, 간격, 테마, 컴포넌트 변형 )에 사용 |
+
 
 -------
 
 ## 3. SCSS
-
 > note :
->
+> - 컴파일러는 **Dart Sass(`sass` 패키지)** 를 사용한다. `node-sass`(LibSass)는 지원 종료되었다. ( Vite 는 `npm i -D sass` 만 설치하면 .scss 를 바로 import 할 수 있다. )
 > - 중첩( Nesting )은 웬만하면 4depth 이하로 작성.
-> - import : 공통 파일을 기능 별로 나누어 _(언더스코어) 붙여서 분할된 파일( partial ) 로 구성한다. ( 컴파일시엔 merge 되어 파일 하나로 볼 수 있다. )
+> - 모듈 : 공통 파일을 기능 별로 나누어 _(언더스코어) 붙여서 분할된 파일( partial ) 로 구성하고 **`@use` / `@forward`** 로 불러온다. ( `@import` 는 deprecated, Dart Sass 3.0 에서 제거 예정 )
 > - extend : 되도록이면 mixin 으로 사용하는 게 좋다.
 > - 함수 : 자주 사용하는 계산 값에 대해 사용.
 
 1. 기능 별 분리
-
 - _component.scss 의 경우 공통 컴포넌트의 집합체이기에 많은 수의 컴포넌트가 존재한다.
 기능 별로 분리할 필요가 있다. 대표적으로 _variable(공통 변수), _button, _input, _form
 
-### 3-1. Variables (변수)
 
+### 3-1. Variables (변수)
 - sass에서 변수라는 기능을 제공하는 이유는 재사용성을 위함이다. 변수로 등록된 스타일은 쉽게 다른 코드에서 사용할 수 있기 때문이다.
 
 ```
 
-    $font-stack : Helvetical, sans-serif;
+    $font-stack : Helvetica, sans-serif;
     $primary-color : #333;
 
 
     body{
-        font : 100% &font-stack;
+        font : 100% $font-stack;
         color: $primary-color;
     }
-```
 
 ```
+
+- Sass 변수는 컴파일 시점에 값이 고정된다. 다크모드/테마처럼 **런타임에 바뀌어야 하는 값은 CSS 변수**( `--color-primary` )로 정의하고, Sass 변수는 브레이크포인트처럼 컴파일 시점 상수에 사용한다.
 
 ### 3-2. Nesting (중첩)
 - 부모 요소를 반복적으로 작성하던 불편함을 해결한다.
@@ -470,14 +1044,47 @@ html {
 - 공식문서에 따르면, scss의 파일 구조를 모듈화 할 수 있다. 하지만, 아까 처음 명령어를 통해서 모듈화된 코드가 있다고 가정했을 때 이를 나누어 모듈화 시킬 scss를 제외하고 scss만 컴파일 하기에는 상당히 고생할 수도 있다. 
 따라서 ***   _partial.scss 처럼 파일 명 앞에 언더 스코어 바를 통해서 빌드에서 제외 시킬 수 있다.   ***
 
+- partial 은 `@import` 대신 **`@use`** 로 불러온다. `@use` 는 파일을 한 번만 로드하고, 멤버를 **네임스페이스**( 파일명 )로 구분하므로 변수/믹스인 이름 충돌이 없다.
+- 여러 partial 을 묶어서 내보낼 때는 `_index.scss` 에서 **`@forward`** 를 사용한다.
+
+```
+// abstracts/_variables.scss
+$primary-color: #333;
+
+// abstracts/_mixins.scss
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// abstracts/_index.scss
+@forward 'variables';
+@forward 'mixins';
+```
+
+```
+// components/_button.scss
+// 아래 세 가지 방식 중 하나를 선택한다.
+// @use '../abstracts' as a;    -> 별칭 지정 : a.$primary-color
+// @use '../abstracts' as *;    -> 네임스페이스 생략 : $primary-color ( 이름 충돌 주의 )
+@use '../abstracts';            // 기본 : 파일명이 네임스페이스 ( abstracts.$primary-color )
+
+.btn {
+  @include abstracts.flex-center;
+  color: abstracts.$primary-color;
+}
+```
+
+> note : 기존 `@import` 코드는 공식 마이그레이션 도구로 변환할 수 있다. `npx sass-migrator module --migrate-deps main.scss`
+
 
 ### 3-4. Mixins (재활용)
 - 믹스 인을 통해서, 사이트 전체에서 재사용할 CSS declarations를 만들 수 있다. 또한, 값들을 믹스인을 통해서 집어 넣을 수 있으며(파라미터), 이를 통해서 좀더 유연하고 동적인 CSS 구조를 만들 수 있다.
 
 ```
-
 /* _mixin.scss */
-    @mixin transform($property) {		  
+    @mixin transform($property) {		      
         -webkit-transform: $property;
         -ms-transform: $property;
         transform: $property;
@@ -485,13 +1092,11 @@ html {
 
 /* _ex.scss */
     .box { @include transform(rotate(30deg)); } 
-
 ```
 
 ```
-
 /* _mixin.scss */
-    @mixin columnWidth( $selector ){  
+    @mixin columnWidth( $selector ){          
         &[data-column="2"]{
             #{$selector}{width:50%;}
         }
@@ -501,22 +1106,19 @@ html {
     }
 
 /* _button.scss */
-    .btn-group[data-column]{			  
+    .btn-group[data-column]{			     
           width:100%;
           display: flex;
           flex-wrap: wrap;
           @include columnWidth('.btn');
-
-```
-     &[data-column="2"]{
-        @include rowChild( 2, '.btn');
-      }
-     &[data-column="3"]{
-       @include rowChild( 3, '.btn');
+    
+         &[data-column="2"]{
+            @include rowChild( 2, '.btn');
+          }
+         &[data-column="3"]{
+           @include rowChild( 3, '.btn');
+         }
      }
- }
-```
-
 ```
 
 믹스인을 만들기 위해 해야 되는 절차는 다음과 같다.
@@ -563,11 +1165,13 @@ html {
 ```
 
 // SCSS:
+@use 'sass:math';
 
 $max-width: 980px;
 
+// 나눗셈 연산자( / )는 deprecated 이므로 math.div() 를 사용한다.
 @function columns($number: 1, $columns: 12) {
-  @return $max-width * ($number / $columns)
+  @return $max-width * math.div($number, $columns);
 }
 
 .box_group {
@@ -583,6 +1187,10 @@ $max-width: 980px;
     width: columns(3);
   }
 }
+
+
+
+
 
 // Compiled to:
 
@@ -606,13 +1214,15 @@ $max-width: 980px;
 ```
 
  예를 들어, 색의 빨강 성분을 가져오는 내장 함수로 이미 red()가 있다면, 접두어를 붙여 extract-red() 같은 이름을 만들 수 있다.
+ ( 전역 내장 함수 `red()` 등은 deprecated 이므로 `sass:color` 같은 내장 모듈을 `@use` 해서 사용한다. )
 
 
 ```
+@use 'sass:color';
 
 @function extract-red($color) {
-  // 내장 함수
-  @return rgb(red($color), 0, 0);
+  // 내장 모듈 함수
+  @return rgb(color.channel($color, 'red', $space: rgb), 0, 0);
 }
 
 div {
@@ -631,8 +1241,7 @@ div {
 
 ```
 
-
-
+// bad
 @if ($support-legacy == true) {
   // …
 }
@@ -641,7 +1250,7 @@ div {
 }
 
 
-
+// good
 @if $support-legacy {
   // …
 } @else {
@@ -653,14 +1262,12 @@ div {
 거짓 값을 테스트 하는 경우에 false, null 대신에 not 키워드를 사용 한다.
 ```
 
-
-
+// bad
 @if index($list, $item) == null {
   // …
 }
 
-
-
+// good
 @if not index($list, $item) {
   // …
 }
@@ -670,14 +1277,12 @@ div {
 언제나 변수 부분을 조건문의 왼쪽에, 기대되는 (혹은 기대되지 않는) 결과를 오른쪽에 배치 한다.
 ```
 
-
-
+// bad
 @if 42 == $value {
   // …
 }
 
-
-
+// good
 @if $value == 42 {
   // …
 }
@@ -687,8 +1292,7 @@ div {
 조건에 따라 다른 결과를 반환하는 함수 안에서 조건문을 사용할 때는, 반드시 함수가 조건문 블록 밖에서도 @return문을 갖도록 해야 한다.
 ```
 
-
-
+// bad
 @function dummy($condition) {
   @if $condition {
     @return true;
@@ -697,8 +1301,7 @@ div {
   }
 }
 
-
-
+// good
 @function dummy($condition) {
   @if $condition {
     @return true;
@@ -715,7 +1318,6 @@ div {
 - through를 사용하는 형식과 to를 사용하는 형식으로 나뉜다.
 
 ```
-
 // SCSS
 
 // through를 사용하는 경우(1부터 3번 이하 반복)
@@ -725,18 +1327,20 @@ div {
   }
 }
 
+
+
 // Compiled to:
 
 .through:nth-child(1) { width: 20px; }
 .through:nth-child(2) { width: 40px; }
 .through:nth-child(3) { width: 60px; }
 
-```
-
-
 
 ```
 
+
+
+```
 // SCSS
 
 // to를 사용하는 경우(1부터 3번 미만, 2번 반복)
@@ -745,6 +1349,8 @@ div {
     width : 20px * $i
   }
 }
+
+
 
 // Compiled to:
 
@@ -755,33 +1361,40 @@ div {
 
 ex)
 ```
-
 // SCSS
+
 
 $total:500;
 
 @for $i from 0 through $total {
-  $unit: if($i == 0,  !important, px !important);
+  // 0 은 단위 없이 출력 ( Sass 의 if() 함수는 deprecated 이므로 @if 사용 )
+  $value: $i * 1px;
+  @if $i == 0 {
+    $value: 0;
+  }
 
   .mgt-#{$i} {
-    margin-top:  #{$i}#{$unit};
+    margin-top: $value !important;
   }
   .mgb-#{$i} {
-    margin-bottom:  #{$i}#{$unit};
+    margin-bottom: $value !important;
   }
 }
+
+
 
 // Compiled to:
 
 .mgt-0 {
-  margin-top: 0!important;
+  margin-top: 0 !important;
 }
 
 .mgb-0 {
-  margin-bottom: 0!important;
+  margin-bottom: 0 !important;
 }
 
 ......중략.......
+
 
 .mgt-500 {
   margin-top: 500px !important;
@@ -804,19 +1417,19 @@ $total:500;
 
 #### 일관성을 유지
 ```
-
 /* Bad */
 const pages_count = 5
 const shouldUpdate = true
+
 
 /* Good */
 const pageCount = 5
 const shouldUpdate = true
 
+
 /* Good as well */
 const page_count = 5
 const should_update = true
-
 ```
 
 
@@ -827,17 +1440,16 @@ const should_update = true
 * Descriptive( 설명 ). 이름은 가장 효율적인 방식으로 수행/소유하는 것을 반영해야 한다.
 
 ```
-
 /* Bad */
 const a = 5 // "a" could mean anything
 const isPaginatable = a > 10 // "Paginatable" sounds extremely unnatural
 const shouldPaginatize = a > 10 // Made up verbs are so much fun!
 
+
 /* Good */
 const postCount = 5
 const hasPagination = postCount > 10
 const shouldDisplayPagination = postCount > 10 // alternatively
-
 ```
 
 
@@ -848,13 +1460,11 @@ const shouldDisplayPagination = postCount > 10 // alternatively
 
 
 ```
-
 /* Bad */
 const onItmClk = () => {}
 
 /* Good */
 const onItemClick = () => {}
-
 ```
 
 
@@ -863,7 +1473,6 @@ const onItemClick = () => {}
 - 이름은 정의된 컨텍스트와 중복되어서는 안된다. 가독성이 떨어지지 않는다면 항상 이름에서 컨텍스트를 제거.
 
 ```
-
 class MenuItem {
   /* 메서드 이름이 컨텍스트("MenuItem")와 중복.*/
   handleMenuItemClick = (event) => { ... }
@@ -871,24 +1480,20 @@ class MenuItem {
   /*  `MenuItem.handleClick()` 처럼 쓰는게 훨씬 좋아보인다. */
   handleClick = (event) => { ... }
 }
-
 ```
 
 #### **예상 결과 반영 (Reflect the expected result)**
 - 이름은 예상 결과를 반영해야 합니다.
 
 ```
-
+/* Bad */
 const isEnabled = itemCount > 3
-return 
+return <Button disabled={!isEnabled} />
 
 /* Good */
 const isDisabled = itemCount <= 3
-return 
-
+return <Button disabled={isDisabled} />
 ```
-/* Bad */
-
 
 
 
@@ -922,11 +1527,9 @@ Take a look at how this pattern may be applied in the table below.
 데이터에 즉시 액세스 (즉, 내부 데이터의 약식 getter).
 
 ```
-
 function getFruitCount() {
   return this.fruits.length
 }
-
 ```
 
 
@@ -934,21 +1537,18 @@ function getFruitCount() {
 - 값 A를 값 B로 사용하여 선언적 방식으로 변수를 설정한다.
 
 ```
-
 let fruits = 0
 function setFruits(nextFruits) {
   fruits = nextFruits
 }
 setFruits(5)
 console.log(fruits) // 5
-
 ```
 
 **reset**
 - 변수를 초기 값 또는 상태로 다시 설정한다.
 
 ```
-
 const initialFruits = 5
 let fruits = initialFruits
 setFruits(10)
@@ -960,27 +1560,28 @@ function resetFruits() {
 
 resetFruits()
 console.log(fruits) // 5
-
 ```
 
 **fetch**
 -  비동기 요청 즉, 불확실한 시간이 소요되는 일부 데이터 요청
-function fetchPosts(postCount) {
-  return fetch('https://api.dev/posts', {...})
+
+```
+async function fetchPosts(postCount) {
+  const response = await fetch(`https://api.dev/posts?limit=${postCount}`)
+  return response.json()
 }
+```
 
 **remove**
 - 무언가를 제거
 예를 들어 검색 페이지에 선택된 필터 컬렉션이 있는 경우 컬렉션에서 필터 중 하나를 제거하는 것은 deleteFilter 가 아니라 removeFilter 이다.
 
 ```
-
 function removeFilter(filterName, filters) {
   return filters.filter((name) => name !== filterName)
 }
 const selectedFilters = ['price', 'availability', 'size']
 removeFilter('price', selectedFilters)
-
 ```
 
 
@@ -990,11 +1591,9 @@ removeFilter('price', selectedFilters)
 없애고 싶은 게시물이 있을 때  "게시물 삭제" 버튼을 클릭시 메서드 네이밍 및 기능은 removePost 가 아닌 deletePost 작업을 수행해야 한다.
 
 ```
-
 function deletePost(id) {
   return database.find({ id }).delete()
 }
-
 ```
 
 
@@ -1002,11 +1601,9 @@ function deletePost(id) {
 - 기존 데이터에서 새 데이터를 생성한다. 주로 문자열, 개체 또는 함수에 적용할 수 있다.
 
 ```
-
 function composePageUrl(pageName, pageId) {
   return `${pageName.toLowerCase()}-${pageId}`
 }
-
 ```
 
 
@@ -1014,12 +1611,10 @@ function composePageUrl(pageName, pageId) {
 이벤트 handle 을 처리한다.  콜백 메서드의 이름을 지정할 때 자주 사용됩니다.
 
 ```
-
 function handleLinkClick() {
   console.log('Clicked a link!')
 }
 link.addEventListener('click', handleLinkClick)
-
 ```
 
 
@@ -1031,7 +1626,6 @@ link.addEventListener('click', handleLinkClick)
 함수는 종종 무언가에 대한 작업이기에 작동 가능한 도메인이 무엇인지 또는 최소한 예상되는 데이터 유형을 명시하는 것이 중요.
 
 ```
-
 /* 프리미티브로써 작동하는 순수 함수 */
 function filter(predicate, list) {
   return list.filter(predicate)
@@ -1039,9 +1633,8 @@ function filter(predicate, list) {
 
 /* 게시물에서만 정확히 작동하는 기능 */
 function getRecentPosts(posts) {
-  return filter(posts, (post) => post.date === Date.now())
+  return filter((post) => post.date === Date.now(), posts)
 }
-
 ```
 
 일부 언어 특유적으로 컨텍스트를 생략할 수 있다. 예를 들어, JavaScript 에서는 필터가 Array 에서 작동하는 것이 일반적.
@@ -1056,7 +1649,6 @@ function getRecentPosts(posts) {
 - 현재 컨텍스트(일반적으로 boolean)의 특성 또는 상태를 설명.
 
 ```
-
 const color = 'blue'
 const isBlue = color === 'blue' // characteristic
 const isPresent = true // state
@@ -1064,32 +1656,27 @@ const isPresent = true // state
 if (isBlue && isPresent) {
   console.log('Blue is present!')
 }
-
 ```
 
 **has**
 - 현재 컨텍스트가 특정 값 또는 상태(보통 부울)를 소유하는지 여부를 설명.
 
 ```
-
 /* Bad */
 const isProductsExist = productsCount > 0
 const areProductsPresent = productsCount > 0
 
 /* Good */
 const hasProducts = productsCount > 0
-
 ```
 
 **should**
 - 특정 작업과 결합된 긍정적인 조건문(보통 부울)을 반영.
 
 ```
-
 function shouldUpdateUrl(url, expectedUrl) {
   return url !== expectedUrl
 }
-
 ```
 
 
@@ -1097,16 +1684,13 @@ function shouldUpdateUrl(url, expectedUrl) {
 - 최소값 또는 최대값을 나타낸다. 경계 또는 한계를 설명할 때 사용.
 
 ```
-
 /**
-
-* Renders a random amount of posts within
-* the given min/max boundaries.
+ * Renders a random amount of posts within
+ * the given min/max boundaries.
  */
 function renderPosts(posts, minPosts, maxPosts) {
   return posts.slice(0, randomBetween(minPosts, maxPosts))
 }
-
 ```
 
 **prev/next**
@@ -1114,23 +1698,20 @@ function renderPosts(posts, minPosts, maxPosts) {
 
 
 ```
+async function loadMorePosts() {
+  const prevPosts = posts.value
 
-function fetchPosts() {
-  const prevPosts = this.state.posts
+  const fetchedPosts = await fetchPosts(10)
+  const nextPosts = [...prevPosts, ...fetchedPosts]
 
-  const fetchedPosts = fetch('...')
-  const nextPosts = concat(prevPosts, fetchedPosts)
-
-  this.setState({ posts: nextPosts })
+  posts.value = nextPosts
 }
-
 ```
 
 #### **단수 / 복수 ( Singular and Plurals )**
 - 접두사와 마찬가지로 변수 이름은 단일 값 또는 여러 값을 보유하는지 여부에 따라 단수 또는 복수로 만들 수 있다.
 
 ```
-
 /* Bad */
 const friends = 'Bob'
 const friend = ['Bob', 'Tony', 'Tanya']
@@ -1138,8 +1719,36 @@ const friend = ['Bob', 'Tony', 'Tanya']
 /* Good */
 const friend = 'Bob'
 const friends = ['Bob', 'Tony', 'Tanya']
+```
+
+### 2. 모던 JavaScript 작성 규칙
+
+- `var` 는 사용하지 않는다. 재할당이 없으면 `const`, 있으면 `let` 을 사용한다.
+- 비교는 항상 일치 연산자 `===` / `!==` 를 사용한다.
+- 모듈은 ES Modules( `import` / `export` )로 작성한다. ( CommonJS `require` 지양 )
+- 비동기 처리는 콜백이나 `.then()` 체인 대신 `async` / `await` + `try` / `catch` 로 작성한다.
+- 값이 없을 수 있는 객체 접근은 옵셔널 체이닝 `?.`, 기본값은 `||` 대신 null 병합 연산자 `??` 를 사용한다. ( `||` 는 0, '' 도 기본값으로 바꿔버린다. )
+- 객체/배열 복사는 스프레드 `...` ( 얕은 복사 ), 깊은 복사는 `structuredClone()` 을 사용한다. ( `JSON.parse(JSON.stringify())` 지양 )
+- 반복은 `for` 문보다 `map` / `filter` / `find` / `some` 같은 배열 메서드를 우선 사용한다.
 
 ```
+/* Bad */
+var count = data && data.items && data.items.length || 10
+fetchUser(id).then(function (user) { console.log(user) })
+
+/* Good */
+const count = data?.items?.length ?? 10
+
+try {
+  const user = await fetchUser(id)
+  console.log(user)
+} catch (error) {
+  console.error(error)
+}
+```
+
+- 코드 품질과 포맷은 사람이 아닌 도구로 통일한다. **ESLint**( flat config : `eslint.config.js` )로 문법 오류/규칙을 검사하고, **Prettier** 로 포맷을 자동 정리한다.
+
 ----------
 
 
@@ -1152,12 +1761,17 @@ const friends = ['Bob', 'Tony', 'Tanya']
 - let 과 const 중 어떤 것을 사용할지 스스로 선택. 
 - 최소 권한의 원칙(Principle of least privilege)을 적용하면 수정하려는 모든 선언은 const 를 사용한다.
 
-- 조건 연산자 
-`! -> Nullable 이다. `
-느낌표를 붙이면 null 과 undefined 를 허용한다. 즉 초기화 하지 않아도 된다.
+- `tsconfig.json` 은 **`"strict": true`** 를 기본으로 사용한다. ( null 체크, 암시적 any 금지 등 엄격한 타입 검사 )
+- 타입을 알 수 없는 값은 `any` 대신 **`unknown`** 으로 받고, 타입 가드로 좁혀서 사용한다.
 
+- 조건 연산자 
 `? -> Optional 이라고 한다. `
-말그대로 필수값이 아닌 옵셔널한 값이라는 뜻.
+말그대로 필수값이 아닌 옵셔널한 값이라는 뜻. ( 타입은 `값 | undefined` 가 된다. )
+
+`! -> Non-null 단언 / 확정 할당 단언`
+- 값 뒤에 붙이면( `el!.focus()` ) 컴파일러에게 **null / undefined 가 아니라고 단언**한다. 타입 검사만 통과시킬 뿐 런타임 검사는 하지 않으므로 남용하지 않는다.
+- 클래스 프로퍼티 뒤에 붙이면( `name!: string` ) 생성자 밖에서 초기화된다고 단언한다.
+- 가능하면 `!` 대신 옵셔널 체이닝( `el?.focus()` )이나 조건문으로 좁혀서 사용한다.
 
 ------------
 
@@ -1172,11 +1786,11 @@ const friends = ['Bob', 'Tony', 'Tanya']
 ```let someValue: "a" | "b" | "c"```
 
 ```
-
 function padLeft(value: string, padding: string | number) {
   // ...
 }
-let indentedString = padLeft("Hello world", true);
+let indentedString = padLeft("Hello world", true); // 오류: boolean 은 string | number 에 할당할 수 없다.
+
 
 interface Bird {
   fly(): void;
@@ -1193,8 +1807,13 @@ declare function getSmallPet(): Fish | Bird;
 let pet = getSmallPet();
 pet.layEggs();
 
-// 두 개의 잠재적인 타입 중 하나에서만 사용할 수 있습니다.
+// 오류: swim 은 두 개의 잠재적인 타입 중 Fish 에서만 사용할 수 있다.
 pet.swim();
+
+// 타입 가드( in 연산자 )로 좁힌 뒤에 사용한다.
+if ("swim" in pet) {
+  pet.swim();
+}
 
 ```
 
@@ -1210,7 +1829,6 @@ pet.swim();
 예를 들어, 일관된 에러를 다루는 여러 네트워크 요청이 있다면 해당 에러 핸들링을 분리하여 하나의 응답 타입에 대응하는 결합된 자체 타입으로 만들 수 있다.
 
 ```
-
 interface ErrorHandling {
   success: boolean;
   error?: { message: string };
@@ -1238,7 +1856,6 @@ const handleArtistsResponse = (response: ArtistsResponse) => {
 
   console.log(response.artists);
 };
-
 ```
 
 ------------
@@ -1247,7 +1864,6 @@ const handleArtistsResponse = (response: ArtistsResponse) => {
 ### **교차를 통한 믹스인 (Mixins via Intersections)**
 
 ```
-
 class Person {
   constructor(public name: string) {}
 }
@@ -1281,7 +1897,6 @@ function extend<First extends {}, Second extends {}>(
 
 const jim = extend(new Person("Jim"), ConsoleLogger.prototype);
 jim.log(jim.name);
-
 ```
 
 ------------
@@ -1290,7 +1905,6 @@ jim.log(jim.name);
 ### **상속 (Inheritance)**
 
 ```
-
 class Animal {
     name: string;
     constructor(theName: string) { this.name = theName; }
@@ -1326,7 +1940,6 @@ tom.move(34);
 //Sammy the Python moved 5m.
 //Galloping...
 //Tommy the Palomino moved 34m.
-
 ```
 
 
@@ -1336,7 +1949,6 @@ tom.move(34);
 ### **기본적으로 공개 (Public by default)**
 
 ```
-
 class Animal {
     public name: string;
     public constructor(theName: string) { this.name = theName; }
@@ -1344,7 +1956,6 @@ class Animal {
         console.log(`${this.name} moved ${distanceInMeters}m.`);
     }
 }
-
 ```
 
 ------------
@@ -1353,7 +1964,6 @@ class Animal {
 ### **비공개( private )**
 
 ```
-
 class Animal {
     private name: string;
     constructor(theName: string) { this.name = theName; }
@@ -1374,7 +1984,16 @@ let employee = new Employee("Bob");
 
 animal = rhino;
 animal = employee; // 오류: 'Animal'과 'Employee'은 호환될 수 없음.
+```
 
+> note : TypeScript 의 `private` 은 컴파일 시점에만 검사하고 JS 로 변환되면 일반 프로퍼티가 된다.  
+> 런타임에서도 외부 접근을 막아야 한다면 JavaScript 표준 private 필드 **`#name`** 을 사용한다.
+
+```
+class Animal {
+  #name: string;
+  constructor(name: string) { this.#name = name; }
+}
 ```
 
 ------------
@@ -1385,7 +2004,6 @@ animal = employee; // 오류: 'Animal'과 'Employee'은 호환될 수 없음.
 - 아래 소스에서 Person 클래스의  name 은 사용할 수 없지만, Employee 클래스에서는 Person 에서 파생되었기 때문에 Employee 의 인스턴스 메서드 내에서는 사용 가능.
 
 ```
-
 class Person {
     protected name: string;
     constructor(name: string) { this.name = name; }
@@ -1394,29 +2012,24 @@ class Person {
 class Employee extends Person {
     private department: string;
 
-```
-constructor(name: string, department: string) {
-    super(name);
-    this.department = department;
-}
+    constructor(name: string, department: string) {
+        super(name);
+        this.department = department;
+    }
 
-public getElevatorPitch() {
-    return `Hello, my name is ${this.name} and I work in ${this.department}.`;
-}
-```
-
+    public getElevatorPitch() {
+        return `Hello, my name is ${this.name} and I work in ${this.department}.`;
+    }
 }
 
 let howard = new Employee("Howard", "Sales");
 console.log(howard.getElevatorPitch());
 console.log(howard.name); // 오류
-
 ```
 
 생성자 또한 protected 로 표시될 수도 있다. 이는 클래스를 포함하는 클래스 외부에서 인스턴스화 할 수 없지만 확장 할 수 있음을 의미.
 
 ```
-
 class Person {
     protected name: string;
     protected constructor(theName: string) { this.name = theName; }
@@ -1426,22 +2039,18 @@ class Person {
 class Employee extends Person {
     private department: string;
 
-```
-constructor(name: string, department: string) {
-    super(name);
-    this.department = department;
-}
+    constructor(name: string, department: string) {
+        super(name);
+        this.department = department;
+    }
 
-public getElevatorPitch() {
-    return `Hello, my name is ${this.name} and I work in ${this.department}.`;
-}
-```
-
+    public getElevatorPitch() {
+        return `Hello, my name is ${this.name} and I work in ${this.department}.`;
+    }
 }
 
 let howard = new Employee("Howard", "Sales");
 let john = new Person("John"); // 오류: 'Person'의 생성자는 protected 이다.
-
 ```
 
 ------------
@@ -1453,7 +2062,6 @@ let john = new Person("John"); // 오류: 'Person'의 생성자는 protected 이
 읽기전용 프로퍼티들은 선언 또는 생성자에서 초기화해야 한다.
 
 ```
-
 class Octopus {
     readonly name: string;
     readonly numberOfLegs: number = 8;
@@ -1463,7 +2071,6 @@ class Octopus {
 }
 let dad = new Octopus("Man with the 8 strong legs");
 dad.name = "Man with the 3-piece suit"; // 오류! name은 읽기전용.
-
 ```
 
 ------------
@@ -1473,7 +2080,6 @@ dad.name = "Man with the 3-piece suit"; // 오류! name은 읽기전용.
 체의 멤버에 대한 접근을 가로채는 방식으로 getters/setters를 지원한다. 이를 통해 각 객체의 멤버에 접근하는 방법을 세밀하게 제어할 수 있다.
 
 ```
-
 const fullNameMaxLength = 10;
 
 class Employee {
@@ -1493,7 +2099,6 @@ employee.fullName = "Bob Smith";
 if (employee.fullName) {
     console.log(employee.fullName);
 }
-
 ```
 
 ------------
@@ -1506,7 +2111,6 @@ if (employee.fullName) {
 인스턴스 접근 앞에 this.를 붙이는 것과 비슷하게 여기선 전역 접근 앞에 Grid.를 붙인다.
 
 ```
-
 class Grid {
     static origin = {x: 0, y: 0};
     calculateDistanceFromOrigin(point: {x: number; y: number;}) {
@@ -1522,7 +2126,6 @@ let grid2 = new Grid(5.0);  // 5x scale
 
 console.log(grid1.calculateDistanceFromOrigin({x: 10, y: 10}));
 console.log(grid2.calculateDistanceFromOrigin({x: 10, y: 10}));
-
 ```
 
 ------------
@@ -1533,14 +2136,12 @@ console.log(grid2.calculateDistanceFromOrigin({x: 10, y: 10}));
 추상 클래스는 직접 인스턴스화할 수 없다. **추상 클래스는 인터페이스와 달리 멤버에 대한 구현 세부 정보를 포함할 수 있다**. 
 abstract 키워드는 추상 클래스뿐만 아니라 추상 클래스 내에서 추상 메서드를 정의하는데 사용된다.
 ```
-
 abstract class Animal {
     abstract makeSound(): void;
     move(): void {
         console.log("roaming the earth...");
     }
 }
-
 ```
 
 추상 클래스 내에서 추상으로 표시된 메서드는 구현을 포함하지 않으며 반드시 파생된 클래스에서 구현되어야 한다. 
@@ -1548,7 +2149,6 @@ abstract class Animal {
 그러나 **추상 메서드는 반드시 abstract 키워드를 포함해야 하며, 선택적으로 접근 지정자를 포함할 수 있다**.
 
 ```
-
 abstract class Department {
     constructor(public name: string) {
     }
@@ -1575,7 +2175,6 @@ department = new AccountingDepartment(); // 추상이 아닌 하위 클래스를
 department.printName();
 department.printMeeting();
 department.generateReports(); // 오류: 선언된 추상 타입에 메서드가 존재하지 않습니다
-
 ```
 
 ------------
@@ -1589,7 +2188,6 @@ TypeScript 는 숫자와 문자열-기반 열거형을 제공한다.
 - **숫자 열거형 (Numeric enums)**
 
 ```
-
 //원한다면, 전부 초기화 하지 않을 수도 있다:
 enum Direction {
     Up = 1,
@@ -1600,7 +2198,6 @@ enum Direction {
 //위 코드에서 Up이 1 로 초기화된 숫자 열거형을 선언. 
 //그 지점부터 뒤따르는 멤버들은 자동으로-증가된 값을 갖는다. 
 //즉 Direction.Up 은 1, Down 은 2, Left 는 3, Right 은 4 을 값으로 가진다.
-
 ```
 
 - **문자열 열거형 (String enums)**
@@ -1612,17 +2209,34 @@ enum Direction {
 반면 문자열 열거형을 이용하면 코드를 실행할 때, 열거형 멤버에 지정된 이름과는 무관하게 유의미하고 읽기 좋은 값을 이용하여 실행할 수 있다.
 
 ```
-
 enum Direction {
     Up = "UP",
     Down = "DOWN",
     Left = "LEFT",
     Right = "RIGHT",
 }
-
 ```
 
 > note: 기술적으로 열거형은 숫자와 문자를 섞어서 사용할 수 있지만 굳이 그렇게 할 이유는 없다.
+
+> note : 최근에는 enum 대신 **유니온 리터럴 타입** 또는 **`as const` 객체**를 권장한다.  
+> - enum 은 타입만 지우면 되는 다른 문법과 달리 런타임 코드를 생성하고, 숫자 enum 은 아무 숫자나 할당되는 등 타입 안전성이 약하다.  
+> - Node.js 의 TypeScript 실행(타입 제거 방식)이나 `erasableSyntaxOnly` 옵션(TS 5.8+)에서는 enum 을 사용할 수 없다.
+
+```
+// 유니온 리터럴 타입
+type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
+
+// as const 객체 ( 값 목록이 런타임에도 필요할 때 )
+const DIRECTION = {
+  Up: 'UP',
+  Down: 'DOWN',
+  Left: 'LEFT',
+  Right: 'RIGHT',
+} as const;
+
+type Direction = (typeof DIRECTION)[keyof typeof DIRECTION]; // 'UP' | 'DOWN' | 'LEFT' | 'RIGHT'
+```
 
 ------------
 
@@ -1630,7 +2244,6 @@ enum Direction {
 ### **다형성 this 타입 (Polymorphic this types)**
 
 ```
-
 class BasicCalculator {
     public constructor(protected value: number = 0) { }
     public currentValue(): number {
@@ -1671,7 +2284,6 @@ let v = new ScientificCalculator(2)
         .currentValue();
 // this 타입 없이, ScientificCalculator는 BasicCalculator를 extend 할 수 없을 것이고 유연한 인터페이스를 유지하지 못한다. 
 // multiply는 sin 메서드를 가지지 않는 BasicCalculator를 반환한다. 하지만, this 타입으로, multiply는 this를 반환하고, 여기서는 ScientificCalculator 을 가르킨다.
-
 ```
 
 ------------
@@ -1682,22 +2294,19 @@ let v = new ScientificCalculator(2)
 일반적인 js 패턴 
 
 ```
-
 function pluck(o, propertyNames) {
     return propertyNames.map(n => o[n]);
 }
-
 ```
 TypeScript 에서 인덱스 타입 패턴
 - 인덱스 타입을 사용하면, 동적인 프로퍼티 이름을 사용하는 코드를 컴파일러가 검사할 수 있다.
 - 인덱스 타입 쿼리와 인덱스 접근 연산자를 사용해서 TypeScript 에서 이 함수를 어떻게 작성하고 사용하는지 보여준다:
 
-```
-
+ ```
  function pluck<T, K extends keyof T>(o: T, propertyNames: K[]): T[K][] {
    return propertyNames.map(n => o[n]);
  }
-
+ 
  interface Car {
      manufacturer: string;
      model: string;
@@ -1708,15 +2317,14 @@ TypeScript 에서 인덱스 타입 패턴
      model: 'Camry',
      year: 2014
  };
-
+ 
  // Manufacturer과 model은 둘 다 문자열 타입.
  // 그래서 둘 다 타이핑된 문자열 배열로 끌어낼 수 있다.
  let makeAndModel: string[] = pluck(taxi, ['manufacturer', 'model']);
-
+ 
  // 만약 model과 year를 끌어내려고 하면,
  // 유니언 타입의 배열: (string | number)[] 을 얻게 된다.
  let modelYear = pluck(taxi, ['model', 'year'])
-
 ```
 
 ------------
@@ -1728,23 +2336,21 @@ keyof 와 T[K] 가 인덱스 시그니처와 상호 작용한다. 인덱스 시�
 그리고 T[string]은 인덱스 시그니처의 타입이다.
 
 ```
-
-interface Dictionary {
+interface Dictionary<T> {
     [key: string]: T;
 }
-let keys: keyof Dictionary; // string | number
-let value: Dictionary['foo']; // number
+let keys: keyof Dictionary<number>; // string | number
+let value: Dictionary<number>['foo']; // number
 
 -------------------------------
 
 //숫자 인덱스 시그니처인 타입이 있으면, keyof T는 number일 것이다.
-interface Dictionary {
+interface Dictionary<T> {
     [key: number]: T;
 }
-let keys: keyof Dictionary; // 숫자
-let value: Dictionary['foo']; // 오류, 프로퍼티 'foo'는 타입 'Dictionary'에 존재하지 않습니다.
-let value: Dictionary[42]; // 숫자
-
+let keys: keyof Dictionary<number>; // 숫자
+let value: Dictionary<number>['foo']; // 오류, 프로퍼티 'foo'는 타입 'Dictionary<number>'에 존재하지 않습니다.
+let value: Dictionary<number>[42]; // 숫자
 ```
 
 
@@ -1755,40 +2361,42 @@ let value: Dictionary[42]; // 숫자
 - 기존 타입을 가져와 선택적 프로퍼티로 만드는 것은 일반적인 작업.
 
 ```
-
-type Readonly = {
+type Readonly<T> = {
     readonly [P in keyof T]: T[P];
 }
-type Partial = {
+type Partial<T> = {
     [P in keyof T]?: T[P];
 }
 
+
 //사용하기 위해선 아래와 같이
-type PersonPartial = Partial;
-type ReadonlyPerson = Readonly;
-
+type PersonPartial = Partial<Person>;
+type ReadonlyPerson = Readonly<Person>;
 ```
 
 
 
 
 ```
-
 interface Options{
    width:number;
    height: number;
    color: string;
    label: string;
 }
-interace OptionsUpate{
+interface OptionsUpdate{
    width? :number;
    height?: number;
    color?: string;
    label?: string;
 }
 
+
 // --> 매핑된 타입과 keyof 를 사용하면 Options 으로부터 OptionsUpdate 를 만들 수 있다.
-type OptionsUpate = { [K in keyof Options]? : Options[K];  
+type OptionsUpdate = { [K in keyof Options]?: Options[K] };
+
+// 내장 유틸리티 타입 Partial 과 동일하다.
+type OptionsUpdate = Partial<Options>;
 
 ```
 
@@ -1804,10 +2412,9 @@ const obj={
   two: 'dos',
   three: 'tres'
 }
-let k: keyof typeof obj;
-for(k in obj){
+for(const k in obj){
   const v=obj[k];
-  // ~~~~~~~~~~~에러 :  obj 에 인덱스 시그니처가 없기 때문에 엘리먼트는 암시적으로 'any' 타입입니다.
+  // ~~~~~~~~~~~에러 :  obj 에 인덱스 시그니처가 없기 때문에 엘리먼트는 암시적으로 'any' 타입입니다. ( k 가 string 으로 추론됨 )
 }
 
 // k 타입을 구체적으로 명시하면 된다.
@@ -1815,7 +2422,6 @@ let k: keyof typeof obj;
 for(k in obj){
   const v=obj[k];
 }
-
 ```
 
 
@@ -1823,7 +2429,6 @@ for(k in obj){
 
 
 ```
-
 interface ABC{
   a: string;
   b: string;
@@ -1840,15 +2445,13 @@ function foo(abc: ABC){
 // foo(x); // 정상 처리 됨.
 // foo 함수는 a,b,c 속성 외에 d 를 가지는 x 객체로 호출이 가능하다. 즉 foo 함수는 ABC 타입에 할당 가능한 어떠한 값이든 매개변수로 허용하기 때문
 
--> 다음과 같이 수정
+-> 다음과 같이 수정 ( Object.entries 는 for...of 로 순회 )
 function foo(abc: ABC){
-   for(const [k, v] in Object.entries(abc)){
+   for(const [k, v] of Object.entries(abc)){
       // k => string 타입 
       // v => any 타입 
-      const v=abc[k];
    }
 }
-
 ```
 ------------
 
@@ -1859,29 +2462,29 @@ function foo(abc: ABC){
 타입은 리터럴 타입에서만 사용하고 Object 형태의 타입은 인터페이스를 쓰라는 소리다.
 type 별칭은 리터럴 타입의 값에만 사용하고, Object 형태의 타입을 잡아줄 때는 Interface 를 사용하면 고민없이 행복해진다.
 
+- **interface** : 객체 형태, 확장(`extends`)이 필요한 타입
+- **type** : 유니온, 튜플, 함수 타입, 유틸리티 타입 조합 등 interface 로 표현할 수 없는 타입
+- 이름 앞에 `I` / `T` 접두어( `IMember`, `TTier` )는 붙이지 않는다. ( TypeScript 공식 가이드 및 최근 컨벤션 )
+
 ```
+export type MemberTier = "Basic" | "Premium" | "Admin";
 
-export type TSomeMemberTier = "Basic" | "Premium" | "Admin";
-
-export interface ISomeMember {
+export interface Member {
   name: string;
   age: number;
   address: string;
-  tier: TSomeMemberTier;
+  tier: MemberTier;
 }
-
 ```
 
 - Destructuring
 - 함수
 ```
-
 function f([first, second]: [number, number]) {
     console.log(first);
     console.log(second);
 }
 f([1, 2]);
-
 ```
 
 - 객체
@@ -1892,6 +2495,7 @@ let { a, b }: { a: string, b: number } = o;
 ```
 
 ------------
+
 
 ### **값의 형태에 해당하는 타입을 정의하고 싶을때**
 
@@ -1911,15 +2515,16 @@ interface Options{
 }
 
 // 이런 경우 typeof 를 사용하면 된다.
-type Options = types INIT_OPTIONS;
+type Options = typeof INIT_OPTIONS;
 ```
+
 
 ------------
 
-### **타입스크립트에서 유용한 유틸**
+
+### **타입스크립트에서 유용한 유틸** 
 
 #### **Omit<T,K>**
-
 - T에서 모든 프로퍼티를 선택한 다음 K를 제거한 타입을 구성.
 
 ```
@@ -1938,10 +2543,9 @@ const todo: TodoPreview = {
 
 ---------------
 
+
 #### **Pick<T,K>**
-
 T에서 프로퍼티 K의 집합을 선택해 타입을 구성.
-
 ```
 // 예제 (Example)
 interface Todo {
@@ -1958,8 +2562,8 @@ const todo: TodoPreview = {
 
 ---------------
 
-#### **keyof**
 
+#### **keyof**
 keyof 키워드는 타입 값에 존재하는 모든 프로퍼티의 키값을 union 형태로 리턴 받다.
 
 ```
@@ -1968,11 +2572,9 @@ interface Todo {
     text: string;
     due: Date;
 }
-```
 
 // TodoKeys의 타입 = "id" | "text" | "due"
 type TodoKeys = keyof Todo;
-
 ```
 
 ---------------
@@ -1984,7 +2586,6 @@ type TodoKeys = keyof Todo;
 Record<K, V>로 쓰인다. 여기서 K는 key 이고, V는 Value 다. 
 
 ```
-
 //예제 (Example)
 
 export type GlobalColors = 'Red' | 'Blue' | 'Green' | 'Black'
@@ -1992,10 +2593,10 @@ type ColorProperties = Record<GlobalColors, string>
 
 //위 두줄 typescript는 아래와 같다
 type ColorProperties = {
-  red: string
-  blue: string
-  green: string
-  black: string
+  Red: string
+  Blue: string
+  Green: string
+  Black: string
 }
 
 ——————
@@ -2021,7 +2622,6 @@ T의 모든 프로퍼티를 선택적으로 만드는 타입을 구성한다.
 이 유틸리티는 주어진 타입의 모든 하위 타입 집합을 나타내는 타입을 반환한다.
 
 ```
-
 예제 (Example)
 
 export type GlobalColors = 'Red' | 'Blue' | 'Green' | 'Black'
@@ -2029,16 +2629,16 @@ type ColorProperties = Record<GlobalColors, string>
 
 //위 두줄 typescript는 아래와 같다
 type ColorProperties = {
-  red: string
-  blue: string
-  green: string
-  black: string
+  Red: string
+  Blue: string
+  Green: string
+  Black: string
 }
 
 // 이거는
-let PartialColorProperties = Partial
+type PartialColorProperties = Partial<ColorProperties>
 // 이거와 같다.
-let PartialColorProperties = { red?: string, blue?: string, green?: string, black?: string }
+type PartialColorProperties = { Red?: string, Blue?: string, Green?: string, Black?: string }
 
 ——————
 
@@ -2047,7 +2647,7 @@ interface Todo {
     description: string;
 }
 
-function updateTodo(todo: Todo, fieldsToUpdate: Partial) {
+function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
     return { ...todo, ...fieldsToUpdate };
 }
 
@@ -2059,29 +2659,28 @@ const todo1 = {
 const todo2 = updateTodo(todo1, {
     description: 'throw out trash',
 });
-
 ```
 
 정리 
 
 ```
-
 // 글로벌 색으로 4가지를 선언한다.
 export type GlobalColors = 'Red' | 'Blue' | 'Green' | 'Black'
 
-// 기본값으로 색상을 선언한다.
-const enum ConstGlobalColorSet {
-  Red = '11, 11, 11',
-  Blue = '22, 22, 22',
-  Green = '33, 33, 33',
-  Black = '44, 44, 44',
+// 기본값으로 모든 색상을 선언한다. ( Record : 키 누락 시 오류 )
+const GLOBAL_COLOR_SET: Record<GlobalColors, string> = {
+  Red: '11, 11, 11',
+  Blue: '22, 22, 22',
+  Green: '33, 33, 33',
+  Black: '44, 44, 44',
 }
 
-// 기본 색상값외에 다른 색상을 사용하고 싶다면
+// 일부 색상만 덮어쓰고 싶다면 Partial 로 선택적 키를 허용한다.
 const CUSTOM_COLORS: Partial<Record<GlobalColors, string>> = {
-  gray: '55, 55, 55',
+  Black: '55, 55, 55',
 }
 
+const colors = { ...GLOBAL_COLOR_SET, ...CUSTOM_COLORS }
 ```
 
 ---------------
@@ -2091,18 +2690,16 @@ const CUSTOM_COLORS: Partial<Record<GlobalColors, string>> = {
 함수 타입 T의 매개변수 타입들의 튜플 타입을 구성.
 
 ```
-
 예제 (Example)
 declare function f1(arg: { a: number, b: string }): void
 type T0 = Parameters<() => string>;  // []
 type T1 = Parameters<(s: string) => void>;  // [string]
-type T2 = Parameters<((arg: T) => T)>;  // [unknown]
-type T4 = Parameters;  // [{ a: number, b: string }]
-type T5 = Parameters;  // unknown[]
-type T6 = Parameters;  // never
-type T7 = Parameters;  // 오류
-type T8 = Parameters;  // 오류
-
+type T2 = Parameters<(<T>(arg: T) => T)>;  // [unknown]
+type T4 = Parameters<typeof f1>;  // [{ a: number, b: string }]
+type T5 = Parameters<any>;  // unknown[]
+type T6 = Parameters<never>;  // never
+type T7 = Parameters<string>;  // 오류
+type T8 = Parameters<Function>;  // 오류
 ```
 
 ---------------
@@ -2112,19 +2709,17 @@ type T8 = Parameters;  // 오류
 함수 T의 반환 타입으로 구성된 타입을 만듭니다.
 
 ```
-
 예제 (Example)
 declare function f1(): { a: number, b: string }
 type T0 = ReturnType<() => string>;  // string
 type T1 = ReturnType<(s: string) => void>;  // void
-type T2 = ReturnType<(() => T)>;  // {}
+type T2 = ReturnType<(<T>() => T)>;  // unknown
 type T3 = ReturnType<(<T extends U, U extends number[]>() => T)>;  // number[]
-type T4 = ReturnType;  // { a: number, b: string }
-type T5 = ReturnType;  // any
-type T6 = ReturnType;  // any
-type T7 = ReturnType;  // 오류
-type T8 = ReturnType;  // 오류
-
+type T4 = ReturnType<typeof f1>;  // { a: number, b: string }
+type T5 = ReturnType<any>;  // any
+type T6 = ReturnType<never>;  // never
+type T7 = ReturnType<string>;  // 오류
+type T8 = ReturnType<Function>;  // 오류
 ```
 
 
@@ -2136,12 +2731,10 @@ type T8 = ReturnType;  // 오류
 클래스 생성자의 인스턴스 타입을 구한다.
 
 ```
-
 예제 (Example)
 type A={new(): B}
 type B={b: number}
-type I= InstanceType // {b: number}
-
+type I= InstanceType<A> // {b: number}
 ```
  
 
@@ -2153,12 +2746,54 @@ type I= InstanceType // {b: number}
 모든 매개변수 타입을 가지는 튜플 타입(T가 함수가 아닌 경우 never)을 생성.
 
 ```
-
 예제 (Example)
-type T0 = ConstructorParameters;  // [(string | undefined)?]
-type T1 = ConstructorParameters;  // string[]
-type T2 = ConstructorParameters;  // [string, (string | undefined)?]
+type T0 = ConstructorParameters<ErrorConstructor>;  // [(string | undefined)?]
+type T1 = ConstructorParameters<FunctionConstructor>;  // string[]
+type T2 = ConstructorParameters<RegExpConstructor>;  // [string, (string | undefined)?]
+```
 
+--------------------
+
+
+#### **그 외 자주 쓰는 유틸리티 타입**
+
+| 유틸리티 | 설명 |
+|------|------|
+| `Required<T>` | 모든 프로퍼티를 필수로 ( Partial 의 반대 ) |
+| `Readonly<T>` | 모든 프로퍼티를 읽기전용으로 |
+| `Exclude<T, U>` | 유니온 T 에서 U 에 해당하는 타입 제거 ( `Exclude<'a' \| 'b', 'a'>` → `'b'` ) |
+| `Extract<T, U>` | 유니온 T 에서 U 에 해당하는 타입만 추출 |
+| `NonNullable<T>` | T 에서 null, undefined 제거 |
+| `Awaited<T>` | Promise 가 resolve 된 값의 타입 ( `Awaited<Promise<string>>` → `string` ) |
+
+
+--------------------
+
+
+### **최신 문법 ( satisfies / as const )**
+
+**as const**
+- 값을 가장 좁은 리터럴 타입으로 고정하고 모든 프로퍼티를 readonly 로 만든다.
+
+```
+const ROLES = ['admin', 'user', 'guest'] as const;
+
+type Role = (typeof ROLES)[number]; // 'admin' | 'user' | 'guest'
+```
+
+**satisfies** ( TS 4.9 이상 )
+- 값이 타입을 만족하는지 검사하면서도, 타입 단언(`as`)이나 타입 지정과 달리 **추론된 구체적인 타입을 유지**한다.
+
+```
+type Colors = Record<'primary' | 'secondary', string | number[]>;
+
+// 타입 지정 : palette.primary 가 string | number[] 로 넓어진다.
+const palette1: Colors = { primary: '#2f4dc9', secondary: [255, 0, 0] };
+palette1.primary.toUpperCase(); // 오류
+
+// satisfies : 키/값 검사는 하면서 primary 는 string 으로 유지된다.
+const palette2 = { primary: '#2f4dc9', secondary: [255, 0, 0] } satisfies Colors;
+palette2.primary.toUpperCase(); // ok
 ```
 
 
@@ -2189,8 +2824,13 @@ type T2 = ConstructorParameters;  // [string, (string | undefined)?]
 | dist/assets/js/Utils.js                | 유틸 기능 정의 js                        |
 | dist/assets/vendors/bootstrap          | 화면 레이아웃 및 요소 지원( 부트스트랩 라이브러리 )     |
 | dist/assets/vendors/jquery             | 화면(dom) 컨트롤 지원 ( jquery js 라이브러리 ) |
-| dist/assets/vendors/greensock/TweenMax | 모션 컨트롤 지원 ( js 라이브러리 )             |
+| dist/assets/vendors/gsap               | 모션 컨트롤 지원 ( GSAP 3 js 라이브러리 )        |
 | dist/assets/vendors/swiper/swiper      | 캐러셀 컨트롤 지원 ( css/js 라이브러리 )        |
+
+> note : 라이브러리 선택 기준
+> - **GSAP** : `TweenMax` 는 GSAP 2 이전 API 이다. GSAP 3 부터 `gsap.to()` 단일 API 로 통합되었고 플러그인 포함 무료로 사용할 수 있다.
+> - **jQuery** : 신규 작업은 `querySelector`, `classList`, `fetch` 등 표준 DOM API 로 대체 가능하다. 사용해야 한다면 1.x 가 아닌 최신 버전을 사용한다. ( 1.x 는 보안 취약점 존재 )
+> - 단순 전환/페이드 효과는 라이브러리 대신 CSS `transition` / `animation` 을 우선 사용한다.
 
 ## 8. Directory
 ### 8-1. 배포용 폴더 구성 
@@ -2220,6 +2860,26 @@ type T2 = ConstructorParameters;  // [string, (string | undefined)?]
 | src/assets/vendors       | 라이브러리                |
 | src/pages                | html                 |
 
+-------------------
+
+### 8-3. SPA ( Vite + Vue ) 프로젝트 폴더 구성
+- `npm create vue@latest` 로 생성한 프로젝트 기준. 빌드 결과물은 `dist/` 에 생성되며 직접 수정하지 않는다.
+
+| Directory / File         | Description                          |
+|:-------------------------|:-------------------------------------|
+| public/                  | 빌드 시 그대로 복사되는 정적 파일 ( favicon 등 ) |
+| src/assets/              | 이미지, 폰트, 전역 스타일 ( 빌드 시 최적화/해시 처리 ) |
+| src/components/          | 재사용 컴포넌트                           |
+| src/views/               | 라우트 단위 페이지 컴포넌트                    |
+| src/composables/         | 재사용 로직 ( `useXxx.ts` )             |
+| src/stores/              | Pinia 스토어                          |
+| src/router/              | Vue Router 설정                       |
+| src/api/                 | API 통신 모듈 ( axios 인스턴스 등 )        |
+| src/types/               | 공통 타입 정의                           |
+| index.html               | 앱 진입 HTML ( Vite 는 루트의 index.html 이 진입점 ) |
+| vite.config.ts           | Vite 설정                            |
+| .env / .env.production   | 환경 변수 ( `VITE_` 접두어만 클라이언트에 노출 ) |
+
 
 --------------
 
@@ -2228,39 +2888,47 @@ type T2 = ConstructorParameters;  // [string, (string | undefined)?]
 #### head 부분
 
 ```
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <meta content="" property="og:title">
+    <meta content="" property="og:url">
+    <meta content="" property="og:description">
+    <meta content="" property="og:image">
+    <meta content="website" property="og:type">
+    <meta content="" property="og:site_name">
+    <meta content="" name="title">
+
+    <!-- inject:css -->
+    <link href="../assets/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="../assets/css/common.css" rel="stylesheet">
+    <link href="../assets/css/sub.css" rel="stylesheet">
+    <!-- endinject -->
 
 
+    <!-- inject:dependency:js -->
+    <script src="../assets/vendors/bootstrap/js/bootstrap.bundle.min.js" defer></script>
+    <script src="../assets/vendors/gsap/gsap.min.js" defer></script>
+    <script src="../assets/vendors/swiper/swiper-bundle.min.js" defer></script>
+    <!-- endinject -->
 
+    <!-- inject:head:js -->
+    <script src="../assets/js/apps.js" defer></script>
+    <!-- endinject -->
+</head>
 ```
-<!-- inject:css -->
-<link href="../assets/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="../assets/vendors/swiper/css/swiper.min.css" rel="stylesheet">
-<link href="../assets/css/common.css" rel="stylesheet">
-<link href="../assets/css/sub.css" rel="stylesheet">
-<!-- endinject -->
 
-
-<!-- inject:dependency:js -->
-<script src="../assets/vendors/jquery/jquery-1.10.2.min.js"></script>
-<script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
-<script src="../assets/vendors/greensock/TweenMax.min.js"></script>
-<script src="../assets/vendors/swiper/js/swiper.min.js"></script>
-<!-- endinject -->
-
-<!-- inject:head:js -->
-<script src="../assets/js/apps.js"></script>
-<!-- endinject -->
-```
-
-```
 
 ### body 부분
 
 > note :
->
 > - 메인페이지일 경우 wrapper 부분은 div class="wrapper main" 라고 지정.
 > - 서브페이지일 경우 wrapper 부분은 div class="wrapper sub" 라고 지정.
 > - 서브페이지에서 추가 구분은 추가명칭 flag 가 붙는다. 회원가입 페이지 경우 div class="wrapper sub sign-up" 처럼 구분 된다.
+> - 페이지 영역은 `<header>`, `<nav>`, `<main>`, `<footer>` 시맨틱 엘리먼트(랜드마크)로 구분한다. `<main>` 은 페이지당 하나만 사용한다. ( 스크린 리더의 영역 이동에 사용 )
 
 ```
 <div class="wrapper sub sign-up">
@@ -2290,8 +2958,8 @@ type T2 = ConstructorParameters;  // [string, (string | undefined)?]
     </header>
     <!-- end: header / gnb -->
 
-    <section class="container-fluid">
-        <div id="contents">
+    <main class="container-fluid" id="contents">
+        <div class="contents-inner">
              <!-- start: 컨텐츠 상단( 주로 타이틀/ stepper 요소등  ) -->
             <div class="sub-top">
                 <h2 class="sub-tit">타이틀</h2>
@@ -2308,10 +2976,10 @@ type T2 = ConstructorParameters;  // [string, (string | undefined)?]
              <!-- end: 컨텐츠 하단 내용 -->
         </div>
 
-    </section>
+    </main>
 
     <footer id="footer"></footer>
-```
+</div>
 
 ```
 
@@ -2319,38 +2987,27 @@ type T2 = ConstructorParameters;  // [string, (string | undefined)?]
 
 
 
-## 11. node 버전 관리
+## 10. node 버전 관리
 - 노드 기반 즉 의존성이 포함된 라이브러리를 많이 쓰는 경우에 협업자들끼리 node 버전을 맞추지 않으면 매번 의존성 라이브러리들을 설치하거나
 깃에서 충돌이 날 것이다. 이럴때 간편하게 node 를 설치하고 버전관리를 해주는 것이 nvm 이라는 것이 있다.
+- node 는 짝수 버전의 **LTS(Long Term Support)** 버전을 사용한다. ( 홀수 버전은 단기 지원 ) 지원 일정은 [Node.js Releases](https://nodejs.org/ko/about/previous-releases) 에서 확인.
+- 프로젝트 루트에 **`.nvmrc`** 파일로 node 버전을 명시해서 협업자 간 버전을 맞춘다.
 
+```
+// .nvmrc
+24
+```
 
-> note: curl 로 설치 
-> - `sudo curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash`
-> - sudo 명령어를 썼기에 사용자 비번 넣으라고 나올 것이다. 가볍게 비번을 넣어주면 설치 뙁 ~!!!!
-> - 설치 후 잘 설치 되었는지 터미널에서 확인 `nvm ls-remote`
+```
+nvm use      # .nvmrc 에 적힌 버전으로 전환 ( 미설치 시 nvm install )
+```
 
-command not found 라는 문구가 뜨면서 안되는 경우가 있다.  
-다음과 같이 해보자..
+- `package.json` 의 `engines` 필드로 지원 node 버전을 명시할 수도 있다.
 
-**1. 터미널에 .bash_profile 있는지 확인**( 참고로 필자는 최상위 루트에서 터미널 명령어를 실행했다. )
--> 명령어 find ./.bash_profile
-
-아래와 같이 파일이 존재할 경우 아래 처럼 해당 파일이 있다고 알려줄 것이다.
-./.bash_profile
-
-없다면 find: ./.bash_profile:No such file or directory 라는 문구가 뜰 것이다.
-
-**2.bash_profile 에 내용 추가** 
-위 내용에서 .bash_profile 이 없는 경우엔 만들어 준다.
-터미널에 다음과 같이 .bash_profile을 만든다. --> `touch .bash_profile `
-
-.bash_profile 이 있는 경우엔 터미널에 다음 명령어를 치고 내용확인 -> `open .bash_profile`
-
-.bash_profile 안에 코드는 아래와 같다.
-```export NVM_DIR="$HOME/.nvm" [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm```
-
-그리고 다시 설치~ 
-
+```
+"engines": {
+  "node": ">=22.12.0"
+}
 ```
 
 ### 10-1. nvm 에서 자주 사용할 명령어
@@ -2361,238 +3018,214 @@ command not found 라는 문구가 뜨면서 안되는 경우가 있다.
 
 `nvm ls` ( 현재 설치된 버전을 보여준다. )
 
-`nvm ls-remote` ( 설치 가능한  node 버전을 알려준다. )
+`nvm ls-remote --lts` ( 설치 가능한 LTS node 버전을 알려준다. )
 
-`nvm install v5`  ( node 5버전대에 latest 버전을 설치한다. )
+`nvm install --lts`  ( 최신 LTS 버전을 설치한다. )
 
-`nvm use v5`  ( node 설치된 v5버전으로 사용한다. )
+`nvm install 24`  ( node 24 버전대의 최신 버전을 설치한다. )
+
+`nvm use 24`  ( 설치된 node 24 버전을 사용한다. )
+
+`nvm alias default 24`  ( 새 터미널을 열 때 기본으로 사용할 버전 지정 )
 
 ----------------------
+### 10-2. mac 환경에서 nvm 설치
+- macOS 기본 쉘은 zsh 이므로 설정 파일은 `~/.zshrc` 를 사용한다. ( `.bash_profile` 은 bash 사용 시 )
+- nvm 공식 설치 스크립트를 사용한다. **sudo 를 붙이지 않는다.** ( 권한 문제가 생긴다 / 버전은 [nvm releases](https://github.com/nvm-sh/nvm/releases) 확인 )
 
-### 10-2. mac m2 환경에서 nvm 설치
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | bash
+```
 
-1. brew 로 nvm 설치
-
-- `brew install nvm`
-
-2. 설치 되었는지 버전 확인
-
-- `nvm --version`
-
-설치가 안되고 nvm not found라는 에러 나오면 환경설정 수정해야 한다.
-
-1. z shell 을 연다.
-
-( 기본 쉘 (Shell) 이 bash 에서 zsh (Z shell)로 변경 )
-
-- `vi ~/.zshrc`
-
-2. 쉘스크립트가 열리면 아래 코드를 입력한다 ( vi 로 열었을때 i 를 누르면 insert 즉 입력가능해진다 )
+- 설치 스크립트가 `~/.zshrc` 에 아래 내용을 자동으로 추가한다. 터미널을 새로 열거나 `source ~/.zshrc` 로 적용한다.
 
 ```
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 ```
 
+- 설치 확인
+
 ```
-export NVM_DIR=~/.nvm
-export PATH=/opt/homebrew/bin:$PATH
-source $(brew --prefix nvm)/nvm.sh
+nvm --version
 ```
 
-export PATH=/opt/homebrew/bin:$PATH 라는 내용은 command not found : brew 라는 에러 발생해서 추가해 주었던 부분이다.
-참고로 해당 에러 발생은 'Homebrew가 /usr/local/... 가 아닌  /opt/homebrew/ 에 설정되어 있어서 그렇다' 라고 해서 해당 부분은 경로를 추가해 해결하였다. 아래는 쉘스크립트에서 기존의 $PATH 값에 새로운 경로추가시 경로 추가하는 법이다.
-( 추가되는 디렉렉터리는 :(쌍점, 콜론)으로 구분 )
-PATH=/추가경로1:/추가경로2:$PATH
+> note : `nvm: command not found` 가 나오는 경우
+> - `~/.zshrc` 파일이 없으면 설치 스크립트가 내용을 추가하지 못한다. `touch ~/.zshrc` 로 파일을 만든 뒤 설치 스크립트를 다시 실행한다.
+> - Homebrew 로 설치한 nvm 은 공식적으로 지원하지 않으므로 공식 설치 스크립트를 권장한다.
 
-3. 입력이 끝나면 esc키 누른다. 그리고 :wq ( 저장후 종료 ) 타이핑을 치고 엔터 누르면 편집에서 빠져나오게 된다.
-4. source 명령어로 아까 입력한 부분을 실행시킨다.
+> note : Apple Silicon(M 시리즈) mac 에서 `command not found: brew` 가 나오는 경우  
+> Homebrew 가 `/usr/local` 이 아닌 `/opt/homebrew` 에 설치되기 때문이다. `~/.zshrc` 에 경로를 추가한다.  
+> `eval "$(/opt/homebrew/bin/brew shellenv)"`
 
-( 참고로 source 명령어는 command를 읽고 실행하는 bash 내장 명령어 )
 
-- `source ~/.zshrc`
-
-### 10-3. window 에서 nvm 설치
-
+### 10-3. window 에서 nvm 설치 
 1. NVM 설치 파일 다운로드
-
 - [https://github.com/coreybutler/nvm-windows/releases](https://github.com/coreybutler/nvm-windows/releases)
-- 위 주소에 접속하여 nvm-setup.zip 파일을 다운 받는다.
+- 위 주소에 접속하여 최신 릴리스의 `nvm-setup.exe` 파일을 다운 받는다.
 
 2. NVM 설치 방법
-   - 받은 압축 파일을 풀고 nvm을 install 한다.
-   - windows 명령 프롬프트 cmd를 실행한다.
-   - nvm version을 입력하여 설치된 것을 확인한다.
+  - 설치 파일을 실행하여 nvm 을 install 한다.
+  - windows 명령 프롬프트(cmd) 또는 PowerShell 을 **관리자 권한**으로 실행한다.
+  - `nvm version` 을 입력하여 설치된 것을 확인한다.
+  
 3. nodejs & npm 설치 방법
-   - nvm install v10.16.3 입력 설치
-   - nvm ls 를 입력 > 버전을 확인.
-   - nvm use 10.15.2 를 입력 > 해당 버전의 nodejs 활성
+  - `nvm install lts` 입력 설치 ( 또는 `nvm install 24` )
+  - `nvm ls` 를 입력 > 버전을 확인.
+  - `nvm use 24` 를 입력 > 해당 버전의 nodejs 활성
+
+> note : nvm-windows 는 `.nvmrc` 를 자동으로 읽지 않는다. `.nvmrc` 를 자동 지원하는 크로스 플랫폼 대안으로 **fnm** 이나 **Volta** 를 사용할 수 있다.
 
 ----------------------
 
 ## 11. 개발 환경 설정.
+- ES 모듈 / TypeScript / SCSS 파일 등을 컴파일 해서 최종 산출물을 전달한다.
+- 빌드 도구는 **Vite** 를 사용한다. ( gulp / webpack 대비 설정이 거의 없고, 개발 서버가 빠르며 HMR(저장 시 즉시 반영)을 기본 지원 )
+- Vite 는 TypeScript, SCSS, PostCSS, 정적 에셋 처리를 별도 플러그인 없이 지원한다.
 
-- es6 / scss / readme.md  / 파일등을 컴파일 해서 최종 산출물을 전달한다.
-- 그렇게 하려면 별도의 컴파일 task runner( gulp 로 설정 ) 가 필요하다.
-( 현재는 모듈화 작업 즉 angular/vue/react 등의 spa 로  entry point 인 하나의 파일로 진입하는 모듈 작업은 거의 없기에 
-webpack 과 같은 모듈러는 사실상 필요가 없다. )
+> note : Vite 8 은 node `20.19` 이상 또는 `22.12` 이상이 필요하다. ( 10. node 버전 관리 참고 )
 
-1. 초기 설정. (해당 프로젝트 폴더로 터미널경로를 이동되어 있어야 한다)
-
-매 프로젝트마다 저 선언은 해주어야 package.json 이 생성된다. ( npm에 의한 프로젝트 의존성 모듈 설정 파일 )
+1. 프로젝트 생성. (프로젝트를 만들 상위 폴더로 터미널 경로를 이동되어 있어야 한다)
 
 ```
-npm init
+# 일반 웹 프로젝트 ( vanilla, vanilla-ts, vue, react 등 템플릿 선택 )
+npm create vite@latest
+
+# Vue 프로젝트 ( TypeScript, Router, Pinia, ESLint, Prettier, Vitest 등 선택 )
+npm create vue@latest
 ```
 
-2. gulp 전역(global)설치
+2. 의존성 설치 및 개발 서버 실행
 
 ```
-npm install -g gulp
+cd 프로젝트명
+npm install
+npm run dev
 ```
 
-3. 프로젝트내 local gulp devDependency 설치
+3. 필요한 도구 추가 설치
 
 ```
-npm install --save-dev gulp
+# SCSS
+npm install -D sass
+
+# 벤더 프리픽스 자동 추가 ( postcss.config.js 에 autoprefixer 플러그인 등록 )
+npm install -D autoprefixer
 ```
 
-4. gulpfile.babel.js 생성
+4. package.json 스크립트
+
+| 명령어 | 설명 |
+|------|------|
+| `npm run dev` | 개발 서버 실행 ( 저장 시 브라우저 즉시 반영 ) |
+| `npm run build` | 배포용 빌드 ( `dist/` 폴더에 압축/최적화된 결과물 생성 ) |
+| `npm run preview` | 빌드 결과물을 로컬 서버로 미리보기 |
+
+5. 환경 변수
+- API 주소 등 환경마다 다른 값은 코드에 하드코딩하지 않고 `.env` 파일로 관리한다.
+- `VITE_` 접두어가 붙은 변수만 클라이언트 코드에 노출되며 `import.meta.env.VITE_XXX` 로 사용한다.
+- 비밀 키가 담긴 `.env.local` 등은 `.gitignore` 에 추가하고 커밋하지 않는다.
 
 ```
-touch gulpfile.babel.js
+// .env.development
+VITE_API_BASE_URL=http://localhost:8080
+
+// .env.production
+VITE_API_BASE_URL=https://api.example.com
 ```
 
-5. Babel  설치( ES2015 + 기능 및 호환성 문제를 피하기 위해)
-
-```
-npm install --save-dev @babel/register @babel/core @babel/preset-env
-```
-
-6. babel 설정파일 .babelrc 을 생성
-
-`touch .babelrc`
-
-7. .babelrc 파일을 열고 아래 내용을 입력.
-
-```
-{
-    "presets": [ "@babel/preset-env" ]
-}
-```
-
-마지막으로 의존성 파일들 설치 ( package.json 에 명시된 라이브러리들 )
-
-위의 내용들을 개별로 설치하기 부담스럽다면  다운로드 링크 : [package.json](./package.json) 을 다운받아서
-프로젝트 폴더내에 root경로에 놓고 터미널에`npm install` 하면 관련 의존성 파일들을 알아서 설치해 줄 것이다.
+> note : 이 가이드 문서 자체도 Vite 로 빌드한다. `README.md` 를 수정하고 `npm run dev` 로 확인, `npm run build` 로 index.html 을 생성한다.
 
 --------
 
 ## 12. 형상관리 ( git )
 
-> note : git 기반 - 현재 [비트버킷 https://bitbucket.org/](https://bitbucket.org/)으로 공유 중 
+> note : git 기반 - 원격 저장소는 GitHub / GitLab / Bitbucket 등 프로젝트에서 정한 곳을 사용한다.
+> - 기본 브랜치 이름은 `master` 대신 **`main`** 을 사용하는 것이 표준이다. ( GitHub, GitLab 신규 저장소 기본값 / 아래 예시의 master 는 저장소에 맞게 바꿔서 사용 )
+> - Git 2.23 부터 `git checkout` 의 기능이 브랜치 전환용 **`git switch`** 와 파일 복원용 **`git restore`** 로 분리되었다. 의도가 명확한 새 명령을 권장한다.
 
 #### 12-1. 원격 저장소 연결
-
-`git remote add origin <원격저장소 주소>`
-
+```git remote add origin <원격저장소 주소>```
 - 원격저장소 등록
 
-`git clone <저장소주소> [새로운 폴더명]`
-
+```git clone <저장소주소> [새로운 폴더명]```
 - 복제하려다 실패하는 대부분의 이유는 폴더명을 생략하면 자동으로 프로젝트 이름과 같은 이름의 폴더가 새로 생성되는데 보통 이름이 이미 존재할 경우라 그런다.
-- 에러 fatal: destination path ‘폴더명’ already exist and is not an empty directory.
+- 에러 fatal: destination path ‘폴더명’ already exist and is not an empty directory. 
 
 -----------------------
+#### 12-2. 커밋 / 히스토리 상태 보기 
 
-#### 12-2. 커밋 / 히스토리 상태 보기
+```git status```
+- 현재 진행 상태 
 
-`git status`
-
-- 현재 진행 상태
-
-`git log —oneline`
-
+```git log --oneline```
 - 간단한 커밋해시와 제목만 보고 싶을때
 
-`git log —oneline —graph —decorate`
-
+```git log --oneline --graph --decorate```
 - HEAD와 관련된 커밋들을 조금 더 자세히 보고 싶을 때
 
-`git log —oneline —graph —all —decorate`
-
+```git log --oneline --graph --all --decorate```
 - 모든 브랜치들을 보고 싶을때 사용하는 명령
 
-`git log —oneline -n5`
-
+```git log --oneline -n5```
 - 내 브랜치의 최신 커밋 5개만 보고 싶을때 사용
 
 ##### git blame
-
 > note 특정 파일의 수정 이력을 확인할 수 있다. 각 라인별로 누가, 언제 마지막으로 수정 했는지 알 수 있다.
 
-`git blame test.txt`
-
+```git blame test.txt```
 - test.txt 파일의 수정 이력을 확인
 
-`git blame -L 5,10 test.txt`
-
+```git blame -L 5,10 test.txt```
 - test.txt 파일의 5부터 10번 라인까지만 확인
 
-`git blame -C newTest.txt`
-
+```git blame -C newTest.txt```
 - 파일명이 변경 되었다면, 변경전의 파일명과 함께 확인
 
-`git blame -w test.txt`
-
+```git blame -w test.txt```
 - 공백 변경을 무시
 
-`git gc` 
-
+```git gc``` 
 - 저장소에 필요없는 파일을 삭제하고 남은 파일을 압축하는 “Garbage Collection” 명령이다. 직접 실행시켜도 되지만 Git이 자동으로 실행해준다.
 
-`git fsck`
-
+```git fsck```
 - Git 저장소의 오브젝트를 검사하여 손상된 파일이나 누락된 파일을 확인하는데 도움
 
 -----------------------
 
 #### 12-3. branch
 
-`git branch`
+```git branch```
+- 현재 로컬 브랜치 목록 보기 
 
-- 현재 로컬 브랜치 목록 보기
+```git branch -r```
+- 현재 원격 저장소 목록 보기 
 
-`git branch -r`
-
-- 현재 원격 저장소 목록 보기
-
-`git checkout temp`
-
+```git checkout temp```
 - 브랜치 이동  git checkout {새로운 로컬 Branch 이름}
+- 권장 : `git switch temp`
 
-`git checkout -b develop master`
-
+```git checkout -b develop master```
 - master을 기준으로 로컬에 새로운 브랜치를 생성합니다
+- 권장 : `git switch -c develop main`
 
-`git checkout -b  develop origin/develop`
-
+```git checkout -b  develop origin/develop```
 - 브랜치 생성 및 체크아웃(이동)
 원격 브런치가 이미 존재 할 경우 원격 브런치를 기준으로 로컬 브랜치를 만드는 방법 
-checkout 명령에 -b 옵션을 넣으면 브랜치 작성과 체크아웃을 한꺼번에 실행
+checkout 명령에 -b 옵션을 넣으면 브랜치 작성과 체크아웃을 한꺼번에 실행 
 
  `git checkout -b {새로운 로컬 Branch 이름} {원격 저장소 별칭}/{원격 Branch 이름}`
 
-`git push origin develop`
+- 권장 : `git switch develop` ( 같은 이름의 원격 브랜치가 있으면 자동으로 추적 브랜치를 만들어 이동 )
 
+
+```git push origin develop```
 - local 브랜치를 remote로 push하기
 
-`git pull origin master`
-
+```git pull origin master```
 - origin(원격)에서 가져오기
 
-`git branch -m master mymaster`
-
+```git branch -m master mymaster```
 - 브랜치이름 변경 git branch -m `[브랜치명] [새로운 브랜치명]`
 
 ```
@@ -2601,234 +3234,213 @@ git push origin -d mybranch
 ```
 
 - mybranch 라는 브랜치 제거. 두번째 명령어는 삭제된 브렌치를 리모트 저장소에도 동기화 
-  > note : `git push origin -d mybranch` 삭제 명령 후에 git unable to delete remote ref does not exist 라는
-  > 메세지가 나온다면 remote 된 git 서버와의 최신 동기화가 이루어 지지 않아서 발생하는 문제이다.
-  > 깃허브나 비트버킷 사이트로 들어가서 정보를 조회해 보면 삭제된 것을 볼 수 있다. 
-  > 하지만 `git branch -r` 로 브랜치를 조회를 하면 삭제한 브랜치가 남아 있는 것을 볼 수 있을 것이다.
-  > 결론은 최신 동기화를 해주면 된다. `git fetch -p origin`  여기서 -p 옵션은 더 이상 존재하지 않는 remote 브랜치 정보는 삭제하는 것이다.
+> note : `git push origin -d mybranch` 삭제 명령 후에 git unable to delete remote ref does not exist 라는
+> 메세지가 나온다면 remote 된 git 서버와의 최신 동기화가 이루어 지지 않아서 발생하는 문제이다.
+> 깃허브나 비트버킷 사이트로 들어가서 정보를 조회해 보면 삭제된 것을 볼 수 있다. 
+> 하지만 `git branch -r` 로 브랜치를 조회를 하면 삭제한 브랜치가 남아 있는 것을 볼 수 있을 것이다.
+> 결론은 최신 동기화를 해주면 된다. `git fetch -p origin`  여기서 -p 옵션은 더 이상 존재하지 않는 remote 브랜치 정보는 삭제하는 것이다.
 
-`git fetch -p origin`
+```git fetch -p origin```
 
-- 서버와 최신 정보 동기화 시키고 삭제된 브랜치 내역 제거
+- 서버와 최신 정보 동기화 시키고 삭제된 브랜치 내역 제거 
+
 
 ```
 git branch -D mybranch
 ```
-
 - `-D` 옵션은 강제 삭제를 의미한다. 만약 머지 중이거나 수정 중인 상태라면 error 를 띄울텐데 그래도 상관없이 지운다면 해당 옵션으로 지우면 된다.
+
+
 
 -----------------------
 
-#### 12-4 스테이징( 로컬 임시저장 ) 및 커밋
+#### 12-4 스테이징( 로컬 임시저장 ) 및 커밋 
 
-`git add test.txt`
-
+```git add test.txt```
 - test.txt  를 스테이지에 저장.
 
-`git add .` 
-
+```git add . ```
 - 폴더의 전체 변경 사항 지정 ( 현재 디렉토리의 모든 변경 내용을 스테이징 영역에 추가 )
 
-`git add -A` 
-
+```git add -A ```
 - 폴더의 전체 변경 사항 지정 ( 작업 디렉토리 내의 모든 변경 내용을 몽땅 스테이징 영역에 추가 )
 
 > note: 
->
 > - `git add -A`는 작업 디렉토리 상에 어디에 위치하든 항상 동일하게 모든 변경 내용을 스테이징으로 넘긴다. 
 > 반면에 `git add .`는 명령어를 실행한 디렉토리 이하에서 발생한 변경 내용만 포함하며, 
 > 해당 디렉토리 기준으로 상위 디렉토리의 변경 내용을 포함하지 않는다. 
 > 만약에 `git add .`를 프로젝트 최상위 디렉토리에서 실행한다면 `git add -A`와 동일한 효과를 낸다.
 
-`git commit -m '기록할 메세지'` 
+```git commit -m '기록할 메세지' ```
+- 입력한 메세지와 함께 커밋 
 
-- 입력한 메세지와 함께 커밋
-
-`git commit -am '기록할 메세지'` 
-
+```git commit -am '기록할 메세지' ```
 - 스테이지와 커밋을 한번에 실행.
 
-`git commit --amend`
+```git commit --amend```
+- 이전 커밋에 변경사항을 추가할때 
 
-- 이전 커밋에 변경사항을 추가할때
-
- `git log`
-
+``` git log```
 - 커밋한 결과 확인 ( 주의 - 모든 목록이 나온다 )
 
-`git show`
-
+```git show```
 - 최근 커밋 확인( 주의 - 변경 내역까지 다 나옴 )
 
-`git show --stat` 
-
+```git show --stat``` 
 - 최근 커밋 요약해서 보기. ( 추천 )
 
-`git log --graph`
-
+```git log --graph```
 - 에디터의 그래프 보듯 예쁘게 히스토리 보기.
 
 --------------------------
 
 #### 12-5 되돌리기.
-
 코드를 작성하다보면 잘못된 코드를 추가하거나 merge한 경우 이를 취소할때,
 
 a. git reset 으로 취소( 단 push 이전 상태이여야 함 )
 
-`git reset`
+```git reset```
+-  add 한 파일 취소
 
-- add 한 파일 취소
-
-`git reset --merge`
-
+```git reset --merge```
 - merge 한 코드 취소
 
 b.만약 commit만 취소하고, 작성한 코드는 남겨둘려면? reset --soft 명령어 사용
 
-`git reset --soft HEAD^` 
-
+```git reset --soft HEAD^ ```
 - commit 코드 되살리기
 
-`git reset --hard HEAD^` 
-
+```git reset --hard HEAD^ ```
 - commit 하기 이전 코드로 돌아가기
 
-`git rebase <대상 브랜치>`
 
+```git rebase <대상 브랜치>```
 - 내 브랜치의 커밋들을 대상 브랜치에 재배치 ( 커밋 히스토리를 하나로 합치기에 주의 - 그룹 리더가 책임지고 해야함.)
-- git reset을 이용하여 작성한 코드를 초기화하고 서버로부터 다시 받아 오기.
 
-`git revert <commit id>`
+ - git reset을 이용하여 작성한 코드를 초기화하고 서버로부터 다시 받아 오기.
 
+```git revert <commit id>```
 - commit을 유지하면서 내용을 Rollback하는 경우 ( 이미 push 하였을 경우 쓴다 )
 
-`git checkout --<파일이름>`
+```git restore <파일이름>```
+- 로컬의 변경 내용을 되돌리기 ( 기존 `git checkout -- <파일이름>` 과 동일 )
 
-- 로컬의 변경 내용을 되돌리기
+```git stash```
+- 이미 자신의 작업 내역이 있고 변경 내역을 불러와 계속 작업을 이어 나갈 경우
 
-`git stash`
--이미 자신의 작업 내역이 있고 변경 내역을 불러와 계속 작업을 이어 나갈 경우
+```git stash push -m "<저장할 목록 이름>"```
+- 작업코드 임시저장하고 브랜치 바꾸기 ( `git stash save` 는 deprecated )
+- `-u` 옵션을 붙이면 새로 추가한(untracked) 파일까지 저장한다.
 
-`git stash save <저장할 목록 이름>`
-
-- 작업코드 임시저장하고 브랜치 바꾸기
-
-`git stash pop`
-
+```git stash pop```
 - 마지막에 저장한 코드 불러오기.
 
-`git stash apply`
-
+```git stash apply```
 - 가장 최근 저장한 stash 를 불러와 복원.
 
-`git stash clear`
-
+```git stash clear```
 - 모든 stash 기록 제거.
 
-`git stash list`
-
+```git stash list```
 - stash로 저장한 목록 보기.
 
 --------
 
 .gitignore 에 제외할 파일 지정후 해당파일을 원격저장소 동기화하여 없애는 역활
 
-`git rm -r —cached`
+```git rm -r --cached .```
 
-`git add -A`
+```git add -A```
 
-`git commit -m ‘기재할 내용’`
+```git commit -m ‘기재할 내용’```
 
-`git push`
+```git push```
 
 > note 
-> `—cached` 옵션은 git 저장소에만 파일을 지우고자 할때 적용
->   `-r` 옵션은 재귀적 탐색 제거 허용
+> ```--cached``` 옵션은 git 저장소에만 파일을 지우고자 할때 적용
+  ```-r``` 옵션은 재귀적 탐색 제거 허용
 
 -------------
-
-##### 단계별 취소
+##### 단계별 취소 
 
 **1. 로컬 변경 취소**
 
-git checkout .
+```git restore .```
+- 기존 `git checkout .` 과 동일
 
-> note 신규 추가한 파일에 관해서는 삭제되지 않으므로, 완전히 원래대로 되돌리려면 따로 삭제해야 한다.
+>note 신규 추가한 파일에 관해서는 삭제되지 않으므로, 완전히 원래대로 되돌리려면 따로 삭제해야 한다.
 
-`git clean -n` 
-
+```git clean -n ```
 - git clean 으로 제거될 파일 미리보기
 
-`git clean -f` 
-
+```git clean -f``` 
 - 전체 untracked files 제거
 
-`git clean -f <filename>`
-
+```git clean -f <filename>```
 - 한 개의 untracked files 제거
 
-`git clean -d -f`
-
+```git clean -d -f```
 - 전체 untracked files 및 디렉터리까지 삭제
+
 
 **2. add를 취소**
 
-`git reset`
-
+```git reset```
 - 전체 파일 add 취소
 
-`git reset HEAD <filename>`
+```git restore --staged <filename>```
+- 특정 파일의 add(스테이지) 취소 ( 기존 `git reset HEAD <filename>` 과 동일 )
 
-- 최신 커밋 / 스테이지 취소
+
 
 **3. commit 취소**
 
-`git reset HEAD^`
+```git reset HEAD^```
+- 최근 commit 취소 ```git reset --mixed HEAD^``` 와 동일 
 
-- 최근 commit 취소 `git reset --mixed HEAD^` 와 동일
-
-`git reset --soft HEAD^`
-
+```git reset --soft HEAD^```
 - commit 코드 되살리기( 코드는 살려두고 커밋 취소 )
 
-`git reset --hard HEAD^`
-
+```git reset --hard HEAD^```
 - commit 하기 이전 코드로 돌아가기( 복구 불가 )
 
-`git reset HEAD~2` 
-
+```git reset HEAD~2 ```
 - 마지막 2개의 commit 을 취소
+
 
 **4. push 취소**
 
-`git revert <commit_Id>`
-`git push origin <branch-name>`
+```git revert <commit_Id>```
+```git push origin <branch-name>```
 이것은 undo한다는 느낌 보다, 변경 지점을 추가 commit 하는 것.
+
 
 **5. merge 취소 방식** 
 
 a. git 머지(병합) 했더니 충돌. 편집해서 수정하지 않을 경우 한정
-
-`git merge --abort`
-
+ 
+```git merge --abort```
 - 병합전의 상태로 되돌린다.
 
 b. git 머지 후 충돌해서 수정하려고 시도했지만, 중간에 그만두고 싶을때! 편집한 내용도 머지(병합)도 모두 취소.
 
-`git reset --hard HEAD`
+```git reset --hard HEAD```
+
 
 c. 머지(병합) 모두 완료 후. 근데 역시 되돌리고 싶을때. 
 revert 커맨드를 사용하여 Merge commit 을 취소.
-`git revert <commit_Id>`
+```git revert <commit_Id>```
+
 
 d. 머지(병합) 모두 완료 후 되돌리고 싶을때.( 추천하지 않음 - 이력이 남지 않는다. )
-`git reset --hard ORIG_HEAD`
-
+```git reset --hard ORIG_HEAD```
 - 머지(병합)하기 전의 HEAD로 돌아갑니다. 이 방법은 한번 생긴 커밋을 취소하는 것. 이력이 남지 않는다.
 
 e. reset, revert 후 저장소 강제 업데이트 
- `git push -f origin <브랜치이름>`
+```git push --force-with-lease origin <브랜치이름>```
+- `-f`( `--force` )는 다른 사람이 그 사이에 push 한 커밋까지 덮어쓴다. `--force-with-lease` 는 원격이 내가 마지막으로 받은 상태일 때만 덮어쓰므로 더 안전하다.
+- `main` / `develop` 같은 공유 브랜치에는 강제 push 하지 않는다.
+
 
 #### 12-7 동기화
 
@@ -2840,59 +3452,76 @@ git reset --hard origin/master
 - **로컬에 있는 모든 변경 내용과 확정본을 포기**. 원격 저장소의 최신 이력을 가져오고
  로컬 master브랜치의 상태를 가져온 최신이력으로 변경.
 
-`git cherry-pick <commit id>`
 
+```git cherry-pick <commit id>```
 - 다른 커밋 버전을 현재의 브렌치에 업데이트하기.
 
-`git cherry-pick <commit id> -continue`
+```git cherry-pick --continue```
+- conflict 를 해결하고 `git add` 한 뒤 체리픽을 계속 진행한다.
 
-- conflict 등으로 실패하는 경우 계속해서 해결하기 위한 방법을 찾는다.
+```git cherry-pick -n <commit id>```
+- 변경 내용만 가져오고 커밋은 하지 않는다.
 
-`git cherry-pick <commit id> -n`
-
-- 파일변경, 커밋은 하지 않는다.
-
-`git cherry-pick <commit id> -quit`
-
+```git cherry-pick --quit```
 - 실패하는 경우 더 진행하지 않고 현재 상태를 빠져나온다.
 
-`git cherry-pick <commit id> -abort`
-
+```git cherry-pick --abort```
 - 체리픽 이전 상태로 돌리고 취소한다.
 
+
 #### 12-8 git 협업을 위한 flow.
-
 1. 저장소와 자신의 로컬 연동. (git clone)
-
 - 만약 최종 결정권자라면 원격 저장소생성하고 그 원격저장소와 로컬 연결. git remote
-
 2. develop 브랜치를 가져와 자신의 브랜치 로컬 및 원격저장소에 생성. `git checkout -b develop origin/develop`
-
-   최종 결정권자는 develop 브랜치가 없다면 생성. )
+ ( 최종 결정권자는 develop 브랜치가 없다면 생성. )
 3. develop 에서 분리된 자신작업 공간 브랜치 생성 그리고 아래와 같은 작업순으로 이루어진다.
-
-- pull origin develop > add > commit > push
-
-4. 작업 완료 되면 pull request 요청
+- pull origin develop > add > commit > push 
+4. 작업 완료 되면 pull request 요청 
 5. 최종 결정권자는 오픈된 pull request 사항을 체크 후 develop 에 merge 혹은 decline 시킨다.
-6. 최종 작업 마무리는  develop 의 모든 사항은 master 에 merge
+6. 최종 작업 마무리는  develop 의 모든 사항은 master 에 merge 
 
 ![./gitWorkFlow.jpg](./gitWorkFlow.jpg)
 
-### 12-9 기타 주의 사항.
 
+### 12-9 기타 주의 사항.
 > note : package-lock.json 
->
 > - package-lock.json 파일은 의존성 트리에 대한 정보를 가지고 있으며, 작성된 시점의 의존성 트리가 다시 생성될 수 있도록 보장해준다.
 > - package-lock.json 파일은 저장소에 꼭 같이 커밋해야 한다.
 > - package-lock.json 파일은 node_modules 없이 배포하는 경우 반드시 필요하다.
+> - CI / 배포 환경에서는 `npm install` 대신 lock 파일 그대로 설치하는 `npm ci` 를 사용한다.
+
+> note : `node_modules`, `dist`, `.env.local` 등은 `.gitignore` 에 추가하고 커밋하지 않는다.
+
+### 12-10 커밋 메시지 규칙 ( Conventional Commits )
+- 커밋 메시지를 `타입: 설명` 형태로 통일하면 이력을 읽기 쉽고, 변경 로그(CHANGELOG) 자동 생성에도 활용할 수 있다. [https://www.conventionalcommits.org/ko/](https://www.conventionalcommits.org/ko/v1.0.0/)
+
+```
+feat: 회원가입 폼 유효성 검사 추가
+fix: 모바일 메뉴가 닫히지 않는 문제 수정
+style: 버튼 여백 정리
+docs: README 개발 환경 설정 내용 수정
+refactor: 날짜 포맷 함수 분리
+chore: vite 버전 업데이트
+```
+
+| 타입 | 설명 |
+|------|------|
+| feat | 새로운 기능 |
+| fix | 버그 수정 |
+| docs | 문서 수정 |
+| style | 코드 포맷, 세미콜론 등 동작에 영향 없는 수정 |
+| refactor | 동작 변경 없는 코드 구조 개선 |
+| test | 테스트 추가 / 수정 |
+| chore | 빌드 설정, 패키지 업데이트 등 기타 작업 |
+
+
+
 
 -------
 
 ## 13. 기타 ( 오픈그래프 / 파비콘 / 아이콘 폰트 만들기 )
 
-### 1. 오픈 그래프
-
+### 1. 오픈 그래프 
 - 오픈그래프 프로토콜은 페이스북에서 처음 만들어졌으며, Dublin Core, link-rel canonical, Microformats, 그리고 RDFa로부터 영감을 받았다. 
 오픈그래프는 어떤 HTML 문서의 메타정보를 쉽게 표시하기 위해서 메타정보에 해당하는 제목, 설명, 문서의 타입, 대표 URL 등 다양한 요소들에 대해서 사람들이 
 통일해서 쓸 수 있도록 정의해놓은 프로토콜이며 페이스북에 의하여 기존의 다양한 메타 데이터 표기 방법을 참조하여 만들어졌다. 그 간편함으로 인하여 현재는 그 창시자인 페이스북은 물론이고, 네이버 블로그, 카카오톡 등에서도 널리 사용하고 있다.
@@ -2905,7 +3534,6 @@ git reset --hard origin/master
 5. 그리고 그 정보를 바탕으로 미리보기 화면을 생성해주게 된다.
 
 아래는 예시 코드
-
 ```
 <meta property="og:title" content="MINTIT UX">
 <meta property="og:url" content="http://mintit.inition.kr/">
@@ -2913,7 +3541,12 @@ git reset --hard origin/master
 <meta property="og:image" content="http://mintit.inition.kr/assets/images/mintit-sns2.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MINTIT UX">
+
+<!-- X(트위터) 카드 : 미지정 시 og 값을 참고하지만 카드 형태는 지정해야 한다 -->
+<meta name="twitter:card" content="summary_large_image">
 ```
+
+> note : `og:url`, `og:image` 는 `https://` 로 시작하는 **절대 경로**로 작성한다. ( 상대 경로는 크롤러가 읽지 못한다 )
 
 | Tag	           | Description              |
 |:---------------|:-------------------------|
@@ -2923,40 +3556,81 @@ git reset --hard origin/master
 | og:image	      | 콘텐츠를 공유 시 표시되는 이미지의 URL  |
 | og:site_name   | 웹 사이트의 이름 (주소 아님)        |
 
-> note : image size 는 800x800 혹은 270x270 이며
->
-> - 보여주고자 하는 아이콘 및 텍스트는 가로 세로 중앙정렬로 배치 되어야 한다.
+> note : 일반적인 og:image 권장 크기는 **1200x630 ( 1.91:1 )** 이다. ( 페이스북, X, 링크드인 등 대부분의 플랫폼 공통 )
+> - 플랫폼마다 잘리는 영역이 다르므로 보여주고자 하는 아이콘 및 텍스트는 가로 세로 중앙정렬로 배치 되어야 한다.
+> - 공유 미리보기 확인 : [Facebook 공유 디버거](https://developers.facebook.com/tools/debug/) / [카카오 공유 디버거](https://developers.kakao.com/tool/debugger/sharing)
 
 > note: 카카오 경우 아래와 같은 가이드로 진행됨( 디자인 가이드 )
->
-> - 스크랩 이미지의 권장 크기는 800px x 800px (*실제 컨텐츠 사이즈가 아니라 캔버스 사이즈)
-> - png 타입으로 15kb 내외
-> - 워드마크로 제작시 800px * 800px 이미지내 정중앙에 600px * 120px 크기의 이미지로 설정.
-> - 심볼로 만들때는 800px * 800px 이미지내 정중앙에 160px * 160px 크기의 이미지로 설정.
+ > - 스크랩 이미지의 권장 크기는 800px x 800px (*실제 컨텐츠 사이즈가 아니라 캔버스 사이즈)
+ > - png 타입으로 15kb 내외
+ > - 워드마크로 제작시 800px * 800px 이미지내 정중앙에 600px * 120px 크기의 이미지로 설정.
+ > - 심볼로 만들때는 800px * 800px 이미지내 정중앙에 160px * 160px 크기의 이미지로 설정.
+
 
 -----------------
 
-### 2. 파비콘
 
+### 2. 파비콘
 - 파비콘은 웹페이지에 접속했을때, 상단 탭에 보여지는 아이콘을 일컫는다. 이 아이콘은 즐겨찾기에 웹페이지를 등록할때도 사용된다. 
 웹사이트를 대표하는 로고(logo)의 개념과 비슷하며, 사이트의 성격을 드러내기도 한다.
 
-```
-<!-- cdn 32x32 사이즈 .ico 파비콘 이미지 ( favicon.ico ) -->
-<link rel="shortcut icon" href="">
+- 예전처럼 사이즈별 png 를 여러 개 만들 필요 없이 아래 4가지면 대부분의 브라우저 / 기기를 지원한다.
+- `shortcut` 은 비표준 값이므로 `rel="icon"` 만 사용한다.
 
-<!-- cdn 144x144 사이즈 .png 이미지 ( apple-touch-icon.png )-->
-<link rel="apple-touch-icon" href="" sizes="144x144">
+```
+<!-- 32x32 사이즈 .ico ( 구형 브라우저 / 루트 경로 favicon.ico 자동 요청 대응 ) -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+
+<!-- svg 파비콘 ( 해상도 무관 / 미디어쿼리로 다크모드 대응 가능 ) -->
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+
+<!-- 180x180 사이즈 .png ( iOS 홈 화면 추가 ) -->
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<!-- 안드로이드 홈 화면 / PWA 아이콘 ( manifest 안에 192x192, 512x512 png 지정 ) -->
+<link rel="manifest" href="/manifest.webmanifest">
+```
+
+```
+// manifest.webmanifest
+{
+  "name": "사이트 이름",
+  "icons": [
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}
 ```
 
 ------------------
 
 ### 3. 아이콘 폰트 만들기( svg icon font )
 
+> note : 요즘은 아이콘 폰트보다 **SVG 를 직접 사용하는 방식**을 우선 권장한다.
+> - 아이콘 폰트는 폰트 로딩 실패 시 깨진 글자(□)가 보이고, 스크린 리더가 의미 없는 문자를 읽는 등 접근성 문제가 있으며 여러 색을 쓸 수 없다.
+> - 웹퍼블리싱 : **SVG 스프라이트** ( `<symbol>` 로 묶은 파일을 `<use href="sprite.svg#icon-search">` 로 사용 )
+> - Vue / React : 아이콘 컴포넌트 라이브러리 사용 ( 예: [lucide](https://lucide.dev/) - `lucide-vue-next`, `lucide-react` / 사용한 아이콘만 번들에 포함됨 )
+> - 장식용 아이콘은 `aria-hidden="true"`, 의미가 있는 아이콘은 `aria-label` 또는 숨김 텍스트를 함께 제공한다.
+
+```
+<!-- sprite.svg -->
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="icon-search" viewBox="0 0 24 24">
+    <path d="..." />
+  </symbol>
+</svg>
+
+<!-- 사용 : fill / stroke 에 currentColor 를 쓰면 글자색(color)을 따라간다 -->
+<button type="button" aria-label="검색">
+  <svg class="icon" aria-hidden="true"><use href="/sprite.svg#icon-search"></use></svg>
+</button>
+```
+
+- 기존 프로젝트 운영 등 아이콘 폰트가 꼭 필요한 경우 아래 icomoon 을 사용한다.
+
 [https://icomoon.io/](https://icomoon.io/)
 
 > note ( 무료 svg icon font )
->
 > - [https://iconsvg.xyz/](https://iconsvg.xyz/)
 > - [https://basicons.xyz/](https://basicons.xyz/)
 > - [https://lucide.dev/](https://lucide.dev/)
@@ -2970,59 +3644,87 @@ git reset --hard origin/master
 
 ----------
 
-2. IcoMoon버튼을 눌러 아래와 같이 페이지가 이동되었다면
 
+2. IcoMoon버튼을 눌러 아래와 같이 페이지가 이동되었다면  
 그림처럼 좌측 상단 Import Icons 를 눌러 제작한 svg 파일을 임포트 하면 된다.  
 ( 만약 이미 아이콘 폰트를 발행한 적이 있으면서 환경 설정 json 파일을 가지고 있다면 svg 파일 대신 json 파일을 임포트 하면 된다. )  
 
 ![2번](./docs/images/icomoon2.jpg)
 
+
 ----------
+ 
 
-3. svg파일을 올렸다면 아래 그림처럼 파일들이 보인다. 아이콘 폰트화 할 것들을 클릭해서 선택한다.
-
+3. svg파일을 올렸다면 아래 그림처럼 파일들이 보인다. 아이콘 폰트화 할 것들을 클릭해서 선택한다.   
 그리고 맨 하단 3번째 Generate Font 버튼을 클릭하여 생성시킨다.
 
 ![3번](./docs/images/icomoon3.jpg)
 
 ----------
+ 
 
-4. 아래 그림처럼 우측 하단에 Download 를 클릭하면 최종 생성된 아이콘 폰트 파일을 다운 받을 수 있다.
-
+4. 아래 그림처럼 우측 하단에 Download 를 클릭하면 최종 생성된 아이콘 폰트 파일을 다운 받을 수 있다.  
 생성된 아이콘 및 web에서 css에 적용할 수 있겠끔 코드가 적혀 있다. 코드 값은 사용자에 맞게 수정할 수 있다.   
 
 ![5번](./docs/images/icomoon5.jpg)
 
+
 -------
 
-5. 마지막으로 상단 우측에 프로젝트 네임이 보일 것이다.    
-   클릭해 보면 아래 그림처럼 프로젝트 리스트로 전환된다.
-
+5. 마지막으로 상단 우측에 프로젝트 네임이 보일 것이다.  <br/>   클릭해 보면 아래 그림처럼 프로젝트 리스트로 전환된다.  
 우측 중단에 Download 클릭하면 프로젝트 설정한 환경 세팅  json 파일을 다운로드 받을 수 있다.  
-그리고 다운로드 받는 위치를 잘 지정해야 한다.  svg 원본파일이 있는 폴더의 위치와 같은 경로로 지정해 주는 것이 가장 좋다.  
-이 환경 설정 json 파일 잘 갖고 있어야지만 다시 세팅하게 되는 불필요한 작업을 방지할 수 있다.  
+그리고 다운로드 받는 위치를 잘 지정해야 한다.  svg 원본파일이 있는 폴더의 위치와 같은 경로로 지정해 주는 것이 가장 좋다.   
+이 환경 설정 json 파일 잘 갖고 있어야지만 다시 세팅하게 되는 불필요한 작업을 방지할 수 있다.    
 ( json 파일 누락시 사이트에서 일일히 아이콘의 코드값을 입력해야 한다. )   
 
 ![4번](./docs/images/icomoon4.jpg)
 
+
+
 ---------------------
 
-## 14. 프로젝트 초기 진행시 체크 사항
 
+## 14. 프로젝트 초기 진행시 체크 사항 
 - **font 종류** ( 폰트 종류는 2개를 넘지 않는게 좋다.) 
+
 - **font 범위** ( 웹폰트 유무 체크 / 라이선스 체크 )
+  - 웹폰트는 `woff2` 포맷을 사용하고, 한글 폰트는 용량이 크므로 서브셋 폰트 또는 가변(variable) 폰트를 검토한다. ( 예: Pretendard )
+  - `font-display: swap` 으로 폰트 로딩 중에도 텍스트가 보이게 한다.
+
 - 웹에선 **font-size 가 11px 이하**로 설정 되지 않게 해야 한다.
+  - 사용자가 브라우저 글자 크기를 바꿀 수 있도록 font-size 는 `rem` 단위 사용을 권장한다.
+
 - **웹접근성 체크**( 접근성 LEVEL 체크 - 수준 A(웹 접근성이 요구하는 최소한의 수준), 수준 AA ) 
+  - 기준 지침 : 국제 표준 **WCAG 2.2** / 국내 **KWCAG 2.2** ( 한국형 웹 콘텐츠 접근성 지침 )
+  - 키보드만으로 모든 기능 사용 가능 여부, 포커스 표시, 명도 대비( 텍스트 4.5:1 이상 ), 이미지 대체 텍스트 체크
+
 - **반응형**( 태블릿까지 지원하는지 체크 ) / **적응형**( 태블릿까지 지원하는지 체크 ) 체크  - 모바일 버전까지 지원시 테스트 디바이스 체크 
-- **크로스브라우징 체크** ( 크롬, 파이어폭스, 오페라, 엣지, IE 등 )
+
+- **크로스브라우징 체크** ( 크롬, 엣지, 사파리( iOS 포함 ), 파이어폭스, 삼성 인터넷 등 )
+  - IE 는 지원 종료(2022)되었으므로 별도 계약이 없으면 지원 대상에서 제외한다.
+  - 지원 범위는 `browserslist` 로 명시해서 빌드 도구( autoprefixer 등 )와 공유한다. ( 2-10 참고 )
+
+- **성능 체크** ( Core Web Vitals )
+  - **LCP** ( 가장 큰 콘텐츠 표시 시간, 2.5초 이하 ) / **INP** ( 입력 반응 속도, 200ms 이하 ) / **CLS** ( 레이아웃 밀림, 0.1 이하 )
+  - 크롬 개발자도구 Lighthouse 또는 [PageSpeed Insights](https://pagespeed.web.dev/) 로 측정
+  - 이미지는 `WebP` / `AVIF` 포맷 사용, `width` / `height` 속성 지정( CLS 방지 ), 첫 화면 밖 이미지는 `loading="lazy"` 적용
+
 - **웹퍼블리싱 / SPA**( Single page application ) 둘 중 어느 타입의 프로젝트인지 체크 
+
 - **라이브러리 및 프레임워크** 사용 체크 ( bootstrap, tailwindcss, jquery - 웹퍼블리싱만 하는 경우 / vue, react - spa 로 진행시 )
+
 - **컴포넌트 단위의 라이브러리/플러그인 호환성 및 버전 체크**( date-picker, time-picker, calendar, rich text editor, chart 등)
+
 - **max-width** / **min-width** 체크( 사이즈 수치값으로 1024 혹은 1280 로 작업. 그 결정하는 기준은 사이즈가 작은 랩탑까지도 지원해야 한다 했을 때 1024 을 선택 )
-- 단색 위주의 아이콘이 많다면 **svg icon font 제작** / 아이콘 개수가 많은데 png 이미지로 해야 하는 경우는 **image sprite 방식**으로 제작 ( 만약 수정이 잦아지거나 운영 맡게 된다면 해당 기법은 패스 )
+
+- 아이콘은 **SVG 스프라이트** 또는 **아이콘 컴포넌트**( Vue / React ) 방식을 우선 검토한다. ( 13. 기타의 3번 참고 ) 아이콘 폰트는 기존 프로젝트 운영 등 필요한 경우에만 제작 / png 이미지로 해야 하는 경우는 **image sprite 방식**으로 제작 ( 만약 수정이 잦아지거나 운영 맡게 된다면 해당 기법은 패스 )
+
 - 간단하게 sprite image 제작 [image sprite 제작 바로가기](https://spritegen.website-performance.org/)
 
+
+
 ------------
+
 
 ## 15. vue3.x 정리
 
